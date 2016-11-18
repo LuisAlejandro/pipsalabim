@@ -3,33 +3,25 @@ Internal API
 ============
 
 pipsalabim package
------------------
+------------------
 
 .. automodule:: pipsalabim
     :members:
     :private-members:
     :special-members:
 
-pipsalabim.bundle submodule
---------------------------
+pipsalabim.api submodule
+------------------------
 
-.. automodule:: pipsalabim.bundle
+.. automodule:: pipsalabim.api
     :members:
     :private-members:
     :special-members:
 
-pipsalabim.environment submodule
--------------------------------
-
-.. automodule:: pipsalabim.environment
-    :members:
-    :private-members:
-    :special-members:
-
-pipsalabim.utils submodule
+pipsalabim.core submodule
 -------------------------
 
-.. automodule:: pipsalabim.utils
+.. automodule:: pipsalabim.core
     :members:
     :private-members:
     :special-members:

@@ -26,9 +26,9 @@ from __future__ import absolute_import
 
 from argparse import ArgumentParser
 
-from pipsalabim import __version__
-from pipsalabim.api import guess
-from pipsalabim.core import logger
+from . import __version__
+from .core import logger
+from .api import guess
 
 
 def _cmdline(argv=None):
@@ -36,16 +36,21 @@ def _cmdline(argv=None):
 
     """
     parser = ArgumentParser()
-    parser.add_argument("-v", "--version", action="version",
-            version="pipsalabim {:s}".format(__version__),
-            help="print version and exit")
-    parser.add_argument("-w", "--warn", default="WARNING",
-            help="logger warning level [WARNING]")
-    subparsers = parser.add_subparsers(title="commands")
-    guess_parser = subparsers.add_parser("guess")
+
+    parser.add_argument(
+        '-v', '--version', action='version',
+        version='pipsalabim {:s}'.format(__version__),
+        help='Print version and exit.')
+
+    parser.add_argument(
+        '-l', '--loglevel', default='WARNING',
+        help='Logger verbosity level (default: WARNING).')
+
+    subparsers = parser.add_subparsers(title='commands')
+    guess_parser = subparsers.add_parser('guess')
     guess_parser.set_defaults(command=guess)
-    args = parser.parse_args(argv)
-    return args
+
+    return parser.parse_args(argv)
 
 
 def main(argv=None):
@@ -55,19 +60,18 @@ def main(argv=None):
 
     """
     args = _cmdline(argv)
-    logger.start(args.warn)
+    logger.start(args.loglevel)
     logger.info("starting execution")
     args.command(**vars(args))
     logger.info("successful completion")
     return 0
 
-# Make the module executable.
 
 if __name__ == "__main__":
     try:
         status = main()
     except:
         logger.critical("shutting down due to fatal error")
-        raise  # print stack trace
+        raise
     else:
         raise SystemExit(status)

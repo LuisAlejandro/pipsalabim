@@ -18,12 +18,15 @@
            :target: https://www.quantifiedcode.com/app/project/6c2cc543a97c4d23988fc0463645c4f9
 
 Pip Sala Bim is an assistant to guess your pip dependencies from your code, without using a
-requirements file. These words are magical, but be careful with what you play with ...
+requirements file.
+
+Pip Sala Bim will tell you which packages you need to install to satisfy the dependencies of
+your project. It uses a simple AST visitor for detecting imports and `PyPIContents`_ to
+search which packages contain these imports.
+
+These words are magical, but be careful with what you play with ...
 
 * Free software: GPL-3
-* Documentation: https://pipsalabim.readthedocs.org.
+* Documentation: https://pipsalabim.readthedocs.org
 
-Features
---------
-
-List 
+.. _PyPIContents: https://github.com/LuisAlejandro/pipsalabim

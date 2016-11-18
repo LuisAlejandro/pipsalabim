@@ -1,22 +1,36 @@
+# -*- coding: utf-8 -*-
+#
+#   This file is part of Pip Sala Bim
+#   Copyright (C) 2016, Pip Sala Bim Developers
+#   All rights reserved.
+#
+#   Please refer to AUTHORS.md for a complete list of Copyright
+#   holders.
+#
+#   Pip Sala Bim is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU Affero General Public License as published
+#   by the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   Pip Sala Bim is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU Affero General Public License for more details.
+#
+#   You should have received a copy of the GNU Affero General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 Parsing and finding routines.
-This could be considered the core of snakefood, and where all the complexity lives.
 """
-# This file is part of the Snakefood open source package.
-# See http://furius.ca/snakefood/ for licensing details.
+from __future__ import absolute_import, print_function
 
 import re
-import logging
 import compiler
 from compiler.visitor import ASTVisitor
 from compiler.ast import Discard, Const, AssName, List, Tuple
 from compiler.consts import OP_ASSIGN
 
-ERROR_IMPORT = "    Line %d: Could not import module '%s'"
-ERROR_SYMBOL = "    Line %d: Symbol is not a module: '%s'"
-ERROR_UNUSED = "    Line %d: Ignored unused import: '%s'"
-ERROR_SOURCE = "       %s"
-WARNING_OPTIONAL = "    Line %d: Pragma suppressing import '%s'"
+from .logger import logger
 
 
 class ImportVisitor(object):
@@ -126,7 +140,7 @@ def parse_python_source(fn):
         contents = open(fn, 'rU').read()
         lines = contents.splitlines()
     except (IOError, OSError), e:
-        logging.error("Could not read file '%s'." % fn)
+        logger.error("Could not read file '%s'." % fn)
         return None, None
 
     # Convert the file to an AST.
@@ -134,13 +148,13 @@ def parse_python_source(fn):
         ast = compiler.parse(contents)
     except SyntaxError, e:
         err = '%s:%s: %s' % (fn, e.lineno or '--', e.msg)
-        logging.error("Error processing file '%s':\n%s" %
+        logger.error("Error processing file '%s':\n%s" %
                       (fn, err))
         return None, lines
     except TypeError, e:
         # Note: this branch untested, applied from a user-submitted patch.
         err = '%s: %s' % (fn, str(e))
-        logging.error("Error processing file '%s':\n%s" %
+        logger.error("Error processing file '%s':\n%s" %
                       (fn, err))
         return None, lines
 
@@ -160,10 +174,10 @@ def get_ast_imports(ast):
     return found_imports
 
 
-def find_imports(fn):
-    "Yields a list of the module names the file 'fn' depends on."
+def find_imports(package, py):
+    "Yields a list of the module names the file 'py' depends on."
 
-    ast, _ = parse_python_source(fn)
+    ast, _ = parse_python_source(py)
     if ast is None:
         raise StopIteration
 
@@ -171,12 +185,12 @@ def find_imports(fn):
     if found_imports is None:
         raise StopIteration
 
-    # local_modules = 
-
-    for modname, rname, lname, lineno, _, _ in found_imports:
-        content = open(fn, 'r').read()
-        if re.findall(r'from\s*(?:\.\.|\.)%s\s*import.*?(?:%s|\*).*' % (modname, rname), content):
+    for modname, rname, lname, lineno, level, pragma in found_imports:
+        content = open(py, 'r').read()
+        if re.findall(r'__all__\s*=.*?%s.*' % modname, content):
             continue
-        if not rname and re.findall(r'__all__\s*=.*?%s' % modname, content):
-            continue
-        yield modname.split('.')[0]
+        if level == 1:
+            modname = '%s.%s' % (package, modname)
+        if level == 2:
+            modname = '%s.%s' % ('.'.join(package.split('.')[:-1]), modname)
+        yield modname.strip('.')

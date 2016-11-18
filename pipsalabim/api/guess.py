@@ -1,8 +1,28 @@
+# -*- coding: utf-8 -*-
+#
+#   This file is part of Pip Sala Bim
+#   Copyright (C) 2016, Pip Sala Bim Developers
+#   All rights reserved.
+#
+#   Please refer to AUTHORS.md for a complete list of Copyright
+#   holders.
+#
+#   Pip Sala Bim is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU Affero General Public License as published
+#   by the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   Pip Sala Bim is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU Affero General Public License for more details.
+#
+#   You should have received a copy of the GNU Affero General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """ Implement the guess command.
 
 """
-from __future__ import absolute_import
-from __future__ import print_function
+from __future__ import absolute_import, print_function
 
 import os
 import json
@@ -13,7 +33,8 @@ try:
 except ImportError:
     from urllib.request import urlopen
 
-from ..core import logger, find_files, find_imports, find_dirs, list_files, create_file_if_notfound
+from ..core import (logger, find_imports, find_files, find_dirs,
+                    list_files, create_file_if_notfound, is_subdir)
 
 
 pypibranch = 'contents'
@@ -29,7 +50,8 @@ pypijsonfile = os.path.join(os.environ.get('HOME'), '.cache', 'pipsalabim',
 def get_package_dirs(path):
     for i, n, p in pkgutil.walk_packages(find_dirs(path)):
         if p and isinstance(i, pkgutil.ImpImporter):
-            yield os.path.join(i.path, n), n
+            if is_subdir(i.path, path):
+                yield os.path.join(i.path, n), n
 
 
 def get_packages(packagedirs, top_dir):
@@ -39,7 +61,7 @@ def get_packages(packagedirs, top_dir):
         yield packagename, p
 
 
-def get_modules(packages):
+def get_local_modules(packages):
     modules = []
     for package, path in packages:
         for py in list_files(path, '*.py'):
@@ -51,18 +73,18 @@ def get_modules(packages):
     return sorted(set(modules))
 
 
-def get_local_imports(basedir):
+def get_local_imports(packages):
     imports = []
-    for py in find_files(basedir, '*.py'):
-        imports.extend(find_imports(py))
+    for package, path in packages:
+        for py in list_files(path, '*.py'):
+            imports.extend(find_imports(package, py))
     return imports
 
 
-def get_local_modules(basedir):
-    packagedirs = list(get_package_dirs(basedir))
-    top_package_dir = os.path.commonprefix(list(map(lambda x: x[0], packagedirs)))
-    packages = list(get_packages(packagedirs, top_package_dir))
-    return get_modules(packages)
+def get_local_packages(basedir):
+    pdata = list(get_package_dirs(basedir))
+    pdirs = os.path.commonprefix(list(map(lambda x: x[0], pdata)))
+    return list(get_packages(pdata, pdirs))
 
 
 def get_stdlib_modules(stdlibjson):
@@ -115,7 +137,7 @@ def get_dependencies(contents, module):
                 yield pkg
 
 
-def main(**kwargs):
+def guess(**kwargs):
     """ Execute the command.
 
     """
@@ -127,8 +149,9 @@ def main(**kwargs):
     stdlib_modules = get_stdlib_modules(stdlibjson)
     pypi_modules = get_pypicontents_modules(pypijson)
 
-    local_imports = get_local_imports(basedir)
-    local_modules = get_local_modules(basedir)
+    local_packages = get_local_packages(basedir)
+    local_modules = get_local_modules(local_packages)
+    local_imports = get_local_imports(local_packages)
 
     satisfied = stdlib_modules + local_modules
     unsatisfied = set(local_imports) - set(satisfied)
@@ -137,7 +160,7 @@ def main(**kwargs):
         options = list(get_dependencies(pypi_modules, mod))
 
         if len(options) > 1:
-            print('There is more than one package that satisfies this module: %s' % mod)
+            print('There is more than one PyPI package that satisfies this module: %s' % mod)
 
             while True:
                 print('\nPlease write the one you would like to use.')
@@ -159,7 +182,7 @@ def main(**kwargs):
             foundreqs.extend(options)
 
     if foundreqs:
-        print('\nThese are the packages you need to install to satisfy dependencies:')
+        print('\nThese are the PyPI packages you need to install to satisfy dependencies:')
         for f in foundreqs:
             print('    - %s' % f)
 
@@ -168,7 +191,7 @@ def main(**kwargs):
         print('Congratulations!')
 
     if notfoundmod:
-        print('\nWe couldnt find these modules in any package, sorry:')
+        print('\nWe couldnt find these python modules in any PyPI package, sorry:')
         for n in notfoundmod:
             print('    - %s' % n)
 
