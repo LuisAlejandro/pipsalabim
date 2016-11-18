@@ -1,5 +1,0 @@
-## Python requirements for using the pipsalabim application.
-##
-##    pip install --requirement=requirements.txt
-##
-PyYAML>=3.11

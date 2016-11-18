@@ -1,61 +1,29 @@
-Overview
-========
+.. image:: https://cdn.rawgit.com/LuisAlejandro/pipsalabim/master/docs/_static/banner.svg
 
-This is the pipsalabim application.
+-----
 
+.. image:: https://img.shields.io/pypi/v/pipsalabim.svg
+           :target: https://pypi.python.org/pypi/pipsalabim
 
-Minimum Requirements
-====================
+.. image:: https://readthedocs.org/projects/pipsalabim/badge/?version=latest
+           :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
 
-* Python 2.7
+.. image:: https://img.shields.io/travis/LuisAlejandro/pipsalabim.svg
+           :target: https://travis-ci.org/LuisAlejandro/pipsalabim
 
+.. image:: https://coveralls.io/repos/github/LuisAlejandro/pipsalabim/badge.svg?branch=master
+           :target: https://coveralls.io/github/LuisAlejandro/pipsalabim?branch=master
 
-Optional Requirements
-=====================
+.. image:: https://www.quantifiedcode.com/api/v1/project/6c2cc543a97c4d23988fc0463645c4f9/badge.svg
+           :target: https://www.quantifiedcode.com/app/project/6c2cc543a97c4d23988fc0463645c4f9
 
-..  _py.test: http://pytest.org
-..  _Sphinx: http://sphinx-doc.org
+Pip Sala Bim is an assistant to guess your pip dependencies from your code, without using a
+requirements file. These words are magical, but be careful with what you play with ...
 
-* `py.test`_ 2.7 (for running the test suite)
-* `Sphinx`_ 1.3 (for generating documentation)
+* Free software: GPL-3
+* Documentation: https://pipsalabim.readthedocs.org.
 
+Features
+--------
 
-Basic Setup
-===========
-
-Install for the current user:
-
-..  code-block::
-
-    $ python setup.py install --user
-
-
-Run the application:
-
-..  code-block::
-
-    $ python -m pipsalabim --help
-
-
-Run the test suite:
-
-..  code-block::
-   
-    $ py.test test/
-
-
-Build documentation:
-
-..  code-block::
-
-    $ cd doc && make html
-    
-    
-Deploy the application in a self-contained `Virtualenv`_ environment:
-
-..  _Virtualenv: https://virtualenv.readthedocs.org
-
-..  code-block::
-
-    $ python deploy.py /path/to/apps
-    $ cd /path/to/apps/ && pipsalabim/bin/cli --help
+List 
