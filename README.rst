@@ -29,4 +29,4 @@ These words are magical, but be careful with what you play with ...
 * Free software: GPL-3
 * Documentation: https://pipsalabim.readthedocs.org
 
-.. _PyPIContents: https://github.com/LuisAlejandro/pipsalabim
+.. _PyPIContents: https://github.com/LuisAlejandro/pypicontents

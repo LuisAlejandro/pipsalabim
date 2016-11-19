@@ -1,8 +1,7 @@
 
-Copyright (C) 2016, Pip Sala Bim Developers
+Copyright (C) 2016, Pip Sala Bim Developers.
 
-Please refer to AUTHORS.md for a complete
-list of Copyright holders.
+Please refer to AUTHORS.rst for a complete list of Copyright holders.
 
 Pip Sala Bim is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
