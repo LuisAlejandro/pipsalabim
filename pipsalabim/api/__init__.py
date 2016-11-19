@@ -22,5 +22,3 @@
 
 This package contains each command of Pip Sala Bim organized in modules.
 """
-from .report import main as report
-from .update import main as update

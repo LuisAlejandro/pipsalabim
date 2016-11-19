@@ -28,8 +28,9 @@ from __future__ import absolute_import
 from argparse import ArgumentParser
 
 from . import __version__, __description__
-from .core import logger
-from .api import report, update
+from .core.logger import logger
+from .api.report import main as report
+from .api.update import main as update
 
 
 def main():

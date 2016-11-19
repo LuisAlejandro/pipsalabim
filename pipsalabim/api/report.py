@@ -29,8 +29,10 @@ from __future__ import absolute_import, print_function
 import os
 import pkgutil
 
-from ..core import (logger, find_imports, find_dirs, list_files,
-                    is_subdir, get_stdlib_modules, get_pypicontents_modules)
+from ..core.logger import logger
+from ..core.imports import find_imports
+from ..core.cache import get_stdlib_modules, get_pypicontents_modules
+from ..core.util import find_dirs, list_files, is_subdir
 
 
 def get_package_dirs(path):
@@ -132,10 +134,12 @@ def get_dependencies(pypicontents, module):
 
     .. versionadded:: 0.1.0
     """
+    dependencies = []
     for pkgname, pkgdata in pypicontents.items():
         for mod in pkgdata['modules']:
             if mod == module:
-                yield pkgname
+                dependencies.append(pkgname)
+    return dependencies
 
 
 def main(*args, **kwargs):
@@ -153,7 +157,7 @@ def main(*args, **kwargs):
     stdlib_modules = get_stdlib_modules()
     pypi_modules = get_pypicontents_modules()
 
-    local_packages = list(get_local_packages(basedir))
+    local_packages = get_local_packages(basedir)
     local_modules = get_local_modules(local_packages)
     local_imports = get_local_imports(local_packages)
 
@@ -161,7 +165,7 @@ def main(*args, **kwargs):
     unsatisfied = set(local_imports) - set(satisfied)
 
     for mod in unsatisfied:
-        options = list(get_dependencies(pypi_modules, mod))
+        options = get_dependencies(pypi_modules, mod)
 
         if len(options) > 1:
             print(('There is more than one PyPI package that satisfies'
