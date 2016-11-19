@@ -25,7 +25,7 @@ for internal and external imports. It then discards the imports that are
 satisfied with internal code or with the standard library and finally
 searches the `PyPIContents`_ index to list which packages satisfy your imports.
 
-.. _PyPIContents: https://github.com/LuisAlejandro/pipsalabim
+.. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
 """
 

@@ -1,4 +1,4 @@
-.. image:: https://cdn.rawgit.com/LuisAlejandro/pipsalabim/master/docs/_static/banner.svg
+.. image:: https://gitcdn.xyz/repo/LuisAlejandro/pipsalabim/master/docs/_static/banner.svg
 
 -----
 

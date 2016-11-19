@@ -138,13 +138,11 @@ def get_dependencies(pypicontents, module):
                 yield pkgname
 
 
-def main(**kwargs):
+def main(*args, **kwargs):
     """
     Generate a report to inform about PyPI dependencies.
 
-    :param path: a path pointing to a directory containing python code.
-    :return: a list of tuples containing the name of the package and
-             the package directory. For example::
+    :return: an exit status.
 
     .. versionadded:: 0.1.0
     """
