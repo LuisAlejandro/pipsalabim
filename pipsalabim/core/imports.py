@@ -23,27 +23,13 @@ Parsing and finding routines.
 from __future__ import absolute_import, print_function
 
 import re
-import compiler
-from compiler.visitor import ASTVisitor
-from compiler.ast import Discard, Const, AssName, List, Tuple
-from compiler.consts import OP_ASSIGN
+import ast
+from ast import NodeVisitor, List, Tuple, Name, Store, Str, Expr
 
 from .logger import logger
 
 
-class ImportWalker(ASTVisitor):
-    "AST walker that we use to dispatch to a default method on the visitor."
-
-    def __init__(self, visitor):
-        ASTVisitor.__init__(self)
-        self._visitor = visitor
-
-    def default(self, node, *args):
-        self._visitor.default(node)
-        ASTVisitor.default(self, node, *args)
-
-
-class ImportVisitor(object):
+class ImportVisitor(NodeVisitor):
     """AST visitor for grabbing the import statements.
 
     This visitor produces a list of
@@ -57,17 +43,18 @@ class ImportVisitor(object):
         self.modules = []
         self.recent = []
 
-    def visitImport(self, node):
+    def visit_Import(self, node):
         self.accept_imports()
-        self.recent.extend((x[0], None, x[1] or x[0], node.lineno, 0)
+        self.recent.extend((x.name, None, x.asname or x.name, node.lineno, 0)
                            for x in node.names)
 
-    def visitFrom(self, node):
+    def visit_ImportFrom(self, node):
         self.accept_imports()
-        modname = node.modname
+        modname = node.module
         if modname == '__future__':
             return
-        for name, as_ in node.names:
+        for alias in node.names:
+            name, as_ = alias.name, alias.asname
             if name == '*':
                 # We really don't know...
                 mod = (modname, None, None, node.lineno, node.level)
@@ -79,37 +66,36 @@ class ImportVisitor(object):
     # implies an implicit import if the package is being imported via
     # from-import; from the documentation:
     #
-    # The import statement uses the following convention: if a package's
-    # __init__.py code defines a list named __all__, it is taken to be the list
-    # of module names that should be imported when from package import * is
-    # encountered. It is up to the package author to keep this list up-to-date
-    # when a new version of the package is released. Package authors may also
-    # decide not to support it, if they don't see a use for importing * from
-    # their package.
-    def visitAssign(self, node):
-        lhs = node.nodes
-        if len(lhs) == 1 and isinstance(lhs[0], AssName) and \
-           lhs[0].name == '__all__' and lhs[0].flags == OP_ASSIGN:
+    #  The import statement uses the following convention: if a package's
+    #  __init__.py code defines a list named __all__, it is taken to be the list
+    #  of module names that should be imported when from package import * is
+    #  encountered. It is up to the package author to keep this list up-to-date
+    #  when a new version of the package is released. Package authors may also
+    #  decide not to support it, if they don't see a use for importing * from
+    #  their package.
+    def visit_Assign(self, node):
+        lhs = node.targets
+        if len(lhs) == 1 and isinstance(lhs[0], Name) and \
+           lhs[0].id == '__all__' and isinstance(lhs[0].ctx, Store):
 
-            rhs = node.expr
+            rhs = node.value
             if isinstance(rhs, (List, Tuple)):
-                for namenode in rhs:
+                for namenode in rhs.elts:
                     # Note: maybe we should handle the case of non-consts.
-                    if isinstance(namenode, Const):
-                        modname = namenode.value
+                    if isinstance(namenode, Str):
+                        modname = namenode.s
                         mod = (modname, None, modname, node.lineno, 0)
                         self.recent.append(mod)
 
-    def default(self, node):
+    def generic_visit(self, node):
         pragma = None
         if self.recent:
-            if isinstance(node, Discard):
-                children = node.getChildren()
-                if len(children) == 1 and isinstance(children[0], Const):
-                    const_node = children[0]
-                    pragma = const_node.value
+            if isinstance(node, Expr) and isinstance(node.value, Str):
+                const_node = node.value
+                pragma = const_node.s
 
         self.accept_imports(pragma)
+        super(ImportVisitor, self).generic_visit(node)
 
     def accept_imports(self, pragma=None):
         self.modules.extend((m, r, l, n, lvl, pragma)
@@ -135,36 +121,35 @@ def parse_python_source(fn):
     try:
         contents = open(fn, 'rU').read()
         lines = contents.splitlines()
-    except (IOError, OSError), e:
+    except (IOError, OSError) as e:
         logger.error('Could not read file "%s".' % fn)
         return None, None
 
     # Convert the file to an AST.
     try:
-        ast = compiler.parse(contents)
-    except SyntaxError, e:
+        ast_ = ast.parse(contents)
+    except SyntaxError as e:
         err = '%s:%s: %s' % (fn, e.lineno or '--', e.msg)
         logger.error('Error processing file "%s":\n%s' % (fn, err))
         return None, lines
-
-    except TypeError, e:
+    except TypeError as e:
         # Note: this branch untested, applied from a user-submitted patch.
         err = '%s: %s' % (fn, str(e))
         logger.error('Error processing file "%s":\n%s' % (fn, err))
         return None, lines
 
-    return ast, lines
+    return ast_, lines
 
 
-def get_ast_imports(ast):
+def get_ast_imports(ast_):
     """
     Given an AST, return a list of module tuples for the imports found, in the
     form:
         (modname, remote-name, local-name, lineno, pragma)
     """
-    assert ast is not None
+    assert ast_ is not None
     vis = ImportVisitor()
-    compiler.walk(ast, vis, ImportWalker(vis))
+    vis.visit(ast_)
     found_imports = vis.finalize()
     return found_imports
 

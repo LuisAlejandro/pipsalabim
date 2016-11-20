@@ -17,6 +17,10 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see http://www.gnu.org/licenses.
-""" Core implementation package.
+"""
+``pipsalabim.core`` contains the core functions of the application.
 
+This package contains functions for managing the download of files,
+exploring and obtaining imported modules, logging and other minor
+file operations.
 """

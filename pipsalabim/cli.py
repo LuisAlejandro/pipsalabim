@@ -33,7 +33,7 @@ from .api.report import main as report
 from .api.update import main as update
 
 
-def main():
+def main(argv=None):
     """
     Handles arguments and commands.
 
@@ -57,7 +57,7 @@ def main():
     update_parser = subparsers.add_parser('update')
     update_parser.set_defaults(command=update)
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     logger.start(args.loglevel)
     logger.info('Starting execution.')

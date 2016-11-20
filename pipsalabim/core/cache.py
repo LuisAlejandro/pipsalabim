@@ -29,21 +29,23 @@ except ImportError:
     from urllib.request import urlopen
 
 from .logger import logger
-from .util import create_file_if_notfound, chunk_report, chunk_read
+from .util import chunk_report, chunk_read
 
 
 pypibranch = 'contents'
 pypiurl = 'https://raw.githubusercontent.com/LuisAlejandro/pypicontents'
 stdlibjson = '%s/%s/stdlib.json' % (pypiurl, pypibranch)
-pypijson = '%s/%s/contents.json' % (pypiurl, pypibranch)
+pypijson = '%s/%s/pypi.json' % (pypiurl, pypibranch)
 stdlibjsonfile = os.path.join(os.environ.get('HOME'), '.cache', 'pipsalabim',
                               'stdlib.json')
 pypijsonfile = os.path.join(os.environ.get('HOME'), '.cache', 'pipsalabim',
-                            'contents.json')
+                            'pypi.json')
 
 
 def download_json_database(datafile, dataurl):
-    create_file_if_notfound(datafile)
+
+    if not os.path.isdir(os.path.dirname(datafile)):
+        os.makedirs(os.path.dirname(datafile))
 
     try:
         response = urlopen(url=dataurl, timeout=10)
@@ -64,9 +66,9 @@ def download_json_database(datafile, dataurl):
 def get_stdlib_modules():
     stdlibmods = []
 
-    if not os.path.isfile(stdlibjsonfile):
-        if not download_json_database(stdlibjsonfile, stdlibjson):
-            return stdlibmods
+    if not os.path.isfile(stdlibjsonfile) and \
+       not download_json_database(stdlibjsonfile, stdlibjson):
+        return stdlibmods
 
     with open(stdlibjsonfile, 'r') as s:
         stdlibdict = json.loads(s.read())
@@ -78,8 +80,8 @@ def get_stdlib_modules():
 
 
 def get_pypicontents_modules():
-    if not os.path.isfile(pypijsonfile):
-        if not download_json_database(pypijsonfile, pypijson):
+    if not os.path.isfile(pypijsonfile) and \
+       not download_json_database(pypijsonfile, pypijson):
             return []
 
     with open(pypijsonfile, 'r') as s:

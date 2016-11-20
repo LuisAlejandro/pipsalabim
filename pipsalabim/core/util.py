@@ -47,56 +47,84 @@ def get_path(path=None):
 
     .. versionadded:: 0.1.0
     """
-    path = path or []
     assert type(path) == list
     return os.path.normpath(os.path.realpath(
         os.path.abspath(os.path.join(*path))))
 
 
 def list_files(path=None, pattern='*'):
-    assert path
+    """
+    List files on ``path`` (non-recursively).
+
+    Locate all the files matching the supplied filename pattern in the first
+    level of the supplied ``path``. If no pattern is supplied, all files will
+    be returned.
+
+    :param path: a string containing a path where the files will be looked for.
+    :param pattern: a string containing a regular expression.
+    :return: a list of files matching the pattern within the first level of
+             path (non-recursive).
+
+    .. versionadded:: 0.1.0
+    """
     assert type(path) == str
-    files = fnmatch.filter(os.listdir(path), pattern)
-    return [get_path([path, f]) for f in files
-            if os.path.isfile(get_path([path, f]))]
+    assert type(pattern) == str
+
+    filelist = []
+    for f in fnmatch.filter(os.listdir(path), pattern):
+        if os.path.isfile(get_path([path, f])):
+            filelist.append(get_path([path, f]))
+    return filelist
 
 
 def find_dirs(path=None, pattern='*'):
-    d = []
-    import fnmatch
-    assert path
-    assert pattern
+    """
+    Search for directories (recursive).
+
+    Locate all the directories matching the supplied pattern in and below
+    the supplied root directory. If no pattern is supplied, all directories
+    will be returned. The result includes ``path``.
+
+    :param path: a string containing a path where the directories will be
+                 looked for.
+    :param pattern: a string containing a regular expression.
+    :return: a list of directories matching the pattern within path
+             (recursive).
+
+    .. versionadded:: 0.1.0
+    """
     assert type(path) == str
     assert type(pattern) == str
+
+    dirlist = [path]
     for directory, subdirs, files in os.walk(os.path.normpath(path)):
         for subdir in fnmatch.filter(subdirs, pattern):
             if os.path.isdir(os.path.join(directory, subdir)):
                 if os.path.islink(os.path.join(directory, subdir)):
-                    d.append(os.path.join(get_path([directory]), subdir))
+                    dirlist.append(os.path.join(get_path([directory]), subdir))
                 else:
-                    d.append(get_path([directory, subdir]))
-    return d+[path]
+                    dirlist.append(get_path([directory, subdir]))
+    return dirlist
 
 
 def is_subdir(subpath, path):
-    commonpath = os.path.commonprefix([os.path.realpath(subpath),
-                                       os.path.realpath(path)])
+    """
+    Test if ``subpath`` is a subdirectory of ``path``.
+
+    :param subpath: a string containing a path.
+    :param path: a string containing a path.
+    :return: ``True`` if ``subpath`` is contained within ``path``. ``False``
+             otherwise.
+
+    .. versionadded:: 0.1.0
+    """
+    commonpath = os.path.commonprefix([get_path([subpath]),
+                                       get_path([path])])
     return commonpath == path
 
 
-def create_file_if_notfound(filename):
-    dedir = os.path.dirname(filename)
-    if not os.path.isdir(dedir):
-        os.makedirs(dedir)
-    if not os.path.isfile(filename):
-        with open(filename, 'w') as f:
-            os.utime(filename, None)
-    return filename
-
-
-def chunk_report(bytes_so_far, chunk_size, total_size):
-    percent = float(bytes_so_far) / total_size
-    percent = round(percent * 100, 2)
+def chunk_report(bytes_so_far, total_size):
+    percent = round((float(bytes_so_far) / total_size) * 100, 2)
     sys.stdout.write('Downloaded %d of %d bytes (%0.2f%%)\r' %
                      (bytes_so_far, total_size, percent))
 
@@ -119,6 +147,6 @@ def chunk_read(response, chunk_size=8192, report_hook=None):
 
         data += chunk
         if report_hook:
-            report_hook(bytes_so_far, chunk_size, total_size)
+            report_hook(bytes_so_far, total_size)
 
     return ''.join(data)

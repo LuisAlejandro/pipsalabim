@@ -20,6 +20,11 @@
 """
 ``pipsalabim.api.update`` is a module implementing the update command.
 
+Pip Sala Bim needs to keep a local copy of the PyPIContents database
+to function properly. This command takes care of maintaining it
+up-to-date.
+
+Please note that this command must be executed manually.
 """
 from __future__ import absolute_import, print_function
 
@@ -30,6 +35,16 @@ from ..core.cache import (download_json_database, stdlibjson, pypijson,
 def main(*args, **kwargs):
     """
     Update databases from PyPIContents.
+
+    .. _stdlib.json: https://git.io/vXF1H
+    .. _pypi.json: https://git.io/vXFDL
+    .. _PyPIContents project: https://github.com/LuisAlejandro/pypicontents
+
+    This function downloads the standard library modules index (`stdlib.json`_)
+    and the PyPI modules index (`pypi.json`_) from the `PyPIContents project`_
+    to keep a local copy of these files, which are critical to PiP Sala Bim.
+
+    This command makes no comparing or checking prior to download.
 
     :return: an exit status.
 

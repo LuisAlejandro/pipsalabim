@@ -46,9 +46,9 @@ def get_package_dirs(path):
     """
     package_dir = []
     for importer, pkgname, is_pkg in pkgutil.walk_packages(find_dirs(path)):
-        if is_pkg and isinstance(importer, pkgutil.ImpImporter):
-            if is_subdir(importer.path, path):
-                package_dir.append(os.path.join(importer.path, pkgname))
+        if is_pkg and isinstance(importer, pkgutil.ImpImporter) and \
+           is_subdir(importer.path, path):
+            package_dir.append(os.path.join(importer.path, pkgname))
     return package_dir
 
 
@@ -145,6 +145,19 @@ def get_dependencies(pypicontents, module):
 def main(*args, **kwargs):
     """
     Generate a report to inform about PyPI dependencies.
+
+    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
+
+    This command will search your code for unsatisfied dependencies by
+    looking at your ``import`` statements. If an import is not satisfied by
+    internal modules or the standard library, then it will query the
+    PyPI module index provided by `PyPIContents`_.
+
+    Sometimes, more than one PyPI package will provide the missing module and
+    in such cases, you will be asked to select one from a list of options.
+
+    If Pip Sala Bim fails to find a package providing the module you need, it
+    will report it back to you.
 
     :return: an exit status.
 
