@@ -23,6 +23,8 @@
 This module contains several utilities to process information coming from the
 other modules.
 """
+from __future__ import absolute_import, print_function
+
 import os
 import sys
 import fnmatch
@@ -31,30 +33,6 @@ try:
     basestring
 except NameError:
     basestring = str
-
-
-def get_path(path=None):
-    """
-    Build and normalize a path.
-
-    This will resolve symlinks to their destination and convert
-    relative to absolute paths. This function does not check if
-    the python path really exists.
-
-    :param path: a list with the components of a path.
-    :return: a string indicating the full path.
-
-    For example:
-
-    >>> p = ['/usr', 'share', 'logs/vars', 'included', 'hola.txt']
-    >>> get_path(p)
-    '/usr/share/logs/vars/included/hola.txt'
-
-    .. versionadded:: 0.1.0
-    """
-    assert isinstance(path, list)
-    return os.path.normpath(os.path.realpath(
-        os.path.abspath(os.path.join(*path))))
 
 
 def list_files(path=None, pattern='*'):
@@ -77,8 +55,8 @@ def list_files(path=None, pattern='*'):
 
     filelist = []
     for f in fnmatch.filter(os.listdir(path), pattern):
-        if os.path.isfile(get_path([path, f])):
-            filelist.append(get_path([path, f]))
+        if os.path.isfile(os.path.join(path, f)):
+            filelist.append(os.path.join(path, f))
     return filelist
 
 
@@ -105,14 +83,11 @@ def find_dirs(path=None, pattern='*'):
     for directory, subdirs, files in os.walk(os.path.normpath(path)):
         for subdir in fnmatch.filter(subdirs, pattern):
             if os.path.isdir(os.path.join(directory, subdir)):
-                if os.path.islink(os.path.join(directory, subdir)):
-                    dirlist.append(os.path.join(get_path([directory]), subdir))
-                else:
-                    dirlist.append(get_path([directory, subdir]))
+                dirlist.append(os.path.join(directory, subdir))
     return dirlist
 
 
-def is_subdir(subpath, path):
+def is_valid_path(path):
     """
     Test if ``subpath`` is a subdirectory of ``path``.
 
@@ -123,9 +98,11 @@ def is_subdir(subpath, path):
 
     .. versionadded:: 0.1.0
     """
-    commonpath = os.path.commonprefix([get_path([subpath]),
-                                       get_path([path])])
-    return commonpath == path
+    for component in os.path.normpath(path).split(os.sep):
+        if ('.' in component or '-' in component) and \
+           component not in ['.', '..']:
+            return False
+    return True
 
 
 def chunk_report(downloaded, total):
@@ -140,11 +117,11 @@ def chunk_report(downloaded, total):
     .. versionadded:: 0.1.0
     """
     percent = round((float(downloaded) / total) * 100, 2)
-    sys.stdout.write(('Downloaded {:d} of {:d} bytes '
-                      '({:0.2f}%)').format(downloaded, total, percent))
-
+    sys.stdout.write(('Downloaded {:d} of {:d} kB '
+                      '({:0.2f}%)\r').format(downloaded / 60,
+                                             total / 60, percent))
     if downloaded >= total:
-        sys.stdout.write('\n')
+        sys.stdout.write('\n\n')
 
 
 def chunk_read(response, chunk_size=8192, report_hook=None):

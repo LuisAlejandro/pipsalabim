@@ -23,7 +23,7 @@
 This modue handles the commands for using Pip Sala Bim. It also parses
 parameters, show help, version and controls the logging level.
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 from argparse import ArgumentParser
 

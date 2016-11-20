@@ -11,7 +11,7 @@ pipsalabim
     :special-members:
 
 pipsalabim.cli module
-~~~~~~~~~~~~~~~~~~~~~
+=====================
 
 .. automodule:: pipsalabim.cli
     :members:
@@ -19,7 +19,7 @@ pipsalabim.cli module
     :special-members:
 
 pipsalabim.api package
-----------------------
+======================
 
 .. automodule:: pipsalabim.api
     :members:
@@ -27,7 +27,7 @@ pipsalabim.api package
     :special-members:
 
 pipsalabim.api.report module
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================
 
 .. automodule:: pipsalabim.api.report
     :members:
@@ -35,7 +35,7 @@ pipsalabim.api.report module
     :special-members:
 
 pipsalabim.api.update module
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================
 
 .. automodule:: pipsalabim.api.update
     :members:
@@ -43,7 +43,7 @@ pipsalabim.api.update module
     :special-members:
 
 pipsalabim.core package
------------------------
+=======================
 
 .. automodule:: pipsalabim.core
     :members:
@@ -51,7 +51,7 @@ pipsalabim.core package
     :special-members:
 
 pipsalabim.core.cache module
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================
 
 .. automodule:: pipsalabim.core.cache
     :members:
@@ -59,7 +59,7 @@ pipsalabim.core.cache module
     :special-members:
 
 pipsalabim.core.imports module
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==============================
 
 .. automodule:: pipsalabim.core.imports
     :members:
@@ -67,7 +67,7 @@ pipsalabim.core.imports module
     :special-members:
 
 pipsalabim.core.logger module
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================
 
 .. automodule:: pipsalabim.core.logger
     :members:
@@ -75,7 +75,7 @@ pipsalabim.core.logger module
     :special-members:
 
 pipsalabim.core.util module
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================
 
 .. automodule:: pipsalabim.core.util
     :members:

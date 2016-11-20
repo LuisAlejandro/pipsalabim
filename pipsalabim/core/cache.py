@@ -17,9 +17,16 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see http://www.gnu.org/licenses.
-""" Core implementation package.
-
 """
+``pipsalabim.core.cache`` handles the download of `PyPIContents`_ cache.
+
+.. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
+
+This module downlads and stores the json files needed to search for modules and
+packages.
+"""
+from __future__ import absolute_import, print_function
+
 import os
 import json
 
@@ -31,21 +38,32 @@ except ImportError:
 from .logger import logger
 from .util import chunk_report, chunk_read
 
-
-pypibranch = 'contents'
-pypiurl = 'https://raw.githubusercontent.com/LuisAlejandro/pypicontents'
-stdlibjson = '{0}/{1}/stdlib.json'.format(pypiurl, pypibranch)
-pypijson = '{0}/{1}/pypi.json'.format(pypiurl, pypibranch)
-stdlibjsonfile = os.path.join(os.environ.get('HOME'), '.cache', 'pipsalabim',
-                              'stdlib.json')
-pypijsonfile = os.path.join(os.environ.get('HOME'), '.cache', 'pipsalabim',
-                            'pypi.json')
+stdliburl = ('https://raw.githubusercontent.com/LuisAlejandro/pypicontents/'
+             'contents/stdlib.json')
+pypiurl = ('https://raw.githubusercontent.com/LuisAlejandro/pypicontents/'
+           'contents/pypi.json')
+stdlibfile = os.path.join(os.environ.get('HOME'), '.cache', 'pipsalabim',
+                          'stdlib.json')
+pypifile = os.path.join(os.environ.get('HOME'), '.cache', 'pipsalabim',
+                        'pypi.json')
 
 
 def download_json_database(datafile, dataurl):
+    """
+    Download a json file from ``dataurl``, store to ``datafile`` and report.
 
+    :param datafile: a string containing a path to store the contents of
+                     the file downloaded from ``dataurl``.
+    :param dataurl: a string containing a url to a file.
+    :return: ``True`` if operations went OK, ``False`` if not.
+
+    .. versionadded:: 0.1.0
+    """
     if not os.path.isdir(os.path.dirname(datafile)):
         os.makedirs(os.path.dirname(datafile))
+
+    print(('{0} is not present, downloading '
+           '...').format(os.path.basename(datafile)))
 
     try:
         response = urlopen(url=dataurl, timeout=10)
@@ -63,26 +81,20 @@ def download_json_database(datafile, dataurl):
     return True
 
 
-def get_stdlib_modules():
-    stdlibmods = []
+def get_database(filename, url):
+    """
+    Check if ``url`` has been downloaded and stored.
 
-    if not os.path.isfile(stdlibjsonfile) and \
-       not download_json_database(stdlibjsonfile, stdlibjson):
-        return stdlibmods
+    :param filename: a string containing a path to store the contents of
+                     the file downloaded from ``url``.
+    :param url: a string containing a url to a file.
+    :return: an interpreted json string.
 
-    with open(stdlibjsonfile, 'r') as s:
-        stdlibdict = json.loads(s.read())
+    .. versionadded:: 0.1.0
+    """
+    if not os.path.isfile(filename) and \
+       not download_json_database(filename, url):
+        return []
 
-    for mods in stdlibdict.values():
-        stdlibmods.extend(mods)
-
-    return stdlibmods
-
-
-def get_pypicontents_modules():
-    if not os.path.isfile(pypijsonfile) and \
-       not download_json_database(pypijsonfile, pypijson):
-            return []
-
-    with open(pypijsonfile, 'r') as s:
+    with open(filename, 'r') as s:
         return json.loads(s.read())

@@ -23,7 +23,7 @@
 All modules use the same global logging object. No messages will be emitted
 until the logger is started.
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 import logging
 
@@ -102,5 +102,6 @@ class ControlableLogger(logging.Logger):
         if self.active:
             self.removeHandler(self.handlers[-1])
             self.active = False
+
 
 logger = ControlableLogger()

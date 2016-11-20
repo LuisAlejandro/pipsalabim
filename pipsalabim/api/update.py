@@ -28,8 +28,8 @@ Please note that this command must be executed manually.
 """
 from __future__ import absolute_import, print_function
 
-from ..core.cache import (download_json_database, stdlibjson, pypijson,
-                          stdlibjsonfile, pypijsonfile)
+from ..core.cache import (download_json_database, stdliburl, pypiurl,
+                          stdlibfile, pypifile)
 
 
 def main(*args, **kwargs):
@@ -51,13 +51,13 @@ def main(*args, **kwargs):
     .. versionadded:: 0.1.0
     """
     print('Updating the standard library database ...')
-    if download_json_database(stdlibjsonfile, stdlibjson):
+    if download_json_database(stdlibfile, stdliburl):
         print('Success!\n')
     else:
         print('There was an error!\n')
 
     print('Updating the PyPIContents database ...')
-    if download_json_database(pypijsonfile, pypijson):
+    if download_json_database(pypifile, pypiurl):
         print('Success!\n')
     else:
         print('There was an error!\n')

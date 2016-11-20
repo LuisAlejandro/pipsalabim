@@ -32,11 +32,14 @@ import pkgutil
 
 from ..core.logger import logger
 from ..core.imports import find_imports
-from ..core.cache import get_stdlib_modules, get_pypicontents_modules
-from ..core.util import find_dirs, list_files, is_subdir
+from ..core.util import find_dirs, list_files, is_valid_path
+from ..core.cache import (get_database, stdliburl, pypiurl, stdlibfile,
+                          pypifile)
 
-if sys.version_info < (3,):
-    input = raw_input
+try:
+    raw_input
+except NameError:
+    raw_input = input
 
 
 def get_package_dirs(path):
@@ -48,12 +51,13 @@ def get_package_dirs(path):
 
     .. versionadded:: 0.1.0
     """
-    package_dir = []
+    package_dirs = []
     for importer, pkgname, is_pkg in pkgutil.walk_packages(find_dirs(path)):
         if is_pkg and isinstance(importer, pkgutil.ImpImporter) and \
-           is_subdir(importer.path, path):
-            package_dir.append(os.path.join(importer.path, pkgname))
-    return package_dir
+           os.path.commonprefix([importer.path, path]) == path and \
+           is_valid_path(os.path.relpath(importer.path, path)):
+            package_dirs.append(os.path.join(importer.path, pkgname))
+    return package_dirs
 
 
 def get_local_packages(path):
@@ -121,8 +125,8 @@ def get_local_imports(pkgdata):
     """
     local_imports = []
     for package, path in pkgdata:
-        for py in list_files(path, '*.py'):
-            local_imports.extend(find_imports(package, py))
+        for filename in list_files(path, '*.py'):
+            local_imports.extend(find_imports(package, filename))
     return local_imports
 
 
@@ -169,22 +173,44 @@ def main(*args, **kwargs):
     """
     foundreqs = []
     notfoundmod = []
+    stdlibfound = []
     basedir = os.getcwd()
+    pyver = '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)
 
-    stdlib_modules = get_stdlib_modules()
-    pypi_modules = get_pypicontents_modules()
+    stdlibdata = get_database(stdlibfile, stdliburl)
+    pypidata = get_database(pypifile, pypiurl)
 
     local_packages = get_local_packages(basedir)
     local_modules = get_local_modules(local_packages)
     local_imports = get_local_imports(local_packages)
 
-    satisfied = stdlib_modules + local_modules
-    unsatisfied = set(local_imports) - set(satisfied)
+    print('=' * 19)
+    print('Pip Sala Bim Report')
+    print('=' * 19)
+
+    if pyver not in stdlibdata:
+        print(('\nPip Sala Bim does not support Python {0}'
+               ' yet, sorry.').format(pyver))
+        return 1
+
+    on_stdlib = list(set(stdlibdata[pyver]).intersection(local_imports))
+    unsatisfied = set(local_imports) - set(on_stdlib + local_modules)
+
+    if not unsatisfied:
+        print(('\nYour dependencies are satisfied by the standard library'
+               ' and internal code.\nCongratulations!'))
+        return 0
 
     for mod in unsatisfied:
-        options = get_dependencies(pypi_modules, mod)
+        options = get_dependencies(pypidata, mod)
 
-        if len(options) > 1:
+        if len(options) == 0:
+            notfoundmod.append(mod)
+
+        elif len(options) == 1:
+            foundreqs.extend(options)
+
+        elif len(options) > 1:
             print(('There is more than one PyPI package that satisfies'
                    ' this module: {0}').format(mod))
 
@@ -193,7 +219,7 @@ def main(*args, **kwargs):
                 for o in options:
                     print('    - {0}'.format(o))
 
-                selected = input('\n>> ')
+                selected = raw_input('\n>> ')
                 if selected not in options:
                     print('"{0}" not available.'.format(selected))
                     continue
@@ -201,26 +227,31 @@ def main(*args, **kwargs):
                 foundreqs.append(selected)
                 break
 
-        elif len(options) == 0:
-            notfoundmod.append(mod)
-
-        elif len(options) == 1:
-            foundreqs.extend(options)
-
     if foundreqs:
         print(('\nThese are the PyPI packages you need to install to'
                ' satisfy dependencies:'))
         for f in foundreqs:
             print('    - {0}'.format(f))
 
-    else:
-        print(('\nYour dependencies are satisfied by the standard library'
-               ' and internal code.\nCongratulations!'))
-
     if notfoundmod:
+        for n in notfoundmod:
+            stdlibpythons = []
+            for stdlibver, stdlibmods in stdlibdata.items():
+                if n in stdlibmods:
+                    stdlibfound.append(n)
+                    stdlibpythons.append(stdlibver)
+            if stdlibpythons:
+                print(('\nThe "{0}" module could not be found in the standard '
+                       'library of the running version of python ({1}), but '
+                       'it is prensent in Python {2}'
+                       '.').format(n, pyver, ', '.join(sorted(stdlibpythons))))
+
+    reallynotfoundmod = set(notfoundmod) - set(stdlibfound)
+
+    if reallynotfoundmod:
         print(('\nWe couldnt find these python modules in any PyPI'
                ' package, sorry:'))
-        for n in notfoundmod:
+        for n in reallynotfoundmod:
             print('    - {0}'.format(n))
 
     return 0
