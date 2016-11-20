@@ -50,7 +50,6 @@ def main(*args, **kwargs):
 
     .. versionadded:: 0.1.0
     """
-
     print('Updating the standard library database ...')
     if download_json_database(stdlibjsonfile, stdlibjson):
         print('Success!\n')

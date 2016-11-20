@@ -27,6 +27,11 @@ import os
 import sys
 import fnmatch
 
+try:
+    basestring
+except NameError:
+    basestring = str
+
 
 def get_path(path=None):
     """
@@ -47,7 +52,7 @@ def get_path(path=None):
 
     .. versionadded:: 0.1.0
     """
-    assert type(path) == list
+    assert isinstance(path, list)
     return os.path.normpath(os.path.realpath(
         os.path.abspath(os.path.join(*path))))
 
@@ -67,8 +72,8 @@ def list_files(path=None, pattern='*'):
 
     .. versionadded:: 0.1.0
     """
-    assert type(path) == str
-    assert type(pattern) == str
+    assert isinstance(path, basestring)
+    assert isinstance(pattern, basestring)
 
     filelist = []
     for f in fnmatch.filter(os.listdir(path), pattern):
@@ -93,8 +98,8 @@ def find_dirs(path=None, pattern='*'):
 
     .. versionadded:: 0.1.0
     """
-    assert type(path) == str
-    assert type(pattern) == str
+    assert isinstance(path, basestring)
+    assert isinstance(pattern, basestring)
 
     dirlist = [path]
     for directory, subdirs, files in os.walk(os.path.normpath(path)):
@@ -123,30 +128,51 @@ def is_subdir(subpath, path):
     return commonpath == path
 
 
-def chunk_report(bytes_so_far, total_size):
-    percent = round((float(bytes_so_far) / total_size) * 100, 2)
-    sys.stdout.write('Downloaded %d of %d bytes (%0.2f%%)\r' %
-                     (bytes_so_far, total_size, percent))
+def chunk_report(downloaded, total):
+    """
+    Print the progress of a download.
 
-    if bytes_so_far >= total_size:
+    :param downloaded: an integer representing the size (in bytes) of data
+                       downloaded so far.
+    :param total: an integer representing the total size (in bytes) of data
+                  that needs to be downloaded.
+
+    .. versionadded:: 0.1.0
+    """
+    percent = round((float(downloaded) / total) * 100, 2)
+    sys.stdout.write(('Downloaded {:d} of {:d} bytes '
+                      '({:0.2f}%)').format(downloaded, total, percent))
+
+    if downloaded >= total:
         sys.stdout.write('\n')
 
 
 def chunk_read(response, chunk_size=8192, report_hook=None):
-    total_size = response.info().getheader('Content-Length').strip()
-    total_size = int(total_size)
-    bytes_so_far = 0
-    data = []
+    """
+    Download a file by chunks.
 
-    while 1:
+    :param response: a file object as returned by ``urlopen``.
+    :param chunk_size: an integer representing the size of the chunks to be
+                       downloaded at a time.
+    :param report_hook: a function to report the progress of the download.
+    :return: a blob containing the downloaded file.
+
+    .. versionadded:: 0.1.0
+    """
+    data = []
+    downloaded = 0
+    total = int(response.info().getheader('Content-Length').strip())
+
+    while True:
         chunk = response.read(chunk_size)
-        bytes_so_far += len(chunk)
 
         if not chunk:
             break
 
         data += chunk
+        downloaded += len(chunk)
+
         if report_hook:
-            report_hook(bytes_so_far, total_size)
+            report_hook(downloaded, total)
 
     return ''.join(data)

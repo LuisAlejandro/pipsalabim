@@ -197,7 +197,7 @@ def find_imports(package, py):
             continue
         if level == 2:
             package = '.'.join(package.split('.')[:-1])
-        if level == 1 or level == 2:
+        if level in [1, 2]:
             modname = '{0}.{1}'.format(package, modname)
         imports.append(modname.strip('.'))
     return imports

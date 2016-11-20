@@ -27,12 +27,16 @@ you need to install in order to satisfy dependencies.
 from __future__ import absolute_import, print_function
 
 import os
+import sys
 import pkgutil
 
 from ..core.logger import logger
 from ..core.imports import find_imports
 from ..core.cache import get_stdlib_modules, get_pypicontents_modules
 from ..core.util import find_dirs, list_files, is_subdir
+
+if sys.version_info < (3,):
+    input = raw_input
 
 
 def get_package_dirs(path):
@@ -189,7 +193,7 @@ def main(*args, **kwargs):
                 for o in options:
                     print('    - {0}'.format(o))
 
-                selected = raw_input('\n>> ')
+                selected = input('\n>> ')
                 if selected not in options:
                     print('"{0}" not available.'.format(selected))
                     continue

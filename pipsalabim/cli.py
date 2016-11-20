@@ -35,7 +35,7 @@ from .api.update import main as update
 
 def main(argv=None):
     """
-    Handles arguments and commands.
+    Handle arguments and commands.
 
     :return: exit status.
 

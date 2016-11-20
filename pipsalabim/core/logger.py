@@ -17,38 +17,52 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see http://www.gnu.org/licenses.
-""" Global application logging.
+"""
+``pipsalabim.core.logger`` is the global application logging module.
 
 All modules use the same global logging object. No messages will be emitted
 until the logger is started.
-
 """
 from __future__ import absolute_import
 
 import logging
 
 
-class _Logger(logging.Logger):
-    """ Log messages to STDERR.
-
+class ControlableLogger(logging.Logger):
     """
-    LOGFMT = "%(asctime)s;%(levelname)s;%(name)s;%(msg)s"
+    This class represents a logger object that can be started and stopped.
+
+    It has a start method which allows you to specify a logging level. The stop
+    method halts output.
+    """
 
     def __init__(self, name=None):
-        """ Initialize this logger.
+        """
+        Initialize this ``ControlableLogger``.
 
         The name defaults to the application name. Loggers with the same name
         refer to the same underlying object. Names are hierarchical, e.g.
         'parent.child' defines a logger that is a descendant of 'parent'.
 
-        """
-        super(_Logger, self).__init__(name or __name__.split(".")[0])
-        self.addHandler(logging.NullHandler())  # default to no output
-        self.active = False
-        return
+        :param name: a string containig the logger name.
+        :return: a ``ControlableLogger`` instance.
 
-    def start(self, level="WARN"):
-        """ Start logging with this logger.
+        .. versionadded:: 0.1.0
+        """
+        super(ControlableLogger, self).__init__(name or __name__.split('.')[0])
+        self.addHandler(logging.NullHandler())
+
+        #: Attribute ``active`` (boolean): Stores the current status of the
+        #: logger.
+        self.active = False
+
+        #: Attribute ``formatstring`` (string): Stores the string that
+        #: will be used to format the logger output.
+        self.formatstring = '[%(levelname)s][%(name)s] %(message)s'
+
+    def start(self, level='WARN'):
+        """
+        Start logging with this logger.
 
         Until the logger is started, no messages will be emitted. This applies
         to all loggers with the same name and any child loggers.
@@ -58,31 +72,35 @@ class _Logger(logging.Logger):
         successful run should produce no diagnostic output. Available levels
         and their suggested meanings:
 
-          DEBUG - output useful for developers
-          INFO - trace normal program flow, especially external interactions
-          WARN - an abnormal condition was detected that might need attention
-          ERROR - an error was detected but execution continued
-          CRITICAL - an error was detected and execution was halted
+        * ``DEBUG``: output useful for developers.
+        * ``INFO``: trace normal program flow, especially external
+                    interactions.
+        * ``WARN``: an abnormal condition was detected that might need
+                    attention.
+        * ``ERROR``: an error was detected but execution continued.
+        * ``CRITICAL``: an error was detected and execution was halted.
 
-        """
-        if self.active:
-            return
-        handler = logging.StreamHandler()  # stderr
-        handler.setFormatter(logging.Formatter(self.LOGFMT))
-        self.addHandler(handler)
-        self.setLevel(level.upper())
-        self.active = True
-        return
+        :param level: a string containing the desired logging level.
 
-    def stop(self):
-        """ Stop logging with this logger.
-
+        .. versionadded:: 0.1.0
         """
         if not self.active:
-            return
-        self.removeHandler(self.handlers[-1])
-        self.active = False
-        return
+            handler = logging.StreamHandler()
+            handler.setFormatter(logging.Formatter(self.formatstring))
+            self.addHandler(handler)
+            self.setLevel(level.upper())
+            self.active = True
 
+    def stop(self):
+        """
+        Stop logging with this logger.
 
-logger = _Logger()
+        Remove available handlers and set active attribute to ``False``.
+
+        .. versionadded:: 0.1.0
+        """
+        if self.active:
+            self.removeHandler(self.handlers[-1])
+            self.active = False
+
+logger = ControlableLogger()
