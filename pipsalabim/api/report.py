@@ -75,7 +75,7 @@ def get_local_packages(path):
     for pkgdir in pkgdirs:
         commondir = pkgdir.replace(os.path.dirname(topdir), '')
         pkgname = commondir.replace(os.sep, '.').strip('.')
-        logger.debug('Found "%s" package in %s' % (pkgname, pkgdir))
+        logger.debug('Found "{0}" package in {1}'.format(pkgname, pkgdir))
         local_packages.append([pkgname, pkgdir])
     return local_packages
 
@@ -99,7 +99,7 @@ def get_local_modules(pkgdata):
                 modname = '.'.join([pkgname, module])
             else:
                 modname = pkgname
-            logger.debug('Found "%s" module.' % modname)
+            logger.debug('Found "{0}" module.' .format(modname))
             local_modules.append(modname)
     return sorted(list(set(local_modules)))
 
@@ -115,11 +115,11 @@ def get_local_imports(pkgdata):
 
     .. versionadded:: 0.1.0
     """
-    imports = []
+    local_imports = []
     for package, path in pkgdata:
         for py in list_files(path, '*.py'):
-            imports.extend(find_imports(package, py))
-    return imports
+            local_imports.extend(find_imports(package, py))
+    return local_imports
 
 
 def get_dependencies(pypicontents, module):
@@ -182,16 +182,16 @@ def main(*args, **kwargs):
 
         if len(options) > 1:
             print(('There is more than one PyPI package that satisfies'
-                   ' this module: %s') % mod)
+                   ' this module: {0}').format(mod))
 
             while True:
                 print('\nPlease write the one you would like to use.')
                 for o in options:
-                    print('    - %s' % o)
+                    print('    - {0}'.format(o))
 
                 selected = raw_input('\n>> ')
                 if selected not in options:
-                    print('"%s" not available.' % selected)
+                    print('"{0}" not available.'.format(selected))
                     continue
 
                 foundreqs.append(selected)
@@ -207,7 +207,7 @@ def main(*args, **kwargs):
         print(('\nThese are the PyPI packages you need to install to'
                ' satisfy dependencies:'))
         for f in foundreqs:
-            print('    - %s' % f)
+            print('    - {0}'.format(f))
 
     else:
         print(('\nYour dependencies are satisfied by the standard library'
@@ -217,6 +217,6 @@ def main(*args, **kwargs):
         print(('\nWe couldnt find these python modules in any PyPI'
                ' package, sorry:'))
         for n in notfoundmod:
-            print('    - %s' % n)
+            print('    - {0}'.format(n))
 
     return 0

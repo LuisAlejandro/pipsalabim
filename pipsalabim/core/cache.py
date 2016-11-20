@@ -34,8 +34,8 @@ from .util import chunk_report, chunk_read
 
 pypibranch = 'contents'
 pypiurl = 'https://raw.githubusercontent.com/LuisAlejandro/pypicontents'
-stdlibjson = '%s/%s/stdlib.json' % (pypiurl, pypibranch)
-pypijson = '%s/%s/pypi.json' % (pypiurl, pypibranch)
+stdlibjson = '{0}/{1}/stdlib.json'.format(pypiurl, pypibranch)
+pypijson = '{0}/{1}/pypi.json'.format(pypiurl, pypibranch)
 stdlibjsonfile = os.path.join(os.environ.get('HOME'), '.cache', 'pipsalabim',
                               'stdlib.json')
 pypijsonfile = os.path.join(os.environ.get('HOME'), '.cache', 'pipsalabim',
@@ -51,14 +51,14 @@ def download_json_database(datafile, dataurl):
         response = urlopen(url=dataurl, timeout=10)
         content = chunk_read(response, report_hook=chunk_report)
     except Exception as e:
-        logger.error('Download error: %s' % e)
+        logger.error('Download error: {0}'.format(e))
         return False
 
     try:
         with open(datafile, 'w') as s:
             s.write(content.decode('utf-8'))
     except Exception as e:
-        logger.error('I/O error: %s' % e)
+        logger.error('I/O error: {0}'.format(e))
         return False
     return True
 

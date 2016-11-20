@@ -38,17 +38,40 @@ class ImportVisitor(NodeVisitor):
 
     * remote-name is the name off the symbol in the imported module.
     * local-name is the name of the object given in the importing module.
+
+    A node visitor base class that walks the abstract syntax tree and calls a
+    visitor function for every node found.  This function may return a value
+    which is forwarded by the `visit` method.
+
+    This class is meant to be subclassed, with the subclass adding visitor
+    methods.
+
+    Per default the visitor functions for the nodes are ``'visit_'`` +
+    class name of the node.  So a `TryFinally` node visit function would
+    be `visit_TryFinally`.  This behavior can be changed by overriding
+    the `visit` method.  If no visitor function exists for a node
+    (return value `None`) the `generic_visit` visitor is used instead.
+
+    Don't use the `NodeVisitor` if you want to apply changes to nodes during
+    traversing.  For this a special visitor exists (`NodeTransformer`) that
+    allows modifications.
     """
     def __init__(self):
         self.modules = []
         self.recent = []
 
-    def visit_Import(self, node):
+    def visit(self, node):
+        """Visit a node."""
+        method = 'visit_{0}'.format(node.__class__.__name__.lower())
+        visitor = getattr(self, method, self.generic_visit)
+        return visitor(node)
+
+    def visit_import(self, node):
         self.accept_imports()
         self.recent.extend((x.name, None, x.asname or x.name, node.lineno, 0)
                            for x in node.names)
 
-    def visit_ImportFrom(self, node):
+    def visit_importfrom(self, node):
         self.accept_imports()
         modname = node.module
         if modname == '__future__':
@@ -62,18 +85,22 @@ class ImportVisitor(NodeVisitor):
                 mod = (modname, name, as_ or name, node.lineno, node.level)
             self.recent.append(mod)
 
+    def visit_assign(self, node):
+        """
     # For package initialization files, try to fetch the __all__ list, which
     # implies an implicit import if the package is being imported via
     # from-import; from the documentation:
     #
     #  The import statement uses the following convention: if a package's
-    #  __init__.py code defines a list named __all__, it is taken to be the list
+    #  __init__.py code defines a list named __all__, it is taken to be the
+    #  list
     #  of module names that should be imported when from package import * is
     #  encountered. It is up to the package author to keep this list up-to-date
     #  when a new version of the package is released. Package authors may also
     #  decide not to support it, if they don't see a use for importing * from
     #  their package.
-    def visit_Assign(self, node):
+
+        """
         lhs = node.targets
         if len(lhs) == 1 and isinstance(lhs[0], Name) and \
            lhs[0].id == '__all__' and isinstance(lhs[0].ctx, Store):
@@ -89,10 +116,10 @@ class ImportVisitor(NodeVisitor):
 
     def generic_visit(self, node):
         pragma = None
-        if self.recent:
-            if isinstance(node, Expr) and isinstance(node.value, Str):
-                const_node = node.value
-                pragma = const_node.s
+        if self.recent and isinstance(node, Expr) and \
+           isinstance(node.value, Str):
+            const_node = node.value
+            pragma = const_node.s
 
         self.accept_imports(pragma)
         super(ImportVisitor, self).generic_visit(node)
@@ -122,20 +149,21 @@ def parse_python_source(fn):
         contents = open(fn, 'rU').read()
         lines = contents.splitlines()
     except (IOError, OSError) as e:
-        logger.error('Could not read file "%s".' % fn)
+        logger.error('Could not read file "{0}".'.format(fn))
         return None, None
 
     # Convert the file to an AST.
     try:
         ast_ = ast.parse(contents)
     except SyntaxError as e:
-        err = '%s:%s: %s' % (fn, e.lineno or '--', e.msg)
-        logger.error('Error processing file "%s":\n%s' % (fn, err))
+        err = '{0}:{1}: {2}'.format(fn, e.lineno or '--', e.msg)
+        logger.error('Error processing file "{0}":\n{1}'.format(fn, err))
         return None, lines
+
     except TypeError as e:
         # Note: this branch untested, applied from a user-submitted patch.
-        err = '%s: %s' % (fn, str(e))
-        logger.error('Error processing file "%s":\n%s' % (fn, err))
+        err = '{0}: {1}'.format(fn, str(e))
+        logger.error('Error processing file "{0}":\n{1}'.format(fn, err))
         return None, lines
 
     return ast_, lines
@@ -157,15 +185,19 @@ def get_ast_imports(ast_):
 def find_imports(package, py):
     "Yields a list of the module names the file 'py' depends on."
 
+    imports = []
     ast, lines = parse_python_source(py)
     found_imports = get_ast_imports(ast)
 
+    with open(py, 'r') as p:
+        content = p.read()
+
     for modname, rname, lname, lineno, level, pragma in found_imports:
-        content = open(py, 'r').read()
-        if re.findall(r'__all__\s*=.*?%s.*' % modname, content):
+        if re.findall(r'__all__\s*=.*?{0}.*'.format(modname), content):
             continue
-        if level == 1:
-            modname = '%s.%s' % (package, modname)
         if level == 2:
-            modname = '%s.%s' % ('.'.join(package.split('.')[:-1]), modname)
-        yield modname.strip('.')
+            package = '.'.join(package.split('.')[:-1])
+        if level == 1 or level == 2:
+            modname = '{0}.{1}'.format(package, modname)
+        imports.append(modname.strip('.'))
+    return imports
