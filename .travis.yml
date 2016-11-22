@@ -5,6 +5,12 @@ matrix:
           env: TOXENV=py27
         - python: 3.5
           env: TOXENV=py35
-install: pip install -r requirements-dev.txt
-script: tox -e $TOXENV
-after_success: coveralls
+addons:
+    code_climate:
+        repo_token: 5b5923d28b425df9772ca6fbd9fd81557dd814b9d0ca205ee558a96cef0eed0f
+install:
+    - pip install -r requirements-dev.txt
+script:
+    - tox -e $TOXENV
+after_success:
+    - coveralls
