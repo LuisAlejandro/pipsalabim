@@ -28,11 +28,52 @@ Please note that this command must be executed manually.
 """
 from __future__ import absolute_import, print_function
 
-from ..core.cache import (download_json_database, stdliburl, pypiurl,
-                          stdlibfile, pypifile)
+import os
+
+try:
+    from urllib2 import urlopen
+except ImportError:
+    from urllib.request import urlopen
+
+from .. import stdliburl, pypiurl, stdlibfile, pypifile
+from ..core.logger import logger
+from ..core.util import chunk_report, chunk_read
 
 
-def main(*args, **kwargs):
+def download_json(datafile, dataurl):
+    """
+    Download a json file from ``dataurl``, store to ``datafile`` and report.
+
+    :param datafile: a string containing a path to store the contents of
+                     the file downloaded from ``dataurl``.
+    :param dataurl: a string containing a url to a file.
+    :return: ``True`` if operations went OK, ``False`` if not.
+
+    .. versionadded:: 0.1.0
+    """
+    if not os.path.isdir(os.path.dirname(datafile)):
+        os.makedirs(os.path.dirname(datafile))
+
+    print(('{0} is not present, downloading '
+           '...').format(os.path.basename(datafile)))
+
+    try:
+        response = urlopen(url=dataurl, timeout=10)
+        content = chunk_read(response, report_hook=chunk_report)
+    except Exception as e:
+        logger.error('Download error: {0}'.format(e))
+        return False
+
+    try:
+        with open(datafile, 'w') as s:
+            s.write(content.decode('utf-8'))
+    except Exception as e:
+        logger.error('I/O error: {0}'.format(e))
+        return False
+    return True
+
+
+def main(**kwargs):
     """
     Update databases from PyPIContents.
 
@@ -51,13 +92,13 @@ def main(*args, **kwargs):
     .. versionadded:: 0.1.0
     """
     print('Updating the standard library database ...')
-    if download_json_database(stdlibfile, stdliburl):
+    if download_json(stdlibfile, stdliburl):
         print('Success!\n')
     else:
         print('There was an error!\n')
 
     print('Updating the PyPIContents database ...')
-    if download_json_database(pypifile, pypiurl):
+    if download_json(pypifile, pypiurl):
         print('Success!\n')
     else:
         print('There was an error!\n')

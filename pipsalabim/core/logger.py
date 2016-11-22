@@ -58,29 +58,14 @@ class ControlableLogger(logging.Logger):
 
         #: Attribute ``formatstring`` (string): Stores the string that
         #: will be used to format the logger output.
-        self.formatstring = '[%(levelname)s][%(name)s] %(message)s'
+        self.formatstring = '%(levelname)s: %(message)s'
 
-    def start(self, level='WARN'):
+    def start(self):
         """
         Start logging with this logger.
 
         Until the logger is started, no messages will be emitted. This applies
         to all loggers with the same name and any child loggers.
-
-        Messages less than the given priority level will be ignored. The
-        default level is 'WARN', which conforms to the *nix convention that a
-        successful run should produce no diagnostic output. Available levels
-        and their suggested meanings:
-
-        * ``DEBUG``: output useful for developers.
-        * ``INFO``: trace normal program flow, especially external
-                    interactions.
-        * ``WARN``: an abnormal condition was detected that might need
-                    attention.
-        * ``ERROR``: an error was detected but execution continued.
-        * ``CRITICAL``: an error was detected and execution was halted.
-
-        :param level: a string containing the desired logging level.
 
         .. versionadded:: 0.1.0
         """
@@ -88,7 +73,6 @@ class ControlableLogger(logging.Logger):
             handler = logging.StreamHandler()
             handler.setFormatter(logging.Formatter(self.formatstring))
             self.addHandler(handler)
-            self.setLevel(level.upper())
             self.active = True
 
     def stop(self):
@@ -102,6 +86,31 @@ class ControlableLogger(logging.Logger):
         if self.active:
             self.removeHandler(self.handlers[-1])
             self.active = False
+
+    def loglevel(self, level='WARNING'):
+        """
+        Set the log level for this logger.
+
+        Messages less than the given priority level will be ignored. The
+        default level is 'WARNING', which conforms to the *nix convention that
+        a successful run should produce no diagnostic output. Available levels
+        and their suggested meanings:
+
+        * ``NOTSET``: all messages are processed.
+        * ``DEBUG``: output useful for developers.
+        * ``INFO``: trace normal program flow, especially external
+                    interactions.
+        * ``WARNING``: an abnormal condition was detected that might need
+                       attention.
+        * ``ERROR``: an error was detected but execution continued.
+        * ``CRITICAL``: an error was detected and execution was halted.
+
+        :param level: a string containing the desired logging level.
+
+        .. versionadded:: 0.1.0
+        """
+        if self.active:
+            self.setLevel(level)
 
 
 logger = ControlableLogger()

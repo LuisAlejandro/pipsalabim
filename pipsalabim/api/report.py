@@ -27,14 +27,13 @@ you need to install in order to satisfy dependencies.
 from __future__ import absolute_import, print_function
 
 import os
-import sys
+import json
 import pkgutil
 
+from .. import stdlibfile, pypifile, __url__
 from ..core.logger import logger
 from ..core.imports import find_imports
 from ..core.util import find_dirs, list_files, is_valid_path
-from ..core.cache import (get_database, stdliburl, pypiurl, stdlibfile,
-                          pypifile)
 
 try:
     raw_input
@@ -60,7 +59,7 @@ def get_package_dirs(path):
     return package_dirs
 
 
-def get_local_packages(path):
+def get_packages(path):
     """
     List packages living in ``path`` with its directory.
 
@@ -76,7 +75,7 @@ def get_local_packages(path):
 
     .. versionadded:: 0.1.0
     """
-    local_packages = []
+    packages = []
     pkgdirs = get_package_dirs(path)
     topdir = os.path.commonprefix(pkgdirs)
 
@@ -84,11 +83,11 @@ def get_local_packages(path):
         commondir = pkgdir.replace(os.path.dirname(topdir), '')
         pkgname = commondir.replace(os.sep, '.').strip('.')
         logger.debug('Found "{0}" package in {1}'.format(pkgname, pkgdir))
-        local_packages.append([pkgname, pkgdir])
-    return local_packages
+        packages.append([pkgname, pkgdir])
+    return packages
 
 
-def get_local_modules(pkgdata):
+def get_modules(pkgdata):
     """
     List modules inside packages provided in ``pkgdata``.
 
@@ -99,7 +98,7 @@ def get_local_modules(pkgdata):
 
     .. versionadded:: 0.1.0
     """
-    local_modules = []
+    modules = []
     for pkgname, pkgdir in pkgdata:
         for py in list_files(pkgdir, '*.py'):
             module = os.path.splitext(os.path.basename(py))[0]
@@ -108,11 +107,11 @@ def get_local_modules(pkgdata):
             else:
                 modname = pkgname
             logger.debug('Found "{0}" module.' .format(modname))
-            local_modules.append(modname)
-    return sorted(list(set(local_modules)))
+            modules.append(modname)
+    return sorted(list(set(modules)))
 
 
-def get_local_imports(pkgdata):
+def get_imports(pkgdata):
     """
     List modules imported inside of packages provided in ``pkgdata``.
 
@@ -123,34 +122,174 @@ def get_local_imports(pkgdata):
 
     .. versionadded:: 0.1.0
     """
-    local_imports = []
+    imports = []
     for package, path in pkgdata:
         for filename in list_files(path, '*.py'):
-            local_imports.extend(find_imports(package, filename))
-    return local_imports
+            imports.extend(find_imports(package, filename))
+    return imports
 
 
-def get_dependencies(pypicontents, module):
+def fill_with_local(datadict, modules):
     """
-    List PyPI packages that provide ``module``.
+    Fill ``datadict`` if module is found in ``modules``.
 
-    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
-
-    :param pypicontents: a dictionary containing the `PyPIContents`_ index.
-    :param module: a python module.
-    :return: a list of PyPI packages that provide ``module``.
+    :param datadict: a dictionary containing modules as keys and
+                     a list as values.
+    :param modules: a list of modules present in the local python source code.
+    :return: a dictionary containing information about the location of each
+             imported module.
 
     .. versionadded:: 0.1.0
     """
-    dependencies = []
-    for pkgname, pkgdata in pypicontents.items():
-        for mod in pkgdata['modules']:
-            if mod == module:
-                dependencies.append(pkgname)
-    return dependencies
+    for module, where in datadict.items():
+        if not where and module in modules:
+            datadict[module].append('LOCAL')
+    return datadict
 
 
-def main(*args, **kwargs):
+def fill_with_stdlib(datadict, stdlibdata):
+    """
+    Fill ``datadict`` with modules from ``stdlibdata`` if found.
+
+    :param datadict: a dictionary containing modules as keys and
+                     a list as values.
+    :param stdlibdata: a dictionary containing the modules of the standard
+                       library of each python version.
+    :return: a dictionary containing information about the location of each
+             imported module.
+
+    .. versionadded:: 0.1.0
+    """
+    for module, where in datadict.items():
+        if where:
+            continue
+        for version, mods in stdlibdata.items():
+            if module not in mods:
+                continue
+            datadict[module].append('STDLIB{0}'.format(version))
+    return datadict
+
+
+def fill_with_pypi(datadict, pypidata):
+    """
+    Fill ``datadict`` with modules from ``pypidata`` if found.
+
+    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
+
+    :param datadict: a dictionary containing modules as keys and
+                     a list as values.
+    :param pypidata: a dictionary with the `PyPIContents`_ database.
+    :return: an updated dictionary containing information about the location
+             of each imported module.
+
+    .. versionadded:: 0.1.0
+    """
+    for module, where in datadict.items():
+        if where:
+            continue
+        for package, data in pypidata.items():
+            if module not in data['modules']:
+                continue
+            datadict[module].append(package)
+    return datadict
+
+
+def get_module_datadict(basedir):
+    """
+    Process the current directory to get data from packages and modules.
+
+    :param basedir: a string containing a path to the directory to be analized.
+    :return: a dictionary containing information for each imported module.
+             Like::
+
+                {
+                    'module_a': ['LOCAL'],
+                    'module_b': ['pypi_package_1'],
+                    'module_c': ['pypi_package_1', 'pypi_package_2'],
+                    'module_d': [],
+                    'module_e': ['STDLIB2.6', 'STDLIB2.7', 'STDLIB3.5'],
+                    'module_f': ['STDLIB2.7'],
+                }
+
+    .. versionadded:: 0.1.0
+    """
+    with open(stdlibfile, 'r') as s:
+        stdlibdata = json.loads(s.read())
+
+    with open(pypifile, 'r') as p:
+        pypidata = json.loads(p.read())
+
+    packages = get_packages(basedir)
+    modules = get_modules(packages)
+    imports = get_imports(packages)
+
+    datadict = {m: [] for m in imports}
+    datadict = fill_with_local(datadict, modules)
+    datadict = fill_with_stdlib(datadict, stdlibdata)
+    datadict = fill_with_pypi(datadict, pypidata)
+
+    return datadict
+
+
+def ask_multiple_pypi(datadict):
+    """
+    Ask the user about which PyPI package will use to satisfy an import.
+
+    :param datadict: a dictionary containing modules as keys and
+                     a list as values.
+    :return: an updated ``datadict`` with the answered information from
+             user.
+
+    .. versionadded:: 0.1.0
+    """
+    for module, where in datadict.items():
+        if len(where) < 2 or 'LOCAL' in where or \
+           any('STDLIB' in s for s in where):
+            continue
+
+        print(('There is more than one PyPI package that satisfies'
+               ' this module: {0}').format(module))
+
+        while True:
+            print('\nPlease write the one you would like to use.')
+            for w in where:
+                print('    - {0}'.format(w))
+
+            selected = raw_input('\n>> ')
+            if selected not in where:
+                print('"{0}" not available.'.format(selected))
+                continue
+
+            datadict[module] = [selected]
+            break
+
+    return datadict
+
+
+def get_messages(datadict):
+    """
+    Generate messages for each type of module in ``datadict``.
+
+    :param datadict: a dictionary containing modules as keys and
+                     a list as values.
+    :return: a dictionary containing messages for each type of module.
+
+    .. versionadded:: 0.1.0
+    """
+    msg = {'l': [], 's': [], 'n': [], 'p': []}
+    for module, where in datadict.items():
+        if 'LOCAL' in where:
+            msg['l'].append(module)
+        elif any('STDLIB' in s for s in where):
+            msg['s'].append('{0}:{1}'.format(module, ','.join(sorted(where))))
+        elif not where:
+            msg['n'].append(module)
+        else:
+            msg['p'].append('{0}:{1}'.format(module, where[0]))
+    return msg
+
+
+def main(**kwargs):
     """
     Generate a report to inform about PyPI dependencies.
 
@@ -171,87 +310,54 @@ def main(*args, **kwargs):
 
     .. versionadded:: 0.1.0
     """
-    foundreqs = []
-    notfoundmod = []
-    stdlibfound = []
     basedir = os.getcwd()
-    pyver = '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)
+    requirements = kwargs.get('requirements', False)
 
-    stdlibdata = get_database(stdlibfile, stdliburl)
-    pypidata = get_database(pypifile, pypiurl)
+    if not os.path.isfile(pypifile) or not os.path.isfile(stdlibfile):
+        print('You need to run "pipsalabim update" before trying to make a'
+              ' report.')
+        return 1
 
-    local_packages = get_local_packages(basedir)
-    local_modules = get_local_modules(local_packages)
-    local_imports = get_local_imports(local_packages)
+    datadict = get_module_datadict(basedir)
+    datadict = ask_multiple_pypi(datadict)
+    messages = get_messages(datadict)
+
+    if requirements:
+        print('\nrequirements.txt file contents below')
+        print('-' * 50)
+        print('\n# file generated by Pip Sala Bim {0}'.format(__url__))
+        print('\n'.join(m.split(':')[1] for m in messages['p']))
+        return 0
 
     print('=' * 19)
     print('Pip Sala Bim Report')
     print('=' * 19)
 
-    if pyver not in stdlibdata:
-        print(('\nPip Sala Bim does not support Python {0}'
-               ' yet, sorry.').format(pyver))
-        return 1
+    for msgtype, msgcont in messages.items():
+        if not msgcont:
+            continue
+        if msgtype == 'l':
+            print('\nThe folowing module imports have been found in your'
+                  ' local source code:')
+            print('\n'.join('    - {0}'.format(m) for m in msgcont))
 
-    on_stdlib = list(set(stdlibdata[pyver]).intersection(local_imports))
-    unsatisfied = set(local_imports) - set(on_stdlib + local_modules)
+        elif msgtype == 's':
+            print('\nThe folowing module imports are part of python'
+                  'standard library:')
+            for msg in msgcont:
+                _mod, _py = msg.split(':')
+                _py = _py.replace('STDLIB', '').split(',')
+                _py = '{0} and {1}'.format(', '.join(_py[:-1]), _py[-1])
+                print('    - {0} (python {1})'.format(_mod, _py))
 
-    if not unsatisfied:
-        print(('\nYour dependencies are satisfied by the standard library'
-               ' and internal code.\nCongratulations!'))
-        return 0
-
-    for mod in unsatisfied:
-        options = get_dependencies(pypidata, mod)
-
-        if len(options) == 0:
-            notfoundmod.append(mod)
-
-        elif len(options) == 1:
-            foundreqs.extend(options)
-
-        elif len(options) > 1:
-            print(('There is more than one PyPI package that satisfies'
-                   ' this module: {0}').format(mod))
-
-            while True:
-                print('\nPlease write the one you would like to use.')
-                for o in options:
-                    print('    - {0}'.format(o))
-
-                selected = raw_input('\n>> ')
-                if selected not in options:
-                    print('"{0}" not available.'.format(selected))
-                    continue
-
-                foundreqs.append(selected)
-                break
-
-    if foundreqs:
-        print(('\nThese are the PyPI packages you need to install to'
-               ' satisfy dependencies:'))
-        for f in foundreqs:
-            print('    - {0}'.format(f))
-
-    if notfoundmod:
-        for n in notfoundmod:
-            stdlibpythons = []
-            for stdlibver, stdlibmods in stdlibdata.items():
-                if n in stdlibmods:
-                    stdlibfound.append(n)
-                    stdlibpythons.append(stdlibver)
-            if stdlibpythons:
-                print(('\nThe "{0}" module could not be found in the standard '
-                       'library of the running version of python ({1}), but '
-                       'it is prensent in Python {2}'
-                       '.').format(n, pyver, ', '.join(sorted(stdlibpythons))))
-
-    reallynotfoundmod = set(notfoundmod) - set(stdlibfound)
-
-    if reallynotfoundmod:
-        print(('\nWe couldnt find these python modules in any PyPI'
-               ' package, sorry:'))
-        for n in reallynotfoundmod:
-            print('    - {0}'.format(n))
+        elif msgtype == 'p':
+            print('\nThe folowing module imports where found in the PyPI'
+                  ' module index:')
+            print('\n'.join('    - {0} (available in "{1}" PyPI package. Use '
+                            '"pip install {1}"'
+                            ')'.format(*m.split(':')) for m in msgcont))
+        elif msgtype == 'n':
+            print('\nThe folowing module imports couldnt be found:')
+            print('\n'.join('    - {0}'.format(m) for m in msgcont))
 
     return 0

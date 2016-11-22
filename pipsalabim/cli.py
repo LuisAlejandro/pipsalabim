@@ -33,47 +33,81 @@ from .api.report import main as report
 from .api.update import main as update
 
 
-def main(argv=None):
+def commandline(argv=None):
     """
-    Handle arguments and commands.
+    Configure ``ArgumentParser`` to accept custom arguments and commands.
 
-    :return: exit status.
+    :param argv: a list of commandline arguments like ``sys.argv``.
+                 For example::
+
+                    ['-v', '--loglevel', 'INFO']
+
+    :return: a ``Namespace`` object.
 
     .. versionadded:: 0.1.0
     """
+    assert isinstance(argv, (list, type(None)))
+
     parser = ArgumentParser(description=__description__)
     parser.add_argument(
-        '-v', '--version', action='version',
+        '-V', '--version', action='version',
         version='pipsalabim {:s}'.format(__version__),
         help='Print version and exit.')
     parser.add_argument(
         '-l', '--loglevel', default='WARNING',
+        choices=['CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG'],
         help='Logger verbosity level (default: WARNING).')
-    subparsers = parser.add_subparsers(title='commands')
 
+    subparsers = parser.add_subparsers(title='commands')
     report_parser = subparsers.add_parser('report')
     report_parser.set_defaults(command=report)
+    report_parser.add_argument(
+        '-r', '--requirements', action='store_true',
+        help='Format output for requirements.txt file.')
 
     update_parser = subparsers.add_parser('update')
     update_parser.set_defaults(command=update)
 
-    args = parser.parse_args(argv)
+    return parser.parse_args(argv)
 
-    logger.start(args.loglevel)
+
+def main(argv=None):
+    """
+    Handle arguments and commands.
+
+    :param argv: a list of commandline arguments like ``sys.argv``.
+                 For example::
+
+                    ['-v', '--loglevel', 'INFO']
+
+    :return: an exit status.
+
+    .. versionadded:: 0.1.0
+    """
+    assert isinstance(argv, (list, type(None)))
+
+    args = commandline(argv)
+
+    logger.start()
+    logger.loglevel(args.loglevel)
     logger.info('Starting execution.')
+    logger.debug('Processed arguments: {:s}\n'.format(vars(args)))
 
-    args.command(**vars(args))
+    try:
+        status = args.command(**vars(args))
+    except Exception as e:
+        logger.exception(e)
+        logger.critical('Shutting down due to fatal error!')
+        status = 1
+    else:
+        logger.info('Ending execution.')
 
-    logger.info('Ending execution.')
-
-    return 0
+    logger.stop()
+    return status
 
 
 if __name__ == '__main__':
-    try:
-        status = main()
-    except:
-        logger.critical('shutting down due to fatal error')
-        raise
-    else:
-        raise SystemExit(status)
+    import re
+    import sys
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())

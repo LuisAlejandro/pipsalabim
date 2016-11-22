@@ -28,10 +28,20 @@ searches the `PyPIContents`_ index to list which packages satisfy your imports.
 .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
 """
+import os
 
 __author__ = 'Luis Alejandro Martínez Faneyth'
 __email__ = 'luis@huntingbears.com.ve'
 __version__ = '0.1.0'
 __url__ = 'https://github.com/LuisAlejandro/pipsalabim'
-__description__ = '''Pip Sala Bim is an assistant to guess your pip
-dependencies from your code, without using a requirements file.'''
+__description__ = ('Pip Sala Bim is an assistant to guess your pip'
+                   ' dependencies from your code, without using a'
+                   ' requirements file.')
+stdliburl = ('https://raw.githubusercontent.com/LuisAlejandro/pypicontents/'
+             'contents/stdlib.json')
+pypiurl = ('https://raw.githubusercontent.com/LuisAlejandro/pypicontents/'
+           'contents/pypi.json')
+stdlibfile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
+                          '.cache', 'pipsalabim', 'stdlib.json')
+pypifile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
+                        '.cache', 'pipsalabim', 'pypi.json')

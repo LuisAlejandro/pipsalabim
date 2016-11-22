@@ -148,29 +148,6 @@ def parse_python_source(filename):
         return None
 
 
-def get_ast_imports(tree):
-    """
-    Get a list of modules and levels extracted from import statements.
-
-    :param tree: an AST object.
-    :return: a list of module tuples for the imports found, in the
-             form::
-
-                 [
-                     ('MODULE', 'LEVEL'),
-                     ('MODULE', 'LEVEL'),
-                     ('MODULE', 'LEVEL'),
-                     ('MODULE', 'LEVEL'),
-                     ('MODULE', 'LEVEL')
-                 ]
-
-    .. versionadded:: 0.1.0
-    """
-    visitor = ImportVisitor()
-    visitor.visit(tree)
-    return visitor.modules
-
-
 def find_imports(package, filename):
     """
     Get a list of modules extracted from import statements.
@@ -184,9 +161,10 @@ def find_imports(package, filename):
     """
     imports = []
     tree = parse_python_source(filename)
-    found_imports = get_ast_imports(tree)
+    visitor = ImportVisitor()
+    visitor.visit(tree)
 
-    for modname, level in found_imports:
+    for modname, level in visitor.modules:
         if not modname:
             modname = ''
         if level == 1:
