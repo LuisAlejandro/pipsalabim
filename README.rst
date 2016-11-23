@@ -32,18 +32,18 @@
 |
 |
 
-Pip Sala Bim will tell you which packages you need to install to satisfy the dependencies of
-your project. It uses a simple AST visitor for detecting imports and `PyPIContents`_ to
-search which packages contain these imports.
-
-* Free software: GPL-3
-* Documentation: https://pipsalabim.readthedocs.org
-
+.. [#] AST refers to an Abstract Syntax Tree, you can read more on
+       https://en.wikipedia.org/wiki/Abstract_syntax_tree
+.. _full documentation: https://pipsalabim.readthedocs.org
 .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
-Features
-========
+**Pip Sala Bim** will tell you which packages you need to install to satisfy the dependencies of
+your project. It uses a simple *AST visitor* [#]_ for detecting imports and `PyPIContents`_ to
+search which packages contain these imports.
 
+For more information, please read the `full documentation`_.
+
+|
 
 Getting started
 ===============
@@ -63,22 +63,27 @@ directlty from GitHub like this::
 
     $ pip install --upgrade https://github.com/LuisAlejandro/pipsalabim/archive/master.tar.gz
 
-:sub:`rterte rter tre ter tre`
+|
 
 Usage
 -----
 
-::
-
-    pipsalabim update
+``pipsalabim`` is really easy to use.
 
 ::
 
-    pipsalabim report
+    $ cd your-python-project/
+    $ pipsalabim report --help
 
-..
+    usage: pipsalabim report [-h] [-r]
 
-    -v  version
+    optional arguments:
+      -h, --help          show this help message and exit
+      -r, --requirements  Format output for requirements.txt file.
+
+:sup:`You need to run *pipsalabim update* before being able to generate a report`
+
+|
 
 Contributing
 ============
@@ -87,6 +92,8 @@ Release history
 ===============
 
 See `HISTORY.rst <HISTORY.rst>`_ for details.
+
+|
 
 License
 =======
@@ -98,6 +105,8 @@ Copyright 2016, Pip Sala Bim Developers (see `AUTHORS.rst <AUTHORS.rst>`_ for a 
 Released under `GPL-3 License <LICENSE.rst>`_.
 
 Authored and Maintained by Luis Martínez (`@LuisAlejandro <https://twitter.com/LuisAlejandro>`_) 
+
+|
 
 Made with :heart: and :hamburger:
 =================================
