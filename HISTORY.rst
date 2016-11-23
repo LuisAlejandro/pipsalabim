@@ -2,7 +2,13 @@
 History
 =======
 
-0.1.0 (2016-05-26)
+0.1.0 (23-11-2016)
 ------------------
 
-* First release on PyPI.
+* Command line interface.
+* ``update`` and ``report`` commands.
+* Initial documentation.
+* Full API documentation.
+* Test infraestructure ready.
+* CI integration.
+* Marketing image ready.
