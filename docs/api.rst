@@ -50,14 +50,6 @@ pipsalabim.core package
     :private-members:
     :special-members:
 
-pipsalabim.core.cache module
-============================
-
-.. automodule:: pipsalabim.core.cache
-    :members:
-    :private-members:
-    :special-members:
-
 pipsalabim.core.imports module
 ==============================
 

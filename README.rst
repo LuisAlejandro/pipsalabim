@@ -32,8 +32,6 @@
 |
 |
 
-.. [#] AST refers to an Abstract Syntax Tree, you can read more on
-       https://en.wikipedia.org/wiki/Abstract_syntax_tree
 .. _full documentation: https://pipsalabim.readthedocs.org
 .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
@@ -42,8 +40,6 @@ your project. It uses a simple *AST visitor* [#]_ for detecting imports and `PyP
 search which packages contain these imports.
 
 For more information, please read the `full documentation`_.
-
-|
 
 Getting started
 ===============
@@ -63,14 +59,11 @@ directlty from GitHub like this::
 
     $ pip install --upgrade https://github.com/LuisAlejandro/pipsalabim/archive/master.tar.gz
 
-|
-
 Usage
 -----
 
-``pipsalabim`` is really easy to use.
-
-::
+``pipsalabim`` is really easy to use. Go to your python project and execute it as follows to
+start guessing your dependencies::
 
     $ cd your-python-project/
     $ pipsalabim report --help
@@ -81,51 +74,72 @@ Usage
       -h, --help          show this help message and exit
       -r, --requirements  Format output for requirements.txt file.
 
-:sup:`You need to run *pipsalabim update* before being able to generate a report`
+:sup:`You need to run "pipsalabim update" before being able to generate a report.`
 
-|
+Getting help
+============
+
+.. _Gitter Chat: https://gitter.im/LuisAlejandro/pipsalabim
+.. _StackOverflow: http://stackoverflow.com/questions/ask
+
+If you have any doubts or problems, suscribe to our `Gitter Chat`_ and ask for help. You can also
+ask your question on StackOverflow_ (tag it ``pipsalabim``) or drop me an email at luis@huntingbears.com.ve.
 
 Contributing
 ============
 
+.. _CONTRIBUTING.rst: CONTRIBUTING.rst
+
+See CONTRIBUTING.rst_ for details.
+
+
 Release history
 ===============
 
-See `HISTORY.rst <HISTORY.rst>`_ for details.
+.. _HISTORY.rst: HISTORY.rst
 
-|
+See HISTORY.rst_ for details.
 
 License
 =======
 
+.. _COPYING.rst: COPYING.rst
 .. _AUTHORS.rst: AUTHORS.rst
+.. _GPL-3 License: LICENSE.rst
 
-Copyright 2016, Pip Sala Bim Developers (see `AUTHORS.rst <AUTHORS.rst>`_ for a full list of copyright holders).
+Copyright 2016, Pip Sala Bim Developers (read AUTHORS.rst_ for a full list of copyright holders).
 
-Released under `GPL-3 License <LICENSE.rst>`_.
-
-Authored and Maintained by Luis Martínez (`@LuisAlejandro <https://twitter.com/LuisAlejandro>`_) 
-
-|
+Released under a `GPL-3 License`_ (read COPYING.rst_ for license details).
 
 Made with :heart: and :hamburger:
 =================================
 
 .. image:: http://huntingbears.com.ve/static/img/site/banner.svg
 
-.. _LuisAlejandro: https://github.com/LuisAlejandro
 .. _Patreon: https://www.patreon.com/luisalejandro
 .. _Flattr: https://flattr.com/profile/luisalejandro
 .. _PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B8LPXHQY8QE8Y
+.. _LuisAlejandroTwitter: https://twitter.com/LuisAlejandro
+.. _LuisAlejandroGitHub: https://github.com/LuisAlejandro
+.. _huntingbears.com.ve: http://huntingbears.com.ve
 
 |
 
-My name is Luis (`@LuisAlejandro <https://github.com/LuisAlejandro>`_) and I'm a Free and
+My name is Luis (`@LuisAlejandro`__) and I'm a Free and
 Open-Source Software developer living in Maracay, Venezuela.
+
+__ LuisAlejandroTwitter_
 
 If you like what I do, please support me on Patreon_, Flattr_, or donate via PayPal_,
 so that I can continue doing what I love.
 
-    Blog `huntingbears.com.ve <http://huntingbears.com.ve/>`_ · 
-    GitHub `@LuisAlejandro <https://github.com/LuisAlejandro>`_ · 
-    Twitter `@LuisAlejandro <https://twitter.com/LuisAlejandro>`_
+    Blog huntingbears.com.ve_ · GitHub `@LuisAlejandro`__ · Twitter `@LuisAlejandro`__
+
+__ LuisAlejandroGitHub_
+__ LuisAlejandroTwitter_
+
+|
+|
+
+.. [#] AST refers to an Abstract Syntax Tree, you can read more on
+       https://en.wikipedia.org/wiki/Abstract_syntax_tree

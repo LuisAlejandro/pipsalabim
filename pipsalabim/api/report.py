@@ -343,7 +343,7 @@ def main(**kwargs):
 
         elif msgtype == 's':
             print('\nThe folowing module imports are part of python'
-                  'standard library:')
+                  ' standard library:')
             for msg in msgcont:
                 _mod, _py = msg.split(':')
                 _py = _py.replace('STDLIB', '').split(',')
@@ -359,5 +359,9 @@ def main(**kwargs):
         elif msgtype == 'n':
             print('\nThe folowing module imports couldnt be found:')
             print('\n'.join('    - {0}'.format(m) for m in msgcont))
+
+    if not messages['n'] and not messages['p']:
+        print('\nCongratulations! All your imports are satisfied by the'
+              ' python standard library or internal code.')
 
     return 0
