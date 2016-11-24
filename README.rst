@@ -25,8 +25,8 @@
    :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
    :alt: Read The Docs
 
-.. image:: https://cla-assistant.io/LuisAlejandro/pipsalabim
-   :target: https://cla-assistant.io/readme/badge/LuisAlejandro/pipsalabim
+.. image:: https://cla-assistant.io/readme/badge/LuisAlejandro/pipsalabim
+   :target: https://cla-assistant.io/LuisAlejandro/pipsalabim
    :alt: Contributor License Agreement
 
 .. image:: https://badges.gitter.im/LuisAlejandro/pipsalabim.svg
