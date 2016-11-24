@@ -91,7 +91,7 @@ def main(argv=None):
     logger.start()
     logger.loglevel(args.loglevel)
     logger.info('Starting execution.')
-    logger.debug('Processed arguments: {:s}\n'.format(vars(args)))
+    logger.debug('Processed arguments: {:s}'.format(vars(args)))
 
     try:
         status = args.command(**vars(args))

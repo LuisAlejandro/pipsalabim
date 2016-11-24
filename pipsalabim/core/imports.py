@@ -107,7 +107,10 @@ class ImportVisitor(ast.NodeVisitor):
             return self.visit_import(node)
         if node.__class__.__name__ == 'ImportFrom':
             return self.visit_importfrom(node)
-        return self.generic_visit(node)
+        try:
+            return self.generic_visit(node)
+        except:
+            pass
 
     def visit_import(self, node):
         """
