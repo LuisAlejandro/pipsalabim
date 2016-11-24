@@ -34,7 +34,7 @@ from distutils import sysconfig
 
 __author__ = 'Luis Alejandro Martínez Faneyth'
 __email__ = 'luis@huntingbears.com.ve'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __url__ = 'https://github.com/LuisAlejandro/pipsalabim'
 __description__ = ('Pip Sala Bim is an assistant to guess your pip'
                    ' dependencies from your code, without using a'
