@@ -29,6 +29,8 @@ searches the `PyPIContents`_ index to list which packages satisfy your imports.
 
 """
 import os
+from distutils import sysconfig
+
 
 __author__ = 'Luis Alejandro Martínez Faneyth'
 __email__ = 'luis@huntingbears.com.ve'
@@ -45,3 +47,4 @@ stdlibfile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
                           '.cache', 'pipsalabim', 'stdlib.json')
 pypifile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
                         '.cache', 'pipsalabim', 'pypi.json')
+libdir = sysconfig.get_config_var('LIBDEST')

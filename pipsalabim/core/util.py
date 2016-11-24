@@ -28,11 +28,44 @@ from __future__ import absolute_import, print_function
 import os
 import sys
 import fnmatch
+from contextlib import contextmanager
 
 try:
     basestring
 except NameError:
     basestring = str
+
+
+@contextmanager
+def custom_sys_path(new_sys_path):
+    """
+    Context manager to momentarily change ``sys.path``.
+
+    :param new_sys_path: a list of paths to overwrite ``sys.path``.
+
+    .. versionadded:: 0.1.0
+    """
+    old_sys_path = sys.path
+    sys.path = new_sys_path
+    yield
+    sys.path = old_sys_path
+
+
+@contextmanager
+def remove_sys_modules(remove):
+    """
+    Context manager to momentarily remove modules from ``sys.modules``.
+
+    :param remove: a list of modules to remove from ``sys.modules``.
+
+    .. versionadded:: 0.1.0
+    """
+    old_sys_modules = sys.modules
+    for r in remove:
+        if r in sys.modules:
+            del sys.modules[r]
+    yield
+    sys.modules = old_sys_modules
 
 
 def list_files(path=None, pattern='*'):
@@ -60,40 +93,37 @@ def list_files(path=None, pattern='*'):
     return filelist
 
 
-def find_dirs(path=None, pattern='*'):
+def find_files(path=None, pattern='*'):
     """
-    Search for directories (recursive).
+    Locate all the files matching the supplied ``pattern`` in ``path``.
 
-    Locate all the directories matching the supplied pattern in and below
-    the supplied root directory. If no pattern is supplied, all directories
-    will be returned. The result includes ``path``.
+    Locate all the files matching the supplied filename pattern in and below
+    the supplied root directory. If no pattern is supplied, all files will be
+    returned.
 
-    :param path: a string containing a path where the directories will be
-                 looked for.
+    :param path: a string containing a path where the files will be looked for.
     :param pattern: a string containing a regular expression.
-    :return: a list of directories matching the pattern within path
-             (recursive).
+    :return: a list of files matching the pattern within path (recursive).
 
-    .. versionadded:: 0.1.0
+    .. versionadded:: 0.1
     """
     assert isinstance(path, basestring)
     assert isinstance(pattern, basestring)
 
-    dirlist = [path]
+    filelist = []
     for directory, subdirs, files in os.walk(os.path.normpath(path)):
-        for subdir in fnmatch.filter(subdirs, pattern):
-            if os.path.isdir(os.path.join(directory, subdir)):
-                dirlist.append(os.path.join(directory, subdir))
-    return dirlist
+        for filename in fnmatch.filter(files, pattern):
+            if os.path.isfile(os.path.join(directory, filename)):
+                filelist.append(os.path.join(directory, filename))
+    return filelist
 
 
 def is_valid_path(path):
     """
-    Test if ``subpath`` is a subdirectory of ``path``.
+    Test if ``path`` is a valid python path.
 
-    :param subpath: a string containing a path.
     :param path: a string containing a path.
-    :return: ``True`` if ``subpath`` is contained within ``path``. ``False``
+    :return: ``True`` if ``path`` is a valid python path. ``False``
              otherwise.
 
     .. versionadded:: 0.1.0
@@ -153,3 +183,68 @@ def chunk_read(response, chunk_size=8192, report_hook=None):
             report_hook(downloaded, total)
 
     return ''.join(data)
+
+
+def fill_with_local(datadict, modules):
+    """
+    Fill ``datadict`` if module is found in ``modules``.
+
+    :param datadict: a dictionary containing modules as keys and
+                     a list as values.
+    :param modules: a list of modules present in the local python source code.
+    :return: a dictionary containing information about the location of each
+             imported module.
+
+    .. versionadded:: 0.1.0
+    """
+    for module, where in datadict.items():
+        if not where and module in modules:
+            datadict[module].append('LOCAL')
+    return datadict
+
+
+def fill_with_stdlib(datadict, stdlibdata):
+    """
+    Fill ``datadict`` with modules from ``stdlibdata`` if found.
+
+    :param datadict: a dictionary containing modules as keys and
+                     a list as values.
+    :param stdlibdata: a dictionary containing the modules of the standard
+                       library of each python version.
+    :return: a dictionary containing information about the location of each
+             imported module.
+
+    .. versionadded:: 0.1.0
+    """
+    for module, where in datadict.items():
+        if where:
+            continue
+        for version, mods in stdlibdata.items():
+            if module not in mods:
+                continue
+            datadict[module].append('STDLIB{0}'.format(version))
+    return datadict
+
+
+def fill_with_pypi(datadict, pypidata):
+    """
+    Fill ``datadict`` with modules from ``pypidata`` if found.
+
+    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
+
+    :param datadict: a dictionary containing modules as keys and
+                     a list as values.
+    :param pypidata: a dictionary with the `PyPIContents`_ database.
+    :return: an updated dictionary containing information about the location
+             of each imported module.
+
+    .. versionadded:: 0.1.0
+    """
+    for module, where in datadict.items():
+        if where:
+            continue
+        for package, data in pypidata.items():
+            if module not in data['modules']:
+                continue
+            datadict[module].append(package)
+    return datadict

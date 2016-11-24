@@ -17,13 +17,17 @@
    :target: https://coveralls.io/github/LuisAlejandro/pipsalabim?branch=master
    :alt: Coveralls
 
-.. image:: https://codeclimate.com/github/LuisAlejandro/pipsalabim/badges/gpa.svg
-   :target: https://codeclimate.com/github/LuisAlejandro/pipsalabim
-   :alt: Code Climate
+.. image:: https://landscape.io/github/LuisAlejandro/pipsalabim/master/landscape.svg?style=flat
+   :target: https://landscape.io/github/LuisAlejandro/pipsalabim/master
+   :alt: Landscape
 
 .. image:: https://readthedocs.org/projects/pipsalabim/badge/?version=latest
    :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
    :alt: Read The Docs
+
+.. image:: https://cla-assistant.io/LuisAlejandro/pipsalabim
+   :target: https://cla-assistant.io/readme/badge/LuisAlejandro/pipsalabim
+   :alt: Contributor License Agreement
 
 .. image:: https://badges.gitter.im/LuisAlejandro/pipsalabim.svg
    :target: https://gitter.im/LuisAlejandro/pipsalabim

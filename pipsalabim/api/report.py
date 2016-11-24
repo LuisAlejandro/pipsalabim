@@ -30,10 +30,14 @@ import os
 import json
 import pkgutil
 
-from .. import stdlibfile, pypifile, __url__
+from .. import __url__, stdlibfile, pypifile, libdir
 from ..core.logger import logger
 from ..core.imports import find_imports
-from ..core.util import find_dirs, list_files, is_valid_path
+from ..core.util import (find_files, list_files, is_valid_path,
+                         custom_sys_path, remove_sys_modules, fill_with_local,
+                         fill_with_stdlib, fill_with_pypi)
+
+from setuptools import find_packages
 
 try:
     raw_input
@@ -51,11 +55,17 @@ def get_package_dirs(path):
     .. versionadded:: 0.1.0
     """
     package_dirs = []
-    for importer, pkgname, is_pkg in pkgutil.walk_packages(find_dirs(path)):
-        if is_pkg and isinstance(importer, pkgutil.ImpImporter) and \
-           os.path.commonprefix([importer.path, path]) == path and \
-           is_valid_path(os.path.relpath(importer.path, path)):
-            package_dirs.append(os.path.join(importer.path, pkgname))
+    logger.info('Searching for package directories ...')
+    for init in find_files(path, '__init__.py'):
+        pkgdir = os.path.dirname(init)
+        if os.path.commonprefix([pkgdir, path]) == path and \
+           is_valid_path(os.path.relpath(pkgdir, path)):
+            while True:
+                init = os.path.split(init)[0]
+                if not os.path.isfile(os.path.join(init, '__init__.py')):
+                    break
+            if init not in package_dirs:
+                package_dirs.append(init)
     return package_dirs
 
 
@@ -76,14 +86,20 @@ def get_packages(path):
     .. versionadded:: 0.1.0
     """
     packages = []
-    pkgdirs = get_package_dirs(path)
-    topdir = os.path.commonprefix(pkgdirs)
+    package_dirs = get_package_dirs(path)
+    logger.info('Extracting package names from directories ...')
 
-    for pkgdir in pkgdirs:
-        commondir = pkgdir.replace(os.path.dirname(topdir), '')
-        pkgname = commondir.replace(os.sep, '.').strip('.')
-        logger.debug('Found "{0}" package in {1}'.format(pkgname, pkgdir))
-        packages.append([pkgname, pkgdir])
+    for _dir in package_dirs:
+        for pkgname in find_packages(_dir):
+            try:
+                with custom_sys_path([_dir, libdir]):
+                    with remove_sys_modules([pkgname]):
+                        pkgdir = pkgutil.get_loader(pkgname).filename
+            except:
+                pkgdir = os.path.join(_dir, os.sep.join(pkgname.split('.')))
+            logger.debug('Found "{0}" package in '
+                         '"{1}".'.format(pkgname, pkgdir))
+            packages.append([pkgname, pkgdir])
     return packages
 
 
@@ -99,6 +115,8 @@ def get_modules(pkgdata):
     .. versionadded:: 0.1.0
     """
     modules = []
+    logger.info('Extracting module names from packages ...')
+
     for pkgname, pkgdir in pkgdata:
         for py in list_files(pkgdir, '*.py'):
             module = os.path.splitext(os.path.basename(py))[0]
@@ -106,7 +124,8 @@ def get_modules(pkgdata):
                 modname = '.'.join([pkgname, module])
             else:
                 modname = pkgname
-            logger.debug('Found "{0}" module.' .format(modname))
+            logger.debug('Found "{0}" module in '
+                         '"{1}" package.' .format(modname, pkgname))
             modules.append(modname)
     return sorted(list(set(modules)))
 
@@ -123,75 +142,15 @@ def get_imports(pkgdata):
     .. versionadded:: 0.1.0
     """
     imports = []
+    logger.info('Extracting imported modules from packages ...')
+
     for package, path in pkgdata:
         for filename in list_files(path, '*.py'):
-            imports.extend(find_imports(package, filename))
+            for i in find_imports(package, filename):
+                logger.debug('Found import to "{0}" in "{1}"'
+                             ' package.'.format(i, package))
+                imports.append(i)
     return imports
-
-
-def fill_with_local(datadict, modules):
-    """
-    Fill ``datadict`` if module is found in ``modules``.
-
-    :param datadict: a dictionary containing modules as keys and
-                     a list as values.
-    :param modules: a list of modules present in the local python source code.
-    :return: a dictionary containing information about the location of each
-             imported module.
-
-    .. versionadded:: 0.1.0
-    """
-    for module, where in datadict.items():
-        if not where and module in modules:
-            datadict[module].append('LOCAL')
-    return datadict
-
-
-def fill_with_stdlib(datadict, stdlibdata):
-    """
-    Fill ``datadict`` with modules from ``stdlibdata`` if found.
-
-    :param datadict: a dictionary containing modules as keys and
-                     a list as values.
-    :param stdlibdata: a dictionary containing the modules of the standard
-                       library of each python version.
-    :return: a dictionary containing information about the location of each
-             imported module.
-
-    .. versionadded:: 0.1.0
-    """
-    for module, where in datadict.items():
-        if where:
-            continue
-        for version, mods in stdlibdata.items():
-            if module not in mods:
-                continue
-            datadict[module].append('STDLIB{0}'.format(version))
-    return datadict
-
-
-def fill_with_pypi(datadict, pypidata):
-    """
-    Fill ``datadict`` with modules from ``pypidata`` if found.
-
-    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
-
-    :param datadict: a dictionary containing modules as keys and
-                     a list as values.
-    :param pypidata: a dictionary with the `PyPIContents`_ database.
-    :return: an updated dictionary containing information about the location
-             of each imported module.
-
-    .. versionadded:: 0.1.0
-    """
-    for module, where in datadict.items():
-        if where:
-            continue
-        for package, data in pypidata.items():
-            if module not in data['modules']:
-                continue
-            datadict[module].append(package)
-    return datadict
 
 
 def get_module_datadict(basedir):
@@ -318,13 +277,17 @@ def main(**kwargs):
               ' report.')
         return 1
 
+    if not os.path.isfile(os.path.join(basedir, 'setup.py')):
+        print('Pip Sala Bim doesn\'t support folders without a setup.py.')
+        return 1
+
     datadict = get_module_datadict(basedir)
     datadict = ask_multiple_pypi(datadict)
     messages = get_messages(datadict)
 
     if requirements:
         print('\nrequirements.txt file contents below')
-        print('-' * 50)
+        print('{0}>8{0}'.format('-' * 40))
         print('\n# file generated by Pip Sala Bim {0}'.format(__url__))
         print('\n'.join(m.split(':')[1] for m in messages['p']))
         return 0
@@ -357,7 +320,7 @@ def main(**kwargs):
                             '"pip install {1}"'
                             ')'.format(*m.split(':')) for m in msgcont))
         elif msgtype == 'n':
-            print('\nThe folowing module imports couldnt be found:')
+            print('\nThe folowing module imports couldn\'t be found:')
             print('\n'.join('    - {0}'.format(m) for m in msgcont))
 
     if not messages['n'] and not messages['p']:
