@@ -20,7 +20,7 @@
 """
 ``pipsalabim.cli`` is a module for handling the command line interface.
 
-This modue handles the commands for using Pip Sala Bim. It also parses
+This module handles the commands for using Pip Sala Bim. It also parses
 parameters, show help, version and controls the logging level.
 """
 from __future__ import absolute_import, print_function
@@ -51,10 +51,10 @@ def commandline(argv=None):
     parser = ArgumentParser(description=__description__)
     parser.add_argument(
         '-V', '--version', action='version',
-        version='pipsalabim {:s}'.format(__version__),
+        version='pipsalabim {0:s}'.format(__version__),
         help='Print version and exit.')
     parser.add_argument(
-        '-l', '--loglevel', default='WARNING',
+        '-l', '--loglevel', default='WARNING', metavar='<level>',
         choices=['CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG'],
         help='Logger verbosity level (default: WARNING).')
 
@@ -95,6 +95,9 @@ def main(argv=None):
 
     try:
         status = args.command(**vars(args))
+    except KeyboardInterrupt:
+        logger.critical('Execution interrupted by user!')
+        status = 1
     except Exception as e:
         logger.exception(e)
         logger.critical('Shutting down due to fatal error!')

@@ -47,4 +47,4 @@ stdlibfile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
                           '.cache', 'pipsalabim', 'stdlib.json')
 pypifile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
                         '.cache', 'pipsalabim', 'pypi.json')
-libdir = sysconfig.get_config_var('LIBDEST')
+libdir = sysconfig.get_python_lib(standard_lib=True)

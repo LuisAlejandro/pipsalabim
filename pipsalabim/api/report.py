@@ -182,7 +182,7 @@ def get_module_datadict(basedir):
     modules = get_modules(packages)
     imports = get_imports(packages)
 
-    datadict = {m: [] for m in imports}
+    datadict = dict((m, []) for m in imports)
     datadict = fill_with_local(datadict, modules)
     datadict = fill_with_stdlib(datadict, stdlibdata)
     datadict = fill_with_pypi(datadict, pypidata)
