@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.1.3 (2017-01-04)
+------------------
+
+Fix
+~~~
+
+- Fixing testing for python 3.2 and 2.6. [Luis Alejandro Martínez
+  Faneyth]
+
 0.1.2 (2017-01-04)
 ------------------
 
