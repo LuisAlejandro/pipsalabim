@@ -40,7 +40,7 @@ leave uncommitted changes.
 
 11. Commit your changes to version files and changelog::
 
-    git commit -aS -m "Updating Changelog and version"
+    git commit -aS -m "Updating Changelog and version."
 
 12. Delete the tag made by bumpversion::
 
