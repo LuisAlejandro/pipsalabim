@@ -22,13 +22,15 @@
    :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
    :alt: Read The Docs
 
-.. image:: https://cla-assistant.io/LuisAlejandro/pipsalabim
-   :target: https://cla-assistant.io/readme/badge/LuisAlejandro/pipsalabim
+.. image:: https://cla-assistant.io/readme/badge/LuisAlejandro/pipsalabim
+   :target: https://cla-assistant.io/LuisAlejandro/pipsalabim
    :alt: Contributor License Agreement
 
 .. image:: https://badges.gitter.im/LuisAlejandro/pipsalabim.svg
    :target: https://gitter.im/LuisAlejandro/pipsalabim
    :alt: Gitter Chat
+
+.. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
 Pip Sala Bim is an assistant to guess your pip dependencies from your code, without using a
 requirements file.
@@ -39,8 +41,6 @@ search which packages contain these imports.
 
 * Free software: GPL-3
 * Documentation: https://pipsalabim.readthedocs.org
-
-.. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
 Table of Contents
 -----------------
@@ -54,3 +54,4 @@ Table of Contents
    contributing
    authors
    history
+   maintainer
