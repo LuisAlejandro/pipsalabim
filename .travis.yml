@@ -1,3 +1,7 @@
+sudo: required
+services: docker
+dist: trusty
+group: edge
 language: python
 matrix:
     include:
@@ -11,7 +15,7 @@ matrix:
           env: TOXENV=py34
         - python: "3.5"
           env: TOXENV=py35
-        - python: "3.6-dev"
+        - python: "3.6"
           env: TOXENV=py36
 install:
     - pip install -r requirements-dev.txt
@@ -24,7 +28,9 @@ install:
             pip install flake8==2.6.2
         fi
 script:
-    - easy_install --version
     - tox -e ${TOXENV}
+    - |
+        docker run -v ${PWD}:${PWD} -w ${PWD} dockershelf/python:${TRAVIS_PYTHON_VERSION} \
+            bash -c "python setup.py install && pipsalabim --version"
 after_success:
     - coveralls
