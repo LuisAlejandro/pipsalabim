@@ -1,14 +1,64 @@
 Changelog
 =========
 
-0.1.3 (2017-01-04)
+0.1.4 (2017-01-15)
 ------------------
+
+Changes
+~~~~~~~
+
+- Fixing python 2.6 support on the logger module (closes #11). [ADD]
+  Implementing functional test on .travis.yml. [Luis Alejandro Martínez
+  Faneyth]
 
 Fix
 ~~~
 
 - Fixing testing for python 3.2 and 2.6. [Luis Alejandro Martínez
   Faneyth]
+
+Other
+~~~~~
+
+- New: dev: Adding support to python 2.6 (closes #10). chg: dev:
+  Removing configurations for codeclimate. [Luis Alejandro Martínez
+  Faneyth]
+
+0.1.3 (2017-01-04)
+------------------
+
+New
+~~~
+
+- Adding gitchangelog configuration file. [Luis Alejandro Martínez
+  Faneyth]
+
+- Adding support to python 2.6 (closes #10). [Luis Alejandro Martínez
+  Faneyth]
+
+Changes
+~~~~~~~
+
+- Adding new changelog entries. [Luis Alejandro Martínez Faneyth]
+
+Fix
+~~~
+
+- Fixing testing for python 3.2 and 2.6. [Luis Alejandro Martínez
+  Faneyth]
+
+- Fixing bumpversion config. [Luis Alejandro Martínez Faneyth]
+
+- Fixing typo. [Luis Alejandro Martínez Faneyth]
+
+Other
+~~~~~
+
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
+
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
+
+- Bump version: 0.1.0 → 0.1.1. [Luis Alejandro Martínez Faneyth]
 
 0.1.2 (2017-01-04)
 ------------------
@@ -21,6 +71,11 @@ New
 
 - Adding support to python 2.6 (closes #10). [Luis Alejandro Martínez
   Faneyth]
+
+Other
+~~~~~
+
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
 
 0.1.1 (2016-11-24)
 ------------------

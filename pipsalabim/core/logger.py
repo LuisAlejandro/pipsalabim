@@ -25,8 +25,23 @@ until the logger is started.
 """
 from __future__ import absolute_import, print_function
 
+import sys
 import types
 import logging
+
+if not hasattr(logging, '_levelNames'):
+    if hasattr(logging, '_nameToLevel'):
+        logging._levelNames = logging._nameToLevel
+    else:
+        logging._levelNames = {
+            'CRITICAL': 50,
+            'ERROR': 40,
+            'WARN': 30,
+            'WARNING': 30,
+            'INFO': 20,
+            'DEBUG': 10,
+            'NOTSET': 0,
+        }
 
 
 class ControlableLogger(logging.Logger):
@@ -53,15 +68,18 @@ class ControlableLogger(logging.Logger):
         # Initializing according to old-style or new-style clases
         if hasattr(types, 'ClassType') and \
            isinstance(logging.Logger, types.ClassType):
-            logging.Logger.__init__(self, __name__.split('.')[0])
+            logging.Logger.__init__(self, name)
         if (hasattr(types, 'TypeType') and
            isinstance(logging.Logger, types.TypeType)) or \
            isinstance(logging.Logger, type):
-            super(ControlableLogger, self).__init__(__name__.split('.')[0])
+            super(ControlableLogger, self).__init__(name)
 
-        #: Attribute ``active`` (boolean): Stores the current status of the
+        self.parent = logging.root
+
+        #: Attribute ``disabled`` (boolean): Stores the current status of the
         #: logger.
-        self.active = False
+        self.disabled = True
+        self.propagate = False
 
         #: Attribute ``formatstring`` (string): Stores the string that
         #: will be used to format the logger output.
@@ -76,11 +94,11 @@ class ControlableLogger(logging.Logger):
 
         .. versionadded:: 0.1.0
         """
-        if not self.active:
-            handler = logging.StreamHandler()
+        if self.disabled:
+            handler = logging.StreamHandler(sys.stdout)
             handler.setFormatter(logging.Formatter(self.formatstring))
             self.addHandler(handler)
-            self.active = True
+            self.disabled = False
 
     def stop(self):
         """
@@ -90,9 +108,10 @@ class ControlableLogger(logging.Logger):
 
         .. versionadded:: 0.1.0
         """
-        if self.active:
-            self.removeHandler(self.handlers[-1])
-            self.active = False
+        if not self.disabled:
+            for h in list(self.handlers):
+                self.removeHandler(h)
+            self.disabled = True
 
     def loglevel(self, level='WARNING'):
         """
@@ -116,8 +135,9 @@ class ControlableLogger(logging.Logger):
 
         .. versionadded:: 0.1.0
         """
-        if self.active:
-            self.setLevel(level)
+        if not self.disabled:
+            self.setLevel(logging._levelNames[level])
 
 
-logger = ControlableLogger()
+logging.setLoggerClass(ControlableLogger)
+logger = logging.getLogger(__name__.split('.')[0])
