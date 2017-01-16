@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.1.5 (2017-01-16)
+------------------
+
+Fix
+~~~
+
+- Fixing python3 compatibility. [Luis Alejandro Martínez Faneyth]
+
 0.1.4 (2017-01-15)
 ------------------
 
@@ -19,6 +27,8 @@ Fix
 
 Other
 ~~~~~
+
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
 
 - New: dev: Adding support to python 2.6 (closes #10). chg: dev:
   Removing configurations for codeclimate. [Luis Alejandro Martínez

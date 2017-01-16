@@ -168,7 +168,7 @@ def chunk_read(response, chunk_size=8192, report_hook=None):
     """
     data = []
     downloaded = 0
-    total = int(response.info().getheader('Content-Length').strip())
+    total = int(response.info().get('Content-Length').strip())
 
     while True:
         chunk = response.read(chunk_size)
