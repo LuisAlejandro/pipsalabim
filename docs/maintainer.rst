@@ -48,7 +48,7 @@ leave uncommitted changes.
 
 13. Finish your release::
 
-    git flow release finish <release number>
+    git flow release finish -s -p <release number>
 
 14. Push your tags::
 
@@ -84,7 +84,7 @@ Making a new hotfix
 
 6. Commit your changes to version files and changelog::
 
-    git commit -aS -m "Updating Changelog and version"
+    git commit -aS -m "Updating Changelog and version."
 
 7. Delete the tag made by bumpversion::
 
