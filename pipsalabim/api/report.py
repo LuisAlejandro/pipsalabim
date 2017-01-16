@@ -33,9 +33,9 @@ import pkgutil
 from .. import __url__, stdlibfile, pypifile, libdir
 from ..core.logger import logger
 from ..core.imports import find_imports
-from ..core.util import (find_files, list_files, is_valid_path,
-                         custom_sys_path, remove_sys_modules, fill_with_local,
-                         fill_with_stdlib, fill_with_pypi)
+from ..core.utils import (find_files, list_files, is_valid_path,
+                          custom_sys_path, remove_sys_modules, fill_with_local,
+                          fill_with_stdlib, fill_with_pypi)
 
 from setuptools import find_packages
 
