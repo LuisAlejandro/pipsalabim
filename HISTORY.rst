@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.1.7 (2017-01-16)
+------------------
+
+Fix
+~~~
+
+- Hotfix: Fixing Travis build because documentation typo. [Luis
+  Alejandro Martínez Faneyth]
+
 0.1.6 (2017-01-16)
 ------------------
 
@@ -9,6 +18,11 @@ Changes
 
 - Improving python 3 compatibility. [REF] Renaming pipsalabim.core.util
   to pipsalabim.core.utils. [Luis Alejandro Martínez Faneyth]
+
+Other
+~~~~~
+
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
 
 0.1.5 (2017-01-16)
 ------------------
