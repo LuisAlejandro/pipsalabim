@@ -30,10 +30,35 @@ import sys
 import fnmatch
 from contextlib import contextmanager
 
-try:
-    basestring
-except NameError:
+if not sys.version_info < (3,):
+    unicode = str
     basestring = str
+
+
+def u(u_string):
+    '''
+    Function to convert a string to unicode working on both python 2 and 3.
+
+    :param u_string: a string to convert to unicode.
+
+    .. versionadded:: 0.1.5
+    '''
+    if isinstance(u_string, unicode):
+        return u_string
+    return u_string.decode('utf-8')
+
+
+def s(s_string):
+    '''
+    Function to convert a byte stream to string working on both python 2 and 3.
+
+    :param s_string: a byte stream to convert to string.
+
+    .. versionadded:: 0.1.5
+    '''
+    if isinstance(s_string, bytes):
+        return s_string
+    return s_string.encode('utf-8')
 
 
 @contextmanager
@@ -147,9 +172,9 @@ def chunk_report(downloaded, total):
     .. versionadded:: 0.1.0
     """
     percent = round((float(downloaded) / total) * 100, 2)
-    sys.stdout.write(('Downloaded {:d} of {:d} kB '
-                      '({:0.2f}%)\r').format(downloaded / 60,
-                                             total / 60, percent))
+    sys.stdout.write(('Downloaded {0:0.0f} of {1:0.0f} kB '
+                      '({2:0.0f}%)\r').format(downloaded / 1024,
+                                              total / 1024, percent))
     if downloaded >= total:
         sys.stdout.write('\n\n')
 
@@ -166,7 +191,7 @@ def chunk_read(response, chunk_size=8192, report_hook=None):
 
     .. versionadded:: 0.1.0
     """
-    data = []
+    data = u('')
     downloaded = 0
     total = int(response.info().get('Content-Length').strip())
 
@@ -176,13 +201,13 @@ def chunk_read(response, chunk_size=8192, report_hook=None):
         if not chunk:
             break
 
-        data += chunk
+        data += u(chunk)
         downloaded += len(chunk)
 
         if report_hook:
             report_hook(downloaded, total)
 
-    return ''.join(data)
+    return data
 
 
 def fill_with_local(datadict, modules):

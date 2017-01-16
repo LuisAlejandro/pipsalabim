@@ -37,7 +37,7 @@ except ImportError:
 
 from .. import stdliburl, pypiurl, stdlibfile, pypifile
 from ..core.logger import logger
-from ..core.util import chunk_report, chunk_read
+from ..core.utils import chunk_report, chunk_read
 
 
 def download_json(datafile, dataurl):

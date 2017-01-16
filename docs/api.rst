@@ -59,17 +59,17 @@ pipsalabim.core.imports module
     :special-members:
 
 pipsalabim.core.logger module
-============================
+=============================
 
 .. automodule:: pipsalabim.core.logger
     :members:
     :private-members:
     :special-members:
 
-pipsalabim.core.util module
+pipsalabim.core.utils module
 ============================
 
-.. automodule:: pipsalabim.core.util
+.. automodule:: pipsalabim.core.utils
     :members:
     :private-members:
     :special-members:
