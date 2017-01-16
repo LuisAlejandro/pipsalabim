@@ -36,26 +36,26 @@ if not sys.version_info < (3,):
 
 
 def u(u_string):
-    '''
+    """
     Function to convert a string to unicode working on both python 2 and 3.
 
     :param u_string: a string to convert to unicode.
 
     .. versionadded:: 0.1.5
-    '''
+    """
     if isinstance(u_string, unicode):
         return u_string
     return u_string.decode('utf-8')
 
 
 def s(s_string):
-    '''
+    """
     Function to convert a byte stream to string working on both python 2 and 3.
 
     :param s_string: a byte stream to convert to string.
 
     .. versionadded:: 0.1.5
-    '''
+    """
     if isinstance(s_string, bytes):
         return s_string
     return s_string.encode('utf-8')
