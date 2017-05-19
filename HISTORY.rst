@@ -9,6 +9,11 @@ Fix
 
 - Fixing python 3.5+ support. [Luis Alejandro Martínez Faneyth]
 
+Other
+~~~~~
+
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
+
 0.1.7 (2017-01-16)
 ------------------
 
