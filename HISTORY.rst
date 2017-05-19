@@ -1,6 +1,21 @@
 Changelog
 =========
 
+0.1.10 (2017-05-19)
+-------------------
+
+Fix
+~~~
+
+- Fixing python 3.2 support. [Luis Alejandro Martínez Faneyth]
+
+- Fixing python 3.2 tests. [Luis Alejandro Martínez Faneyth]
+
+0.1.9 (2017-05-19)
+------------------
+
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
+
 0.1.8 (2017-05-19)
 ------------------
 
