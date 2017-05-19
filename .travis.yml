@@ -20,7 +20,8 @@ matrix:
 install:
     - |
         if [ "${TOXENV}" == "py32" ]; then
-            pip install pip==7.1.2 virtualenv==13.1.2 setuptools==29.0.1 coverage==3.7.1
+            pip install setuptools==29.0.1
+            pip install pip==7.1.2 virtualenv==13.1.2 coverage==3.7.1
         fi
     - |
         if [ "${TOXENV}" == "py26" ]; then
