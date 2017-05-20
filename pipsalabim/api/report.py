@@ -95,7 +95,7 @@ def get_packages(path):
                 with custom_sys_path([_dir, libdir]):
                     with remove_sys_modules([pkgname]):
                         pkgdir = pkgutil.get_loader(pkgname).filename
-            except:
+            except Exception:
                 pkgdir = os.path.join(_dir, os.sep.join(pkgname.split('.')))
             logger.debug('Found "{0}" package in '
                          '"{1}".'.format(pkgname, pkgdir))

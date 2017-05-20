@@ -51,7 +51,7 @@ def commandline(argv=None):
     parser = ArgumentParser(description=__description__)
     parser.add_argument(
         '-V', '--version', action='version',
-        version='pipsalabim {0:s}'.format(__version__),
+        version='pipsalabim {0}'.format(__version__),
         help='Print version and exit.')
     parser.add_argument(
         '-l', '--loglevel', default='WARNING', metavar='<level>',
@@ -91,7 +91,6 @@ def main(argv=None):
     logger.start()
     logger.loglevel(args.loglevel)
     logger.info('Starting execution.')
-    logger.debug('Processed arguments: {0:s}'.format(vars(args)))
 
     try:
         status = args.command(**vars(args))

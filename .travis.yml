@@ -31,7 +31,9 @@ install:
 script:
     - tox -e ${TOXENV}
     - |
-        docker run -v ${PWD}:${PWD} -w ${PWD} dockershelf/python:${TRAVIS_PYTHON_VERSION} \
-            bash -c "python setup.py install && pipsalabim --version"
+        docker run -v ${PWD}:${PWD} -w ${PWD} \
+            dockershelf/python:${TRAVIS_PYTHON_VERSION} bash -c \
+            "python${TRAVIS_PYTHON_VERSION} setup.py install && \
+            python${TRAVIS_PYTHON_VERSION} -m pipsalabim.cli update"
 after_success:
     - coveralls
