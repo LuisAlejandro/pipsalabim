@@ -1,3 +1,6 @@
+.. image:: https://badge.waffle.io/LuisAlejandro/pipsalabim.png?label=ready&title=Ready 
+ :target: https://waffle.io/LuisAlejandro/pipsalabim?utm_source=badge
+ :alt: 'Stories in Ready'
 .. image:: https://gitcdn.xyz/repo/LuisAlejandro/pipsalabim/master/docs/_static/banner.svg
 
 ..
