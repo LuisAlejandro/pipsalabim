@@ -1,5 +1,5 @@
-flake8
-pydocstyle
-tox
-coverage
-coveralls
+flake8==3.3.0
+pydocstyle==2.0.0
+tox==2.7.0
+coverage==4.4.1
+coveralls==1.1
