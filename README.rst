@@ -17,9 +17,13 @@
    :target: https://coveralls.io/github/LuisAlejandro/pipsalabim?branch=master
    :alt: Coveralls
 
-.. image:: https://landscape.io/github/LuisAlejandro/pipsalabim/master/landscape.svg?style=flat
-   :target: https://landscape.io/github/LuisAlejandro/pipsalabim/master
-   :alt: Landscape
+.. image:: https://codeclimate.com/github/LuisAlejandro/pipsalabim/badges/gpa.svg
+   :target: https://codeclimate.com/github/LuisAlejandro/pipsalabim
+   :alt: Code Climate
+
+.. image:: https://requires.io/github/LuisAlejandro/pipsalabim/requirements.svg?branch=master
+   :target: https://requires.io/github/LuisAlejandro/pipsalabim/requirements/?branch=master
+   :alt: Requirements Status
 
 .. image:: https://readthedocs.org/projects/pipsalabim/badge/?version=latest
    :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
@@ -122,7 +126,7 @@ Made with :heart: and :hamburger:
 
 .. _Patreon: https://www.patreon.com/luisalejandro
 .. _Flattr: https://flattr.com/profile/luisalejandro
-.. _PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B8LPXHQY8QE8Y
+.. _PayPal: https://www.paypal.me/martinezfaneyth
 .. _LuisAlejandroTwitter: https://twitter.com/LuisAlejandro
 .. _LuisAlejandroGitHub: https://github.com/LuisAlejandro
 .. _huntingbears.com.ve: http://huntingbears.com.ve
