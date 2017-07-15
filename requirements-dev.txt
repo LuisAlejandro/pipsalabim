@@ -1,5 +1,18 @@
-flake8
-pydocstyle
-tox
-coverage
-coveralls
+flake8==3.3.0; python_version != '2.6'
+flake8==2.6.2; python_version == '2.6'				# rq.filter: !=2.6.2
+
+pip==9.0.1; python_version != '3.2'
+pip==7.1.2; python_version == '3.2'					# rq.filter: !=7.1.2
+
+setuptools==36.2.0; python_version != '3.2'
+setuptools==29.0.1; python_version == '3.2'			# rq.filter: !=29.0.1
+
+virtualenv==15.1.0; python_version != '3.2'
+virtualenv==13.1.2; python_version == '3.2'			# rq.filter: !=13.1.2
+
+coverage==4.4.1; python_version != '3.2'
+coverage==3.7.1; python_version == '3.2'			# rq.filter: !=3.7.1
+
+pydocstyle==2.0.0
+tox==2.7.0
+coveralls==1.1
