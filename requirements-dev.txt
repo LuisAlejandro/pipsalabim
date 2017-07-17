@@ -1,14 +1,14 @@
-flake8==3.3.0; python_version != '2.6'
-flake8==2.6.2; python_version == '2.6'
-
-pydocstyle==2.0.0; python_version != '2.6'
-pydocstyle==1.1.1; python_version == '2.6'
+setuptools==36.2.0; python_version != '3.2'
+setuptools==29.0.1; python_version == '3.2'
 
 pip==9.0.1; python_version != '3.2'
 pip==7.1.2; python_version == '3.2'
 
-setuptools==36.2.0; python_version != '3.2'
-setuptools==29.0.1; python_version == '3.2'
+flake8==3.3.0; python_version != '2.6'
+flake8==2.6.2; python_version == '2.6'
+
+pydocstyle==2.0.0; python_version != '2.6' and python_version != '3.2'
+pydocstyle==1.1.1; python_version == '2.6' or python_version == '3.2'
 
 virtualenv==15.1.0; python_version != '3.2'
 virtualenv==13.1.2; python_version == '3.2'
