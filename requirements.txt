@@ -1,1 +1,2 @@
-setuptools
+setuptools==36.2.0; python_version != '3.2'
+setuptools==29.0.1; python_version == '3.2'

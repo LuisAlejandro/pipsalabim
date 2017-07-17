@@ -18,15 +18,6 @@ matrix:
         - python: "3.6"
           env: TOXENV=py36
 install:
-    - |
-        if [ "${TOXENV}" == "py32" ]; then
-            pip install setuptools==29.0.1
-            pip install pip==7.1.2 virtualenv==13.1.2 coverage==3.7.1
-        fi
-    - |
-        if [ "${TOXENV}" == "py26" ]; then
-            pip install flake8==2.6.2
-        fi
     - pip install -r requirements-dev.txt
 script:
     - tox -e ${TOXENV}

@@ -37,7 +37,7 @@ if not sys.version_info < (3,):
 
 def u(u_string):
     """
-    Function to convert a string to unicode working on both python 2 and 3.
+    Convert a string to unicode working on both python 2 and 3.
 
     :param u_string: a string to convert to unicode.
 
@@ -50,7 +50,7 @@ def u(u_string):
 
 def s(s_string):
     """
-    Function to convert a byte stream to string working on both python 2 and 3.
+    Convert a byte stream to string working on both python 2 and 3.
 
     :param s_string: a byte stream to convert to string.
 
