@@ -14,7 +14,7 @@ virtualenv==15.1.0; python_version != '3.2'
 virtualenv==15.1.0; python_version == '3.2'
 
 coverage==4.4.1; python_version != '3.2'
-coverage==3.7.1; python_version == '3.2'
+coverage==4.4.1; python_version == '3.2'
 
 tox==2.7.0
 coveralls==1.1
