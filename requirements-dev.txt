@@ -11,7 +11,7 @@ pydocstyle==2.0.0; python_version != '2.6' and python_version != '3.2'
 pydocstyle==2.0.0; python_version == '2.6' or python_version == '3.2'
 
 virtualenv==15.1.0; python_version != '3.2'
-virtualenv==13.1.2; python_version == '3.2'
+virtualenv==15.1.0; python_version == '3.2'
 
 coverage==4.4.1; python_version != '3.2'
 coverage==3.7.1; python_version == '3.2'
