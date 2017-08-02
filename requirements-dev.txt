@@ -16,5 +16,8 @@ virtualenv==13.1.2; python_version == '3.2'										# pyup: ignore
 coverage; python_version != '3.2'
 coverage==3.7.1; python_version == '3.2'										# pyup: ignore
 
+gitchangelog
+bumpversion
+wheel
 tox
 coveralls
