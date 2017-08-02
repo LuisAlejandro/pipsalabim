@@ -1,13 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+import re
+
+from setuptools import setup
 
 from pipsalabim import (__author__, __email__, __version__, __url__,
                         __description__)
+
+
+def read_requirements(reqfile):
+    with open(reqfile, 'r') as r:
+        reqs = filter(None, r.read().split('\n'))
+    return [re.sub(r'\t*# pyup.*', r'', x) for x in reqs]
+
 
 setup(
     name='pipsalabim',
@@ -20,7 +26,7 @@ setup(
     packages=['pipsalabim', 'pipsalabim.api', 'pipsalabim.core'],
     package_dir={'pipsalabim': 'pipsalabim'},
     include_package_data=True,
-    install_requires=open('requirements.txt').read().split('\n'),
+    install_requires=read_requirements('requirements.txt'),
     entry_points={
         'console_scripts': ('pipsalabim = pipsalabim.cli:main',),
     },
@@ -43,5 +49,5 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     test_suite='tests',
-    tests_require=open('requirements-dev.txt').read().split('\n')
+    tests_require=read_requirements('requirements-dev.txt')
 )
