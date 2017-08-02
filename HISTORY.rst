@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.1.14 (2017-08-02)
+-------------------
+
+Changes
+~~~~~~~
+
+- Adding pyup configuration. [Luis Alejandro Martínez Faneyth]
+
 0.1.13 (2017-08-02)
 -------------------
 
@@ -12,6 +20,11 @@ Changes
 
 - Adjusting version of setuptools for python 2.6. [Luis Alejandro
   martínez Faneyth]
+
+Other
+~~~~~
+
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
 
 0.1.12 (2017-07-17)
 -------------------
