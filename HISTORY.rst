@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.1.15 (2017-08-02)
+-------------------
+
+Changes
+~~~~~~~
+
+- Adding development tools to requirements. [Luis Alejandro Martínez
+  Faneyth]
+
 0.1.14 (2017-08-02)
 -------------------
 
@@ -8,6 +17,11 @@ Changes
 ~~~~~~~
 
 - Adding pyup configuration. [Luis Alejandro Martínez Faneyth]
+
+Other
+~~~~~
+
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
 
 0.1.13 (2017-08-02)
 -------------------
