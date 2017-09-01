@@ -16,7 +16,7 @@ virtualenv==13.1.2; python_version == '3.2'										# pyup: ignore
 coverage==4.4.1; python_version != '3.2'
 coverage==3.7.1; python_version == '3.2'										# pyup: ignore
 
-gitchangelog
+gitchangelog==3.0.3
 bumpversion
 wheel
 tox
