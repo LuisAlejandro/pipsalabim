@@ -10,7 +10,7 @@ flake8==2.6.2; python_version == '2.6'											# pyup: ignore
 pydocstyle==2.1.1; python_version != '2.6' and python_version != '3.2'
 pydocstyle==1.1.1; python_version == '2.6' or python_version == '3.2'			# pyup: ignore
 
-virtualenv==15.1.0; python_version != '3.2'
+virtualenv==15.2.0; python_version != '3.2'
 virtualenv==13.1.2; python_version == '3.2'										# pyup: ignore
 
 coverage==4.4.1; python_version != '3.2'
