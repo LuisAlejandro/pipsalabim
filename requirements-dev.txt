@@ -1,4 +1,4 @@
-setuptools==36.3.0; python_version != '2.6' and python_version != '3.2'
+setuptools==36.5.0; python_version != '2.6' and python_version != '3.2'
 setuptools==29.0.1; python_version == '2.6' or python_version == '3.2'			# pyup: ignore
 
 pip==9.0.1; python_version != '3.2'
@@ -18,6 +18,6 @@ coverage==3.7.1; python_version == '3.2'										# pyup: ignore
 
 gitchangelog==3.0.3
 bumpversion==0.5.3
-wheel==0.29.0
-tox==2.7.0
+wheel==0.30.0
+tox==2.9.1
 coveralls==1.2.0
