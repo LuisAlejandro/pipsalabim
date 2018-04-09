@@ -151,7 +151,3 @@ __ LuisAlejandroTwitter_
 
 .. [#] AST refers to an Abstract Syntax Tree, you can read more on
        https://en.wikipedia.org/wiki/Abstract_syntax_tree
-
-.. image:: https://badges.gitter.im/LuisAlejandro/pipsalabim.svg
-   :alt: Join the chat at https://gitter.im/LuisAlejandro/pipsalabim
-   :target: https://gitter.im/LuisAlejandro/pipsalabim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge

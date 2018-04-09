@@ -37,7 +37,7 @@ except ImportError:
 
 from .. import stdliburl, pypiurl, stdlibfile, pypifile
 from ..core.logger import logger
-from ..core.util import chunk_report, chunk_read
+from ..core.utils import chunk_report, chunk_read, u
 
 
 def download_json(datafile, dataurl):
@@ -66,7 +66,7 @@ def download_json(datafile, dataurl):
 
     try:
         with open(datafile, 'w') as s:
-            s.write(content.decode('utf-8'))
+            s.write(u(content))
     except Exception as e:
         logger.error('I/O error: {0}'.format(e))
         return False

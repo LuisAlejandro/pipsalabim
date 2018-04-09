@@ -29,10 +29,12 @@ searches the `PyPIContents`_ index to list which packages satisfy your imports.
 
 """
 import os
+from distutils import sysconfig
+
 
 __author__ = 'Luis Alejandro Martínez Faneyth'
 __email__ = 'luis@huntingbears.com.ve'
-__version__ = '0.1.0'
+__version__ = '0.1.15'
 __url__ = 'https://github.com/LuisAlejandro/pipsalabim'
 __description__ = ('Pip Sala Bim is an assistant to guess your pip'
                    ' dependencies from your code, without using a'
@@ -45,3 +47,4 @@ stdlibfile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
                           '.cache', 'pipsalabim', 'stdlib.json')
 pypifile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
                         '.cache', 'pipsalabim', 'pypi.json')
+libdir = sysconfig.get_python_lib(standard_lib=True)
