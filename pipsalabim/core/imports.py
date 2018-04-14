@@ -109,7 +109,7 @@ class ImportVisitor(ast.NodeVisitor):
             return self.visit_importfrom(node)
         try:
             return self.generic_visit(node)
-        except:
+        except Exception:
             pass
 
     def visit_import(self, node):
