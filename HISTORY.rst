@@ -2,6 +2,14 @@ Changelog
 =========
 
 
+0.1.17 (2018-04-14)
+-------------------
+
+Fix
+~~~
+- Fixing python 3.2 support. [Luis Alejandro Martínez Faneyth]
+
+
 0.1.16 (2018-04-14)
 -------------------
 
@@ -10,6 +18,11 @@ Fix
 - Pinning versions of software to avoid CI breaks over time. [Luis
   Alejandro Martínez Faneyth]
 - Fixing PEP8 styleguide. [Luis Alejandro Martínez Faneyth]
+
+Other
+~~~~~
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
+- Add Gitter badge (#29) [The Gitter Badger]
 
 
 0.1.15 (2017-08-02)
