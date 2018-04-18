@@ -2,12 +2,26 @@ Changelog
 =========
 
 
-0.1.17 (2018-04-14)
+0.1.18 (2018-04-18)
+-------------------
+
+Fix
+~~~
+- Removing conditional dependencies from requirements.txt because it is
+  not supported for instal_requires with setuptools < 36.2.1, so it
+  breakes py26 and py32 tests. [Luis Alejandro Martínez Faneyth]
+
+
+0.1.17 (2018-04-15)
 -------------------
 
 Fix
 ~~~
 - Fixing python 3.2 support. [Luis Alejandro Martínez Faneyth]
+
+Other
+~~~~~
+- Updating Changelog and version. [Luis Alejandro Martínez Faneyth]
 
 
 0.1.16 (2018-04-14)
