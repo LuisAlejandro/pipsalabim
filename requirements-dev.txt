@@ -1,4 +1,4 @@
-setuptools==39.0.1; python_version != '2.6' and python_version != '3.2'
+setuptools==39.1.0; python_version != '2.6' and python_version != '3.2'
 setuptools==29.0.1; python_version == '2.6' or python_version == '3.2'			# pyup: ignore
 
 pip==9.0.3; python_version != '3.2'
