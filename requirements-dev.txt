@@ -21,7 +21,7 @@ virtualenv==16.1.0; python_version != '2.6' and python_version != '3.2'
 virtualenv==13.1.2; python_version == '3.2'										# pyup: ignore
 virtualenv==15.2.0; python_version == '2.6'										# pyup: ignore
 
-coverage==4.5.1; python_version != '3.2'
+coverage==4.5.2; python_version != '3.2'
 coverage==3.7.1; python_version == '3.2'										# pyup: ignore
 
 gitchangelog==3.0.3
