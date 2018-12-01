@@ -5,7 +5,7 @@ pip==18.1; python_version != '2.6' and python_version != '3.2'
 pip==7.1.2; python_version == '3.2'												# pyup: ignore
 pip==9.0.3; python_version == '2.6'												# pyup: ignore
 
-flake8==3.5.0; python_version != '2.6' and python_version != '3.2'
+flake8==3.6.0; python_version != '2.6' and python_version != '3.2'
 flake8==2.6.2; python_version == '2.6' or python_version == '3.2'				# pyup: ignore
 
 wheel==0.31.1; python_version != '2.6'
