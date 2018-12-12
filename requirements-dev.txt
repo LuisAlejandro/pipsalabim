@@ -1,29 +1,10 @@
-setuptools==40.6.2; python_version != '2.6' and python_version != '3.2'
-setuptools==29.0.1; python_version == '2.6' or python_version == '3.2'			# pyup: ignore
-
-pip==18.1; python_version != '2.6' and python_version != '3.2'
-pip==7.1.2; python_version == '3.2'												# pyup: ignore
-pip==9.0.3; python_version == '2.6'												# pyup: ignore
-
-flake8==3.6.0; python_version != '2.6' and python_version != '3.2'
-flake8==2.6.2; python_version == '2.6' or python_version == '3.2'				# pyup: ignore
-
-wheel==0.32.3; python_version != '2.6'
-wheel==0.30.0; python_version == '2.6'											# pyup: ignore
-
-tox==3.5.3; python_version != '2.6'
-tox==2.9.1; python_version == '2.6'											    # pyup: ignore
-
-pydocstyle==3.0.0; python_version != '2.6' and python_version != '3.2'
-pydocstyle==1.1.1; python_version == '2.6' or python_version == '3.2'			# pyup: ignore
-
-virtualenv==16.1.0; python_version != '2.6' and python_version != '3.2'
-virtualenv==13.1.2; python_version == '3.2'										# pyup: ignore
-virtualenv==15.2.0; python_version == '2.6'										# pyup: ignore
-
-coverage==4.5.2; python_version != '3.2'
-coverage==3.7.1; python_version == '3.2'										# pyup: ignore
-
+setuptools==40.6.2
+pip==18.1
+flake8==3.6.0
+pydocstyle==3.0.0
+virtualenv==16.1.0
+coverage==4.5.2
 gitchangelog==3.0.3
 bumpversion==0.5.3
+tox==3.5.3
 coveralls==1.5.1
