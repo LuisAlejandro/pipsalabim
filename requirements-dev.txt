@@ -1,5 +1,5 @@
 setuptools==40.7.2
-pip==18.1
+pip==19.0.1
 flake8==3.6.0
 pydocstyle==3.0.0
 virtualenv==16.1.0
