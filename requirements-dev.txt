@@ -4,7 +4,7 @@ flake8==3.7.4
 pydocstyle==3.0.0
 virtualenv==16.3.0
 coverage==4.5.2
-gitchangelog==3.0.3
+gitchangelog==3.0.4
 bumpversion==0.5.3
 tox==3.5.3
 coveralls==1.5.1
