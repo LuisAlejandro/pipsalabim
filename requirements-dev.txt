@@ -7,4 +7,4 @@ coverage==4.5.2
 gitchangelog==3.0.4
 bumpversion==0.5.3
 tox==3.7.0
-coveralls==1.5.1
+coveralls==1.6.0
