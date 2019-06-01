@@ -1,1 +1,1 @@
-setuptools==40.8.0
+setuptools==41.0.1
