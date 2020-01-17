@@ -1,8 +1,8 @@
-setuptools==41.2.0
-pip==19.2.3
-flake8==3.7.8
+setuptools==41.6.0
+pip==19.3.1
+flake8==3.7.9
 pydocstyle==4.0.1
-virtualenv==16.7.5
+virtualenv==16.7.7
 coverage==4.5.4
 gitchangelog==3.0.4
 bumpversion==0.5.3
