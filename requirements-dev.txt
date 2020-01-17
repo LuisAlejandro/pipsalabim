@@ -1,10 +1,10 @@
 setuptools==41.0.1
-pip==19.1.1
-flake8==3.7.7
-pydocstyle==3.0.0
-virtualenv==16.6.1
-coverage==4.5.3
+pip==19.2.1
+flake8==3.7.8
+pydocstyle==4.0.0
+virtualenv==16.7.2
+coverage==4.5.4
 gitchangelog==3.0.4
 bumpversion==0.5.3
-tox==3.13.1
-coveralls==1.8.1
+tox==3.13.2
+coveralls==1.8.2
