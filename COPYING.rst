@@ -1,5 +1,5 @@
 
-Copyright (C) 2016, Pip Sala Bim Developers.
+Copyright (C) 2016-2020, Pip Sala Bim Developers.
 
 Please refer to AUTHORS.rst for a complete list of Copyright holders.
 

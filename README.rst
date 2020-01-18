@@ -122,7 +122,7 @@ Released under a `GPL-3 License`_ (read COPYING.rst_ for license details).
 Made with :heart: and :hamburger:
 =================================
 
-.. image:: https://rawcdn.githack.com/CollageLabs/candyshop/4fc50d0f22c7c221275586b193b9e0b3170a0340/docs/_static/promo-open-source.svg
+.. image:: https://rawcdn.githack.com/CollageLabs/pipsalabim/b00c6704253b9d05447b621f728869a2229d5322/docs/_static/promo-open-source.svg
 
 .. _CollageLabsTwitter: https://twitter.com/CollageLabs
 .. _CollageLabsGitHub: https://github.com/CollageLabs
