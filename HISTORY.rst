@@ -2,6 +2,160 @@ Changelog
 =========
 
 
+0.1.20 (2020-01-18)
+-------------------
+
+Changes
+~~~~~~~
+- Adding python 3.7 support. [Luis Alejandro Martínez Faneyth]
+- Removing support for python 2.7 and 3.4. Adding support for python 3.8
+  and PyPy3. [Luis Alejandro Martínez Faneyth]
+- Improving docstrings. [Luis Alejandro Martínez Faneyth]
+- Changing branding. [Luis Alejandro Martínez Faneyth]
+
+Other
+~~~~~
+- Scheduled monthly dependency update for November (#47) [Luis Alejandro
+  Martínez Faneyth, pyup.io bot]
+
+  * Update setuptools from 41.0.1 to 41.6.0
+
+  * Update setuptools from 41.0.1 to 41.6.0
+
+  * Update pip from 19.1.1 to 19.3.1
+
+  * Update flake8 from 3.7.7 to 3.7.9
+
+  * Update pydocstyle from 3.0.0 to 4.0.1
+
+  * Update virtualenv from 16.6.1 to 16.7.7
+
+  * Update coverage from 4.5.3 to 4.5.4
+
+  * Update tox from 3.13.1 to 3.14.0
+
+  * Update coveralls from 1.8.1 to 1.8.2
+- Scheduled monthly dependency update for October (#46) [Luis Alejandro
+  Martínez Faneyth, pyup.io bot]
+
+  * Update setuptools from 41.0.1 to 41.2.0
+
+  * Update setuptools from 41.0.1 to 41.2.0
+
+  * Update pip from 19.1.1 to 19.2.3
+
+  * Update flake8 from 3.7.7 to 3.7.8
+
+  * Update pydocstyle from 3.0.0 to 4.0.1
+
+  * Update virtualenv from 16.6.1 to 16.7.5
+
+  * Update coverage from 4.5.3 to 4.5.4
+
+  * Update tox from 3.13.1 to 3.14.0
+
+  * Update coveralls from 1.8.1 to 1.8.2
+- Scheduled monthly dependency update for September (#45) [Luis
+  Alejandro Martínez Faneyth, pyup.io bot]
+
+  * Update setuptools from 41.0.1 to 41.2.0
+
+  * Update setuptools from 41.0.1 to 41.2.0
+
+  * Update pip from 19.1.1 to 19.2.3
+
+  * Update flake8 from 3.7.7 to 3.7.8
+
+  * Update pydocstyle from 3.0.0 to 4.0.1
+
+  * Update virtualenv from 16.6.1 to 16.7.4
+
+  * Update coverage from 4.5.3 to 4.5.4
+
+  * Update tox from 3.13.1 to 3.13.2
+
+  * Update coveralls from 1.8.1 to 1.8.2
+- Scheduled monthly dependency update for August (#44) [pyup.io bot]
+
+  * Update pip from 19.1.1 to 19.2.1
+
+  * Update flake8 from 3.7.7 to 3.7.8
+
+  * Update pydocstyle from 3.0.0 to 4.0.0
+
+  * Update virtualenv from 16.6.1 to 16.7.2
+
+  * Update coverage from 4.5.3 to 4.5.4
+
+  * Update tox from 3.13.1 to 3.13.2
+
+  * Update coveralls from 1.8.1 to 1.8.2
+- Scheduled monthly dependency update for July (#43) [pyup.io bot]
+
+  * Update setuptools from 40.8.0 to 41.0.1
+
+  * Update setuptools from 40.8.0 to 41.0.1
+
+  * Update pip from 19.0.3 to 19.1.1
+
+  * Update virtualenv from 16.4.3 to 16.6.1
+
+  * Update coverage from 4.5.2 to 4.5.3
+
+  * Update tox from 3.7.0 to 3.13.1
+
+  * Update coveralls from 1.6.0 to 1.8.1
+- Scheduled monthly dependency update for March (#39) [pyup.io bot]
+
+  * Update setuptools from 40.7.2 to 40.8.0
+
+  * Update setuptools from 40.7.2 to 40.8.0
+
+  * Update pip from 19.0.1 to 19.0.3
+
+  * Update flake8 from 3.7.4 to 3.7.7
+
+  * Update virtualenv from 16.3.0 to 16.4.3
+
+  * Update coveralls from 1.5.1 to 1.6.0
+- Scheduled monthly dependency update for February (#38) [pyup.io bot]
+
+  * Update setuptools from 40.6.2 to 40.7.2
+
+  * Update setuptools from 40.6.2 to 40.7.2
+
+  * Update pip from 18.1 to 19.0.1
+
+  * Update flake8 from 3.6.0 to 3.7.4
+
+  * Update virtualenv from 16.1.0 to 16.3.0
+
+  * Update gitchangelog from 3.0.3 to 3.0.4
+
+  * Update tox from 3.5.3 to 3.7.0
+- Scheduled monthly dependency update for December (#36) [pyup.io bot]
+
+  * Update setuptools from 40.0.0 to 40.6.2
+
+  * Update setuptools from 40.0.0 to 40.6.2
+
+  * Update pip from 18.0 to 18.1
+
+  * Update flake8 from 3.5.0 to 3.6.0
+
+  * Update wheel from 0.31.1 to 0.32.3
+
+  * Update tox from 3.1.2 to 3.5.3
+
+  * Update pydocstyle from 2.1.1 to 3.0.0
+
+  * Update virtualenv from 16.0.0 to 16.1.0
+
+  * Update coverage from 4.5.1 to 4.5.2
+
+  * Update coveralls from 1.3.0 to 1.5.1
+
+
 0.1.19 (2018-12-12)
 -------------------
 
