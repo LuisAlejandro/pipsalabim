@@ -79,7 +79,7 @@ def main(**kwargs):
 
     .. _stdlib.json: https://git.io/vXF1H
     .. _pypi.json: https://git.io/vXFDL
-    .. _PyPIContents project: https://github.com/LuisAlejandro/pypicontents
+    .. _PyPIContents project: https://github.com/CollageLabs/pypicontents
 
     This function downloads the standard library modules index (`stdlib.json`_)
     and the PyPI modules index (`pypi.json`_) from the `PyPIContents project`_

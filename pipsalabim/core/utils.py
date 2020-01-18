@@ -255,7 +255,7 @@ def fill_with_pypi(datadict, pypidata):
     """
     Fill ``datadict`` with modules from ``pypidata`` if found.
 
-    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
+    .. _PyPIContents: https://github.com/CollageLabs/pypicontents
 
     :param datadict: a dictionary containing modules as keys and
                      a list as values.
