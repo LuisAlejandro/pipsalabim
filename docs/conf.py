@@ -122,7 +122,7 @@ html_theme_options = {
     'logo_name': False,
     'logo_text_align': 'center',
     'description': pipsalabim.__description__,
-    'github_user': 'LuisAlejandro',
+    'github_user': 'CollageLabs',
     'github_repo': 'pipsalabim',
     'travis_button': True,
     'link': '#2471a3',

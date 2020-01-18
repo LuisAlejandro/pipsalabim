@@ -5,7 +5,7 @@ Authors
 Development Lead
 ----------------
 
-* Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+* Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 
 Contributors
 ------------

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #   This file is part of Pip Sala Bim.
-#   Copyright (C) 2016, Pip Sala Bim Developers.
+#   Copyright (C) 2016-2020, Pip Sala Bim Developers.
 #
 #   Please refer to AUTHORS.rst for a complete list of Copyright holders.
 #
@@ -252,7 +252,7 @@ def main(**kwargs):
     """
     Generate a report to inform about PyPI dependencies.
 
-    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
+    .. _PyPIContents: https://github.com/CollageLabs/pypicontents
 
     This command will search your code for unsatisfied dependencies by
     looking at your ``import`` statements. If an import is not satisfied by

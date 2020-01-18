@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #   This file is part of Pip Sala Bim.
-#   Copyright (C) 2016, Pip Sala Bim Developers.
+#   Copyright (C) 2016-2020, Pip Sala Bim Developers.
 #
 #   Please refer to AUTHORS.rst for a complete list of Copyright holders.
 #
@@ -255,7 +255,7 @@ def fill_with_pypi(datadict, pypidata):
     """
     Fill ``datadict`` with modules from ``pypidata`` if found.
 
-    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
+    .. _PyPIContents: https://github.com/CollageLabs/pypicontents
 
     :param datadict: a dictionary containing modules as keys and
                      a list as values.

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #   This file is part of Pip Sala Bim.
-#   Copyright (C) 2016, Pip Sala Bim Developers.
+#   Copyright (C) 2016-2020, Pip Sala Bim Developers.
 #
 #   Please refer to AUTHORS.rst for a complete list of Copyright holders.
 #
@@ -25,7 +25,7 @@ for internal and external imports. It then discards the imports that are
 satisfied with internal code or with the standard library and finally
 searches the `PyPIContents`_ index to list which packages satisfy your imports.
 
-.. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
+.. _PyPIContents: https://github.com/CollageLabs/pypicontents
 
 """
 import os
@@ -34,14 +34,14 @@ from distutils import sysconfig
 
 __author__ = 'Luis Alejandro Martínez Faneyth'
 __email__ = 'luis@huntingbears.com.ve'
-__version__ = '0.1.19'
-__url__ = 'https://github.com/LuisAlejandro/pipsalabim'
+__version__ = '0.1.20'
+__url__ = 'https://github.com/CollageLabs/pipsalabim'
 __description__ = ('Pip Sala Bim is an assistant to guess your pip'
                    ' dependencies from your code, without using a'
                    ' requirements file.')
-stdliburl = ('https://raw.githubusercontent.com/LuisAlejandro/pypicontents/'
+stdliburl = ('https://raw.githubusercontent.com/CollageLabs/pypicontents/'
              'contents/stdlib.json')
-pypiurl = ('https://raw.githubusercontent.com/LuisAlejandro/pypicontents/'
+pypiurl = ('https://raw.githubusercontent.com/CollageLabs/pypicontents/'
            'contents/pypi.json')
 stdlibfile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
                           '.cache', 'pipsalabim', 'stdlib.json')
