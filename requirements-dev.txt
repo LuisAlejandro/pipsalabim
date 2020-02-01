@@ -1,7 +1,7 @@
 setuptools==45.1.0
 pip==20.0.2
 flake8==3.7.9
-pydocstyle==4.0.1
+pydocstyle==5.0.2
 virtualenv==16.7.7
 coverage==4.5.4
 gitchangelog==3.0.4
