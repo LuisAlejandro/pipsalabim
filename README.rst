@@ -91,7 +91,7 @@ Getting help
 .. _StackOverflow: http://stackoverflow.com/questions/ask
 
 If you have any doubts or problems, suscribe to our `Gitter Chat`_ and ask for help. You can also
-ask your question on StackOverflow_ (tag it ``pipsalabim``) or drop me an email at luis@huntingbears.com.ve.
+ask your question on StackOverflow_ (tag it ``pipsalabim``) or drop me an email at luis@collagelabs.org.
 
 Contributing
 ============
