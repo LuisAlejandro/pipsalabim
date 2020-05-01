@@ -3,7 +3,7 @@ pip==20.1
 flake8==3.7.9
 pydocstyle==5.0.2
 virtualenv==20.0.18
-coverage==5.0.4
+coverage==5.1
 gitchangelog==3.0.4
 bumpversion==0.5.3
 tox==3.14.6
