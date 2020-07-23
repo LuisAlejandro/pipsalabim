@@ -3,7 +3,13 @@ services: docker
 dist: bionic
 group: edge
 language: python
-matrix:
+env:
+    global:
+        # Docker Hub username ${DH_USERNAME}
+        - DH_USERNAME="luisalejandro"
+        # Docker Hub password ${DH_PASSWORD}
+        - secure: "Wx2sHBZwef4VSXPcT/zO+LZdjJNniFs8HGkFq1zoTcIdN5tfVCCNxHaZDu8FTlLJAHb7h/0IkF663jYaSIsMlV3PtWLuxaZJQK9WmH0rJG3liHlstunv9/L87sHrQXIRCj+3Z1r9wwl1MQLZfx7gfZ1HPiEf0Ne+cOKL2lUk4+jiMCyWf3mc0n6VsxytZN2VGffaqeTV2CGPv6PUmju4t9ylZ5OtsYtNPfllLrTjjxGzXMyqNgJbOGooCqM+mGHrqM8lmz3hrTZ7xSjXPR1mRszPrhGguFINeMOmEo5wsiNbIMmYXMN6LOdrRtoIP7hLZdvhklPdqMY3Qmj0D6UdhQUfv8Fd6dOS7DAPcyBax4xD/6RcqBV2wbQGnqm91Wd+IWMobI2IOJv7jrh3IYXe2A8rPunBTlkPWbfjqLXZdFL5uvJ87tLqWEAQeWAt+gHkUSjtXPa7A16GSKmXh961INPrHdlMsrTO0hgNWn81YVILoodQF4ksznu0tynRtgZYD2nbVysJUgQXVzFRpYe6aUx9AtzRta8Kzq0c43Y4Qt6LTpTsXzNxDoGRw31X8U8eYDHdu3M4DCDQqydw0O9x7f37exxDCjanXay6xdmq/yMq58nxT+VB8iVVTdogurJNQI4PenDG6coitYZT8kPsks4q9b5pVC8SJ8idyaT+6xE="
+jobs:
     include:
         - python: "3.5"
           env: TOXENV=py35
@@ -19,6 +25,7 @@ install:
     - pip install -r requirements-dev.txt
 script:
     - tox -e ${TOXENV}
+    - docker login --username ${DH_USERNAME} --password ${DH_PASSWORD}
     - |
         if [ "${TOXENV}" == "pypy3" ]; then
           docker run -v ${PWD}:${PWD} -w ${PWD} \
