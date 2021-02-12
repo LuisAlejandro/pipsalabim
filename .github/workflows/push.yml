@@ -1,0 +1,58 @@
+name: Push
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - python-version: "3.5"
+            toxenv: "py35"
+          - python-version: "3.6"
+            toxenv: "py36"
+          - python-version: "3.7"
+            toxenv: "py37"
+          - python-version: "3.8"
+            toxenv: "py38"
+          - python-version: "3.9"
+            toxenv: "py39"
+          - python-version: "pypy3"
+            toxenv: "pypy3"
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Measuring coverage
+        env:
+          TOXENV: ${{ matrix.toxenv }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
+        run: |
+          pip install -r requirements-dev.txt
+          tox -e ${TOXENV}
+          coveralls
+      - name: Functional test
+        env:
+          TOXENV: ${{ matrix.toxenv }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
+        run: |
+          if [ "${TOXENV}" == "pypy3" ]; then
+            docker run -v ${PWD}:${PWD} -w ${PWD} \
+                pypy:3 bash -c \
+                "pypy3 setup.py install && \
+                pypy3 -m pipsalabim.cli update"
+          else
+            docker run -v ${PWD}:${PWD} -w ${PWD} \
+                dockershelf/python:${PYTHON_VERSION} bash -c \
+                "python${PYTHON_VERSION} setup.py install && \
+                python${PYTHON_VERSION} -m pipsalabim.cli update"
+          fi
