@@ -1,4 +1,4 @@
-.. image:: https://gitcdn.xyz/repo/CollageLabs/pipsalabim/master/docs/_static/banner.svg
+.. image:: https://rawcdn.githack.com/CollageLabs/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/banner.svg
 
 ..
 
@@ -126,7 +126,7 @@ Released under a `GPL-3 License`_ (read COPYING.rst_ for license details).
 Made with :heart: and :hamburger:
 =================================
 
-.. image:: https://rawcdn.githack.com/CollageLabs/pipsalabim/b00c6704253b9d05447b621f728869a2229d5322/docs/_static/promo-open-source.svg
+.. image:: https://rawcdn.githack.com/CollageLabs/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/promo-open-source.svg
 
 .. _CollageLabsTwitter: https://twitter.com/CollageLabs
 .. _CollageLabsGitHub: https://github.com/CollageLabs

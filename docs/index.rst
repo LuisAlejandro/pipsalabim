@@ -1,4 +1,4 @@
-.. image:: https://gitcdn.xyz/repo/CollageLabs/pipsalabim/master/docs/_static/title.svg
+.. image:: https://rawcdn.githack.com/CollageLabs/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/title.svg
 
 -----
 
