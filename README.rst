@@ -5,37 +5,41 @@
     Pip Sala Bim is an assistant to guess your pip dependencies from your code, without using a
     requirements file.
 
-.. image:: https://img.shields.io/pypi/v/pipsalabim.svg
-   :target: https://pypi.python.org/pypi/pipsalabim
-   :alt: PyPI Package
+.. image:: https://img.shields.io/github/release/CollageLabs/pipsalabim.svg
+   :target: https://github.com/CollageLabs/pipsalabim/releases
+   :alt: Github Releases
 
-.. image:: https://img.shields.io/travis/CollageLabs/pipsalabim.svg
-   :target: https://travis-ci.org/CollageLabs/pipsalabim
-   :alt: Travis CI
+.. image:: https://img.shields.io/github/issues/CollageLabs/pipsalabim
+   :target: https://github.com/CollageLabs/pipsalabim/issues?q=is%3Aopen
+   :alt: Github Issues
 
-.. image:: https://coveralls.io/repos/github/CollageLabs/pipsalabim/badge.svg?branch=develop
-   :target: https://coveralls.io/github/CollageLabs/pipsalabim?branch=develop
-   :alt: Coveralls
+.. image:: https://github.com/CollageLabs/pipsalabim/workflows/Push/badge.svg
+   :target: https://github.com/CollageLabs/pipsalabim/actions?query=workflow%3APush
+   :alt: Push
 
 .. image:: https://codeclimate.com/github/CollageLabs/pipsalabim/badges/gpa.svg
    :target: https://codeclimate.com/github/CollageLabs/pipsalabim
    :alt: Code Climate
 
-.. image:: https://pyup.io/repos/github/CollageLabs/pipsalabim/shield.svg
-   :target: https://pyup.io/repos/github/CollageLabs/pipsalabim/
-   :alt: Updates
-
-.. image:: https://readthedocs.org/projects/pipsalabim/badge/?version=latest
-   :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
-   :alt: Read The Docs
+.. image:: https://snyk.io/test/github/CollageLabs/pipsalabim/badge.svg
+   :target: https://snyk.io/test/github/CollageLabs/pipsalabim
+   :alt: Snyk
 
 .. image:: https://cla-assistant.io/readme/badge/CollageLabs/pipsalabim
    :target: https://cla-assistant.io/CollageLabs/pipsalabim
    :alt: Contributor License Agreement
 
-.. image:: https://badges.gitter.im/CollageLabs/pipsalabim.svg
-   :target: https://gitter.im/CollageLabs/pipsalabim
-   :alt: Gitter Chat
+.. image:: https://img.shields.io/pypi/v/pipsalabim.svg
+   :target: https://pypi.python.org/pypi/pipsalabim
+   :alt: PyPI Package
+
+.. image:: https://readthedocs.org/projects/pipsalabim/badge/?version=latest
+   :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
+   :alt: Read The Docs
+
+.. image:: https://img.shields.io/badge/chat-discord-ff69b4.svg
+   :target: https://discord.gg/6W6pJKRyAJ
+   :alt: Discord Channel
 
 |
 |

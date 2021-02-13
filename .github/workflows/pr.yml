@@ -34,13 +34,30 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Building project
+      - name: Measuring coverage
         env:
           TOXENV: ${{ matrix.toxenv }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
         run: |
           pip install -r requirements-dev.txt
           tox -e ${TOXENV}
           coveralls
+      - name: Functional test
+        env:
+          TOXENV: ${{ matrix.toxenv }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
+        run: |
+          if [ "${TOXENV}" == "pypy3" ]; then
+            docker run -v ${PWD}:${PWD} -w ${PWD} \
+                pypy:3 bash -c \
+                "pypy3 setup.py install && \
+                pypy3 -m pipsalabim.cli update"
+          else
+            docker run -v ${PWD}:${PWD} -w ${PWD} \
+                dockershelf/python:${PYTHON_VERSION} bash -c \
+                "python${PYTHON_VERSION} setup.py install && \
+                python${PYTHON_VERSION} -m pipsalabim.cli update"
+          fi
 
   approve:
     name: Approve pull request

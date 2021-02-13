@@ -23,12 +23,5 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Building project
-        env:
-          TOXENV: ${{ matrix.toxenv }}
-        run: |
-          pip install -r requirements-dev.txt
-          tox -e ${TOXENV}
-          coveralls
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
