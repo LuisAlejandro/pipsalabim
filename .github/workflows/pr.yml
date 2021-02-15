@@ -5,6 +5,8 @@ on:
     types:
       - opened
       - ready_for_review
+      - synchronize
+      - reopened
     branches:
       - develop
 
