@@ -23,6 +23,8 @@ jobs:
             toxenv: "py38"
           - python-version: "3.9"
             toxenv: "py39"
+          - python-version: "3.10"
+            toxenv: "py310"
           - python-version: "pypy3"
             toxenv: "pypy3"
     steps:
@@ -80,23 +82,23 @@ jobs:
     needs: approve
     steps:
       - name: Merge
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
           github-token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
           script: |
-            await github.pulls.merge({
+            await github.rest.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             })
       - name: Merge
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         if: github.actor == 'LuisAlejandro'
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           script: |
-            await github.pulls.merge({
+            await github.rest.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
