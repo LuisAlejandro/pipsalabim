@@ -1,4 +1,4 @@
-setuptools==59.6.0
+setuptools==60.0.5
 pip==21.3.1
 flake8==4.0.1
 pydocstyle==6.1.1
