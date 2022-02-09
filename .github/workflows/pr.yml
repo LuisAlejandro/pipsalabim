@@ -46,11 +46,11 @@ jobs:
           TOXENV: ${{ matrix.toxenv }}
           PYTHON_VERSION: ${{ matrix.python-version }}
         run: |
-          if [ "${TOXENV}" == "pypy3" ]; then
+          if [ "${TOXENV}" == "py311" ]; then
             docker run -v ${PWD}:${PWD} -w ${PWD} \
-                pypy:3 bash -c \
-                "pypy3 setup.py install && \
-                pypy3 -m pipsalabim.cli update"
+                dockershelf/python:3.11 bash -c \
+                "python3.11 setup.py install && \
+                python3.11 -m pipsalabim.cli update"
           else
             docker run -v ${PWD}:${PWD} -w ${PWD} \
                 dockershelf/python:${PYTHON_VERSION} bash -c \
