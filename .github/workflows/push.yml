@@ -33,10 +33,11 @@ jobs:
           TOXENV: ${{ matrix.toxenv }}
           PYTHON_VERSION: ${{ matrix.python-version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
           pip install -r requirements-dev.txt
           tox -e ${TOXENV}
-          coveralls --service=github
+          coveralls --service=github || coveralls --service=github-actions
       - name: Functional test
         env:
           TOXENV: ${{ matrix.toxenv }}

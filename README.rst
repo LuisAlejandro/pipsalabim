@@ -1,32 +1,32 @@
-.. image:: https://rawcdn.githack.com/CollageLabs/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/banner.svg
+.. image:: https://rawcdn.githack.com/LuisAlejandro/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/banner.svg
 
 ..
 
     Pip Sala Bim is an assistant to guess your pip dependencies from your code, without using a
     requirements file.
 
-.. image:: https://img.shields.io/github/release/CollageLabs/pipsalabim.svg
-   :target: https://github.com/CollageLabs/pipsalabim/releases
+.. image:: https://img.shields.io/github/release/LuisAlejandro/pipsalabim.svg
+   :target: https://github.com/LuisAlejandro/pipsalabim/releases
    :alt: Github Releases
 
-.. image:: https://img.shields.io/github/issues/CollageLabs/pipsalabim
-   :target: https://github.com/CollageLabs/pipsalabim/issues?q=is%3Aopen
+.. image:: https://img.shields.io/github/issues/LuisAlejandro/pipsalabim
+   :target: https://github.com/LuisAlejandro/pipsalabim/issues?q=is%3Aopen
    :alt: Github Issues
 
-.. image:: https://github.com/CollageLabs/pipsalabim/workflows/Push/badge.svg
-   :target: https://github.com/CollageLabs/pipsalabim/actions?query=workflow%3APush
+.. image:: https://github.com/LuisAlejandro/pipsalabim/workflows/Push/badge.svg
+   :target: https://github.com/LuisAlejandro/pipsalabim/actions?query=workflow%3APush
    :alt: Push
 
-.. image:: https://codeclimate.com/github/CollageLabs/pipsalabim/badges/gpa.svg
-   :target: https://codeclimate.com/github/CollageLabs/pipsalabim
+.. image:: https://codeclimate.com/github/LuisAlejandro/pipsalabim/badges/gpa.svg
+   :target: https://codeclimate.com/github/LuisAlejandro/pipsalabim
    :alt: Code Climate
 
-.. image:: https://snyk.io/test/github/CollageLabs/pipsalabim/badge.svg
-   :target: https://snyk.io/test/github/CollageLabs/pipsalabim
+.. image:: https://snyk.io/test/github/LuisAlejandro/pipsalabim/badge.svg
+   :target: https://snyk.io/test/github/LuisAlejandro/pipsalabim
    :alt: Snyk
 
-.. image:: https://cla-assistant.io/readme/badge/CollageLabs/pipsalabim
-   :target: https://cla-assistant.io/CollageLabs/pipsalabim
+.. image:: https://cla-assistant.io/readme/badge/LuisAlejandro/pipsalabim
+   :target: https://cla-assistant.io/LuisAlejandro/pipsalabim
    :alt: Contributor License Agreement
 
 .. image:: https://img.shields.io/pypi/v/pipsalabim.svg
@@ -45,7 +45,7 @@
 |
 
 .. _full documentation: https://pipsalabim.readthedocs.org
-.. _PyPIContents: https://github.com/CollageLabs/pypicontents
+.. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
 **Pip Sala Bim** will tell you which packages you need to install to satisfy the dependencies of
 your project. It uses a simple *AST visitor* [#]_ for detecting imports and `PyPIContents`_ to
@@ -69,7 +69,7 @@ pip to install the stable version::
 If you want to install the development version (not recomended), you can install
 directlty from GitHub like this::
 
-    $ pip install --upgrade https://github.com/CollageLabs/pipsalabim/archive/master.tar.gz
+    $ pip install --upgrade https://github.com/LuisAlejandro/pipsalabim/archive/master.tar.gz
 
 Usage
 -----
@@ -91,7 +91,7 @@ start guessing your dependencies::
 Getting help
 ============
 
-.. _Gitter Chat: https://gitter.im/CollageLabs/pipsalabim
+.. _Gitter Chat: https://gitter.im/LuisAlejandro/pipsalabim
 .. _StackOverflow: http://stackoverflow.com/questions/ask
 
 If you have any doubts or problems, suscribe to our `Gitter Chat`_ and ask for help. You can also
@@ -126,18 +126,18 @@ Released under a `GPL-3 License`_ (read COPYING.rst_ for license details).
 Made with :heart: and :hamburger:
 =================================
 
-.. image:: https://rawcdn.githack.com/CollageLabs/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/promo-open-source.svg
+.. image:: https://rawcdn.githack.com/LuisAlejandro/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/promo-open-source.svg
 
-.. _CollageLabsTwitter: https://twitter.com/CollageLabs
-.. _CollageLabsGitHub: https://github.com/CollageLabs
+.. _LuisAlejandroTwitter: https://twitter.com/LuisAlejandro
+.. _LuisAlejandroGitHub: https://github.com/LuisAlejandro
 .. _collagelabs.org: http://collagelabs.org
 
 |
 
-    Web collagelabs.org_ · GitHub `@CollageLabs`__ · Twitter `@CollageLabs`__
+    Web collagelabs.org_ · GitHub `@LuisAlejandro`__ · Twitter `@LuisAlejandro`__
 
-__ CollageLabsGitHub_
-__ CollageLabsTwitter_
+__ LuisAlejandroGitHub_
+__ LuisAlejandroTwitter_
 
 |
 |

@@ -252,7 +252,7 @@ def main(**kwargs):
     """
     Generate a report to inform about PyPI dependencies.
 
-    .. _PyPIContents: https://github.com/CollageLabs/pypicontents
+    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
     This command will search your code for unsatisfied dependencies by
     looking at your ``import`` statements. If an import is not satisfied by
