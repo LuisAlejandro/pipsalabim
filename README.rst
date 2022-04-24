@@ -43,6 +43,8 @@
 .. _full documentation: https://pipsalabim.readthedocs.org
 .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
+Current version: 0.1.20
+
 **Pip Sala Bim** will tell you which packages you need to install to satisfy the dependencies of
 your project. It uses a simple *AST visitor* [#]_ for detecting imports and `PyPIContents`_ to
 search which packages contain these imports.
