@@ -1,34 +1,33 @@
-.. image:: https://rawcdn.githack.com/LuisAlejandro/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/title.svg
+.. image:: https://raw.githubusercontent.com/LuisAlejandro/pipsalabim/develop/docs/_static/title.svg
 
 -----
 
 .. image:: https://img.shields.io/pypi/v/pipsalabim.svg
-   :target: https://pypi.python.org/pypi/pipsalabim
+   :target: https://pypi.org/project/pipsalabim
    :alt: PyPI Package
 
-.. image:: https://img.shields.io/travis/LuisAlejandro/pipsalabim.svg
-   :target: https://travis-ci.org/LuisAlejandro/pipsalabim
-   :alt: Travis CI
+.. image:: https://img.shields.io/github/release/LuisAlejandro/pipsalabim.svg
+   :target: https://github.com/LuisAlejandro/pipsalabim/releases
+   :alt: Github Releases
 
-.. image:: https://coveralls.io/repos/github/LuisAlejandro/pipsalabim/badge.svg?branch=master
-   :target: https://coveralls.io/github/LuisAlejandro/pipsalabim?branch=master
-   :alt: Coveralls
+.. image:: https://img.shields.io/github/issues/LuisAlejandro/pipsalabim
+   :target: https://github.com/LuisAlejandro/pipsalabim/issues?q=is%3Aopen
+   :alt: Github Issues
 
-.. image:: https://landscape.io/github/LuisAlejandro/pipsalabim/master/landscape.svg?style=flat
-   :target: https://landscape.io/github/LuisAlejandro/pipsalabim/master
-   :alt: Landscape
+.. image:: https://github.com/LuisAlejandro/pipsalabim/workflows/Push/badge.svg
+   :target: https://github.com/LuisAlejandro/pipsalabim/actions?query=workflow%3APush
+   :alt: Push
 
 .. image:: https://readthedocs.org/projects/pipsalabim/badge/?version=latest
    :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
    :alt: Read The Docs
 
-.. image:: https://cla-assistant.io/readme/badge/LuisAlejandro/pipsalabim
-   :target: https://cla-assistant.io/LuisAlejandro/pipsalabim
-   :alt: Contributor License Agreement
+.. image:: https://img.shields.io/discord/809504357359157288.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2
+   :target: https://discord.gg/6W6pJKRyAJ
+   :alt: Discord Channel
 
-.. image:: https://badges.gitter.im/LuisAlejandro/pipsalabim.svg
-   :target: https://gitter.im/LuisAlejandro/pipsalabim
-   :alt: Gitter Chat
+|
+|
 
 .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
@@ -55,3 +54,19 @@ Table of Contents
    authors
    history
    maintainer
+
+Made with 💖 and 🍔
+====================
+
+.. image:: https://raw.githubusercontent.com/LuisAlejandro/pipsalabim/develop/docs/_static/author-banner.svg
+
+.. _LuisAlejandroTwitter: https://twitter.com/LuisAlejandro
+.. _LuisAlejandroGitHub: https://github.com/LuisAlejandro
+.. _luisalejandro.org: https://luisalejandro.org
+
+|
+
+    Web luisalejandro.org_ · GitHub `@LuisAlejandro`__ · Twitter `@LuisAlejandro`__
+
+__ LuisAlejandroGitHub_
+__ LuisAlejandroTwitter_

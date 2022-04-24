@@ -19,7 +19,7 @@ existing bugs to your new milestone.
 
     git flow feature start <feature name>
 
-5. Code, code and code. More coding. Fuck it up several times. Push to feature
+5. Code, code and code. More coding. Mess it up several times. Push to feature
 branch. Watch Travis go red. Write unit tests. Watch Travis go red again. Don't
 leave uncommitted changes.
 6. Finish your feature::
@@ -33,7 +33,7 @@ leave uncommitted changes.
 
 9. Bump your version (check everything before next step)::
 
-    bumpversion --no-commit --new-version <release number> patch
+    bumpversion --no-commit <major, minor or patch>
 
 10. Update your changelog (edit HISTORY.rst after to customize)::
 
@@ -51,10 +51,6 @@ leave uncommitted changes.
 
     git flow release finish -s -p <release number>
 
-14. Push your tags::
-
-    git push --tags
-
 15. Draft a new release in GitHub (based on the new version tag) and include
 a description. Also pick a codename because it makes you cool.
 
@@ -62,7 +58,7 @@ a description. Also pick a codename because it makes you cool.
 
 17. Publish your new version to PyPI::
 
-    python setup.py sdist upload
+    make release
 
 18. Write about your new version in your blog. Tweet it, post it on facebook.
 
@@ -77,7 +73,7 @@ Making a new hotfix
 3. Code your hotfix.
 4. Bump your version (check everything before next step)::
 
-    bumpversion --no-commit --new-version <new version> patch
+    bumpversion --no-commit <major, minor or patch>
 
 5. Update your changelog (edit HISTORY.rst after to customize)::
 
@@ -95,10 +91,6 @@ Making a new hotfix
 
     git flow hotfix finish -s -p <new version>
 
-9. Push your tags::
-
-    git push --tags
-
 10. Draft a new release in GitHub (based on the new version tag) and include
 a description. Don't change the codename if it is a hotfix.
 
@@ -106,6 +98,6 @@ a description. Don't change the codename if it is a hotfix.
 
 12. Publish your new version to PyPI::
 
-    python setup.py sdist upload
+    make release
 
 13. Write about your new version in your blog. Tweet it, post it on facebook.

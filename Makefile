@@ -9,7 +9,7 @@ except:
 webbrowser.open("file://" + pathname2url(os.path.abspath(sys.argv[1])))
 endef
 export BROWSER_PYSCRIPT
-BROWSER := python -c "$$BROWSER_PYSCRIPT"
+BROWSER := python3 -c "$$BROWSER_PYSCRIPT"
 
 help:
 	@echo "clean - remove all build, test, coverage and Python artifacts"
@@ -48,37 +48,77 @@ clean-test:
 clean-docs:
 	rm -fr docs/_build
 
-lint:
-	flake8 pipsalabim tests
+lint: start
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim flake8 pipsalabim
 
-test:
-	python setup.py test
+test: start
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim python3 -m unittest -v -f
 
-test-all:
-	tox
+test-all: start
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim tox
 
-coverage:
-	coverage run --source pipsalabim setup.py test
-	coverage report -m
-	coverage html
+coverage: start
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim coverage run --source pipsalabim -m unittest -v -f
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim coverage report -m
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs:
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim make -C docs clean
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim make -C docs html
 	$(BROWSER) docs/_build/html/index.html
 
-servedocs: docs
-	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
+servedocs: docs start
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim watchmedo shell-command -p '*.rst' -c 'make -C docs html' -R -D .
 
-release: clean
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+release: clean start dist
+	twine upload -s -i luis@luisalejandro.org dist/*
 
-dist: clean
-	python setup.py sdist
-	python setup.py bdist_wheel
+dist: clean start
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim python3 -m build
 	ls -l dist
 
-install: clean
-	python setup.py install
+install: clean start
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim pip3 install .
+
+image:
+	@docker-compose -p pipsalabim -f docker-compose.yml build \
+		--force-rm --pull
+
+start:
+	@docker-compose -p pipsalabim -f docker-compose.yml up \
+		--remove-orphans -d
+
+console: start
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim bash
+
+stop:
+	@docker-compose -p pipsalabim -f docker-compose.yml stop
+
+down:
+	@docker-compose -p pipsalabim -f docker-compose.yml down \
+		--remove-orphans
+
+destroy:
+	@docker-compose -p pipsalabim -f docker-compose.yml down \
+		--rmi all --remove-orphans -v
+
+virtualenv: start
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim python3 -m venv --clear --copies ./virtualenv
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim ./virtualenv/bin/pip install -U wheel setuptools
+	@docker-compose -p pipsalabim -f docker-compose.yml exec \
+		--user luisalejandro pipsalabim ./virtualenv/bin/pip install -r requirements.txt -r requirements-dev.txt

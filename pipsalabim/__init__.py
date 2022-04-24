@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
 #
-#   This file is part of Pip Sala Bim.
-#   Copyright (C) 2016-2020, Pip Sala Bim Developers.
-#
-#   Please refer to AUTHORS.rst for a complete list of Copyright holders.
-#
-#   Pip Sala Bim is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-#
-#   Pip Sala Bim is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program. If not, see http://www.gnu.org/licenses.
+# Please refer to AUTHORS.rst for a complete list of Copyright holders.
+# Copyright (C) 2016-2022, Pip Sala Bim Developers.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 ``pipsalabim`` is just black magic.
 
@@ -39,10 +37,10 @@ __url__ = 'https://github.com/LuisAlejandro/pipsalabim'
 __description__ = ('Pip Sala Bim is an assistant to guess your pip'
                    ' dependencies from your code, without using a'
                    ' requirements file.')
-stdliburl = ('https://raw.githubusercontent.com/LuisAlejandro/pypicontents/'
-             'contents/stdlib.json')
-pypiurl = ('https://raw.githubusercontent.com/LuisAlejandro/pypicontents/'
-           'contents/pypi.json')
+stdliburl = ('https://raw.githubusercontent.com/LuisAlejandro/'
+             'pypicontents-build/master/stdlib.json')
+pypiurl = ('https://raw.githubusercontent.com/LuisAlejandro/'
+           'pypicontents-build/master/pypi.json.xz')
 stdlibfile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),
                           '.cache', 'pipsalabim', 'stdlib.json')
 pypifile = os.path.join(os.environ.get('HOME', os.path.expanduser('~')),

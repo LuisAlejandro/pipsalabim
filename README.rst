@@ -1,9 +1,13 @@
-.. image:: https://rawcdn.githack.com/LuisAlejandro/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/banner.svg
+.. image:: https://raw.githubusercontent.com/LuisAlejandro/pipsalabim/develop/docs/_static/banner.svg
 
 ..
 
     Pip Sala Bim is an assistant to guess your pip dependencies from your code, without using a
     requirements file.
+
+.. image:: https://img.shields.io/pypi/v/pipsalabim.svg
+   :target: https://pypi.org/project/pipsalabim
+   :alt: PyPI Package
 
 .. image:: https://img.shields.io/github/release/LuisAlejandro/pipsalabim.svg
    :target: https://github.com/LuisAlejandro/pipsalabim/releases
@@ -17,27 +21,19 @@
    :target: https://github.com/LuisAlejandro/pipsalabim/actions?query=workflow%3APush
    :alt: Push
 
-.. image:: https://codeclimate.com/github/LuisAlejandro/pipsalabim/badges/gpa.svg
-   :target: https://codeclimate.com/github/LuisAlejandro/pipsalabim
-   :alt: Code Climate
-
-.. image:: https://snyk.io/test/github/LuisAlejandro/pipsalabim/badge.svg
-   :target: https://snyk.io/test/github/LuisAlejandro/pipsalabim
-   :alt: Snyk
+.. image:: https://coveralls.io/repos/github/LuisAlejandro/pipsalabim/badge.svg?branch=develop
+   :target: https://coveralls.io/github/LuisAlejandro/pipsalabim?branch=develop
+   :alt: Coverage
 
 .. image:: https://cla-assistant.io/readme/badge/LuisAlejandro/pipsalabim
    :target: https://cla-assistant.io/LuisAlejandro/pipsalabim
    :alt: Contributor License Agreement
 
-.. image:: https://img.shields.io/pypi/v/pipsalabim.svg
-   :target: https://pypi.python.org/pypi/pipsalabim
-   :alt: PyPI Package
-
 .. image:: https://readthedocs.org/projects/pipsalabim/badge/?version=latest
    :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
    :alt: Read The Docs
 
-.. image:: https://img.shields.io/badge/chat-discord-ff69b4.svg
+.. image:: https://img.shields.io/discord/809504357359157288.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2
    :target: https://discord.gg/6W6pJKRyAJ
    :alt: Discord Channel
 
@@ -74,27 +70,17 @@ directlty from GitHub like this::
 Usage
 -----
 
-``pipsalabim`` is really easy to use. Go to your python project and execute it as follows to
-start guessing your dependencies::
+.. _USAGE.rst: USAGE.rst
 
-    $ cd your-python-project/
-    $ pipsalabim report --help
-
-    usage: pipsalabim report [-h] [-r]
-
-    optional arguments:
-      -h, --help          show this help message and exit
-      -r, --requirements  Format output for requirements.txt file.
-
-:sup:`You need to run "pipsalabim update" before being able to generate a report.`
+See USAGE.rst_ for details.
 
 Getting help
 ============
 
-.. _Gitter Chat: https://gitter.im/LuisAlejandro/pipsalabim
+.. _Discord server: https://discord.gg/6W6pJKRyAJ
 .. _StackOverflow: http://stackoverflow.com/questions/ask
 
-If you have any doubts or problems, suscribe to our `Gitter Chat`_ and ask for help. You can also
+If you have any doubts or problems, suscribe to our `Discord server`_ and ask for help. You can also
 ask your question on StackOverflow_ (tag it ``pipsalabim``) or drop me an email at luis@collagelabs.org.
 
 Contributing
@@ -115,26 +101,25 @@ See HISTORY.rst_ for details.
 License
 =======
 
-.. _COPYING.rst: COPYING.rst
 .. _AUTHORS.rst: AUTHORS.rst
-.. _GPL-3 License: LICENSE.rst
+.. _GPL-3 License: LICENSE
 
-Copyright 2016, Pip Sala Bim Developers (read AUTHORS.rst_ for a full list of copyright holders).
+Copyright 2016-2022, Pip Sala Bim Developers (read AUTHORS.rst_ for a full list of copyright holders).
 
-Released under a `GPL-3 License`_ (read COPYING.rst_ for license details).
+Released under a `GPL-3 License`_.
 
-Made with :heart: and :hamburger:
-=================================
+Made with 💖 and 🍔
+====================
 
-.. image:: https://rawcdn.githack.com/LuisAlejandro/pipsalabim/8f880530063f05e96d006a55b5c5f4afee9c5e40/docs/_static/promo-open-source.svg
+.. image:: https://raw.githubusercontent.com/LuisAlejandro/pipsalabim/develop/docs/_static/author-banner.svg
 
 .. _LuisAlejandroTwitter: https://twitter.com/LuisAlejandro
 .. _LuisAlejandroGitHub: https://github.com/LuisAlejandro
-.. _collagelabs.org: http://collagelabs.org
+.. _luisalejandro.org: https://luisalejandro.org
 
 |
 
-    Web collagelabs.org_ · GitHub `@LuisAlejandro`__ · Twitter `@LuisAlejandro`__
+    Web luisalejandro.org_ · GitHub `@LuisAlejandro`__ · Twitter `@LuisAlejandro`__
 
 __ LuisAlejandroGitHub_
 __ LuisAlejandroTwitter_

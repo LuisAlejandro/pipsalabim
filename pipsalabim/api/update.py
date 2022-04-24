@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
 #
-#   This file is part of Pip Sala Bim.
-#   Copyright (C) 2016-2020, Pip Sala Bim Developers.
-#
-#   Please refer to AUTHORS.rst for a complete list of Copyright holders.
-#
-#   Pip Sala Bim is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-#
-#   Pip Sala Bim is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program. If not, see http://www.gnu.org/licenses.
+# Please refer to AUTHORS.rst for a complete list of Copyright holders.
+# Copyright (C) 2016-2022, Pip Sala Bim Developers.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 ``pipsalabim.api.update`` is a module implementing the update command.
 
@@ -26,21 +24,18 @@ up-to-date.
 
 Please note that this command must be executed manually.
 """
-from __future__ import absolute_import, print_function
 
 import os
-
-try:
-    from urllib2 import urlopen
-except ImportError:
-    from urllib.request import urlopen
+import lzma
+from io import BytesIO
+from urllib.request import urlopen
 
 from .. import stdliburl, pypiurl, stdlibfile, pypifile
 from ..core.logger import logger
-from ..core.utils import chunk_report, chunk_read, u
+from ..core.utils import chunk_report, chunk_read
 
 
-def download_json(datafile, dataurl):
+def download_json(datafile, dataurl, istarred):
     """
     Download a json file from ``dataurl``, store to ``datafile`` and report.
 
@@ -58,15 +53,18 @@ def download_json(datafile, dataurl):
            '...').format(os.path.basename(datafile)))
 
     try:
-        response = urlopen(url=dataurl, timeout=10)
+        response = urlopen(url=dataurl, timeout=60)
         content = chunk_read(response, report_hook=chunk_report)
     except Exception as e:
         logger.error('Download error: {0}'.format(e))
         return False
 
     try:
-        with open(datafile, 'w') as s:
-            s.write(u(content))
+        if istarred:
+            with lzma.open(BytesIO(content), 'rb') as x:
+                content = x.read()
+        with open(datafile, 'wb') as s:
+            s.write(content)
     except Exception as e:
         logger.error('I/O error: {0}'.format(e))
         return False
@@ -77,12 +75,16 @@ def main(**kwargs):
     """
     Update databases from PyPIContents.
 
-    .. _stdlib.json: https://git.io/vXF1H
-    .. _pypi.json: https://git.io/vXFDL
-    .. _PyPIContents project: https://github.com/LuisAlejandro/pypicontents
+    .. _stdlib.json:
+    https://raw.githubusercontent.com/LuisAlejandro/pypicontents-build/master/stdlib.json
+    .. _pypi.json.xz:
+    https://raw.githubusercontent.com/LuisAlejandro/pypicontents-build/master/pypi.json.xz
+    .. _PyPIContents project:
+    https://github.com/LuisAlejandro/pypicontents-build
 
     This function downloads the standard library modules index (`stdlib.json`_)
-    and the PyPI modules index (`pypi.json`_) from the `PyPIContents project`_
+    and the PyPI modules index (`pypi.json.xz`_) from the
+    `PyPIContents project`_
     to keep a local copy of these files, which are critical to PiP Sala Bim.
 
     This command makes no comparing or checking prior to download.
@@ -92,13 +94,13 @@ def main(**kwargs):
     .. versionadded:: 0.1.0
     """
     print('Updating the standard library database ...')
-    if download_json(stdlibfile, stdliburl):
+    if download_json(stdlibfile, stdliburl, False):
         print('Success!\n')
     else:
         print('There was an error!\n')
 
     print('Updating the PyPIContents database ...')
-    if download_json(pypifile, pypiurl):
+    if download_json(pypifile, pypiurl, True):
         print('Success!\n')
     else:
         print('There was an error!\n')
