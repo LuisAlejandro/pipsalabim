@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
 #
-#   This file is part of Pip Sala Bim.
-#   Copyright (C) 2016-2020, Pip Sala Bim Developers.
-#
-#   Please refer to AUTHORS.rst for a complete list of Copyright holders.
-#
-#   Pip Sala Bim is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-#
-#   Pip Sala Bim is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program. If not, see http://www.gnu.org/licenses.
+# Please refer to AUTHORS.rst for a complete list of Copyright holders.
+# Copyright (C) 2016-2022, Pip Sala Bim Developers.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 ``pipsalabim.api.report`` is a module implementing the report command.
 
@@ -24,11 +22,12 @@ This module contains the logic to examine your source code, extract internal
 and external imports, and finally determine which external PyPI packages
 you need to install in order to satisfy dependencies.
 """
-from __future__ import absolute_import, print_function
 
 import os
 import json
 import pkgutil
+
+from setuptools import find_packages
 
 from .. import __url__, stdlibfile, pypifile, libdir
 from ..core.logger import logger
@@ -36,13 +35,6 @@ from ..core.imports import find_imports
 from ..core.utils import (find_files, list_files, is_valid_path,
                           custom_sys_path, remove_sys_modules, fill_with_local,
                           fill_with_stdlib, fill_with_pypi)
-
-from setuptools import find_packages
-
-try:
-    raw_input
-except NameError:
-    raw_input = input
 
 
 def get_package_dirs(path):
@@ -214,7 +206,7 @@ def ask_multiple_pypi(datadict):
             for w in where:
                 print('    - {0}'.format(w))
 
-            selected = raw_input('\n>> ')
+            selected = input('\n>> ')
             if selected not in where:
                 print('"{0}" not available.'.format(selected))
                 continue
@@ -252,7 +244,7 @@ def main(**kwargs):
     """
     Generate a report to inform about PyPI dependencies.
 
-    .. _PyPIContents: https://github.com/CollageLabs/pypicontents
+    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
     This command will search your code for unsatisfied dependencies by
     looking at your ``import`` statements. If an import is not satisfied by

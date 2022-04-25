@@ -1,0 +1,27 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: thursday
+    time: "01:00"
+  open-pull-requests-limit: 99
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: thursday
+    time: "01:00"
+  open-pull-requests-limit: 99
+- package-ecosystem: docker
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: thursday
+    time: "01:00"
+  open-pull-requests-limit: 99
+  ignore:
+  - dependency-name: dockershelf/python
+    versions:
+    - "> 3.10"

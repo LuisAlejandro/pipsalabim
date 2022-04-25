@@ -1,64 +1,31 @@
 # -*- coding: utf-8 -*-
 #
-#   This file is part of Pip Sala Bim.
-#   Copyright (C) 2016-2020, Pip Sala Bim Developers.
-#
-#   Please refer to AUTHORS.rst for a complete list of Copyright holders.
-#
-#   Pip Sala Bim is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-#
-#   Pip Sala Bim is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program. If not, see http://www.gnu.org/licenses.
+# Please refer to AUTHORS.rst for a complete list of Copyright holders.
+# Copyright (C) 2016-2022, Pip Sala Bim Developers.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 ``pipsalabim.core.utils`` is a utility module.
 
 This module contains several utilities to process information coming from the
 other modules.
 """
-from __future__ import absolute_import, print_function
 
 import os
 import sys
 import fnmatch
 from contextlib import contextmanager
-
-if not sys.version_info < (3,):
-    unicode = str
-    basestring = str
-
-
-def u(u_string):
-    """
-    Convert a string to unicode working on both python 2 and 3.
-
-    :param u_string: a string to convert to unicode.
-
-    .. versionadded:: 0.1.5
-    """
-    if isinstance(u_string, unicode):
-        return u_string
-    return u_string.decode('utf-8')
-
-
-def s(s_string):
-    """
-    Convert a byte stream to string working on both python 2 and 3.
-
-    :param s_string: a byte stream to convert to string.
-
-    .. versionadded:: 0.1.5
-    """
-    if isinstance(s_string, bytes):
-        return s_string
-    return s_string.encode('utf-8')
 
 
 @contextmanager
@@ -108,8 +75,8 @@ def list_files(path=None, pattern='*'):
 
     .. versionadded:: 0.1.0
     """
-    assert isinstance(path, basestring)
-    assert isinstance(pattern, basestring)
+    assert isinstance(path, str)
+    assert isinstance(pattern, str)
 
     filelist = []
     for f in fnmatch.filter(os.listdir(path), pattern):
@@ -132,8 +99,8 @@ def find_files(path=None, pattern='*'):
 
     .. versionadded:: 0.1
     """
-    assert isinstance(path, basestring)
-    assert isinstance(pattern, basestring)
+    assert isinstance(path, str)
+    assert isinstance(pattern, str)
 
     filelist = []
     for directory, subdirs, files in os.walk(os.path.normpath(path)):
@@ -191,7 +158,7 @@ def chunk_read(response, chunk_size=8192, report_hook=None):
 
     .. versionadded:: 0.1.0
     """
-    data = u('')
+    data = b''
     downloaded = 0
     total = int(response.info().get('Content-Length').strip())
 
@@ -201,7 +168,7 @@ def chunk_read(response, chunk_size=8192, report_hook=None):
         if not chunk:
             break
 
-        data += u(chunk)
+        data += chunk
         downloaded += len(chunk)
 
         if report_hook:
@@ -255,7 +222,7 @@ def fill_with_pypi(datadict, pypidata):
     """
     Fill ``datadict`` with modules from ``pypidata`` if found.
 
-    .. _PyPIContents: https://github.com/CollageLabs/pypicontents
+    .. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
 
     :param datadict: a dictionary containing modules as keys and
                      a list as values.

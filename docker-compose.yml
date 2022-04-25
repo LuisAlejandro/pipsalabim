@@ -1,0 +1,9 @@
+version: "3"
+services:
+  pipsalabim:
+    image: luisalejandro/pipsalabim:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/home/luisalejandro/app

@@ -1,4 +1,4 @@
-.. image:: https://gitcdn.xyz/repo/CollageLabs/pipsalabim/master/docs/_static/banner.svg
+.. image:: https://raw.githubusercontent.com/LuisAlejandro/pipsalabim/develop/docs/_static/banner.svg
 
 ..
 
@@ -6,42 +6,44 @@
     requirements file.
 
 .. image:: https://img.shields.io/pypi/v/pipsalabim.svg
-   :target: https://pypi.python.org/pypi/pipsalabim
+   :target: https://pypi.org/project/pipsalabim
    :alt: PyPI Package
 
-.. image:: https://img.shields.io/travis/CollageLabs/pipsalabim.svg
-   :target: https://travis-ci.org/CollageLabs/pipsalabim
-   :alt: Travis CI
+.. image:: https://img.shields.io/github/release/LuisAlejandro/pipsalabim.svg
+   :target: https://github.com/LuisAlejandro/pipsalabim/releases
+   :alt: Github Releases
 
-.. image:: https://coveralls.io/repos/github/CollageLabs/pipsalabim/badge.svg?branch=develop
-   :target: https://coveralls.io/github/CollageLabs/pipsalabim?branch=develop
-   :alt: Coveralls
+.. image:: https://img.shields.io/github/issues/LuisAlejandro/pipsalabim
+   :target: https://github.com/LuisAlejandro/pipsalabim/issues?q=is%3Aopen
+   :alt: Github Issues
 
-.. image:: https://codeclimate.com/github/CollageLabs/pipsalabim/badges/gpa.svg
-   :target: https://codeclimate.com/github/CollageLabs/pipsalabim
-   :alt: Code Climate
+.. image:: https://github.com/LuisAlejandro/pipsalabim/workflows/Push/badge.svg
+   :target: https://github.com/LuisAlejandro/pipsalabim/actions?query=workflow%3APush
+   :alt: Push
 
-.. image:: https://pyup.io/repos/github/CollageLabs/pipsalabim/shield.svg
-   :target: https://pyup.io/repos/github/CollageLabs/pipsalabim/
-   :alt: Updates
+.. image:: https://coveralls.io/repos/github/LuisAlejandro/pipsalabim/badge.svg?branch=develop
+   :target: https://coveralls.io/github/LuisAlejandro/pipsalabim?branch=develop
+   :alt: Coverage
+
+.. image:: https://cla-assistant.io/readme/badge/LuisAlejandro/pipsalabim
+   :target: https://cla-assistant.io/LuisAlejandro/pipsalabim
+   :alt: Contributor License Agreement
 
 .. image:: https://readthedocs.org/projects/pipsalabim/badge/?version=latest
    :target: https://readthedocs.org/projects/pipsalabim/?badge=latest
    :alt: Read The Docs
 
-.. image:: https://cla-assistant.io/readme/badge/CollageLabs/pipsalabim
-   :target: https://cla-assistant.io/CollageLabs/pipsalabim
-   :alt: Contributor License Agreement
-
-.. image:: https://badges.gitter.im/CollageLabs/pipsalabim.svg
-   :target: https://gitter.im/CollageLabs/pipsalabim
-   :alt: Gitter Chat
+.. image:: https://img.shields.io/discord/809504357359157288.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2
+   :target: https://discord.gg/6W6pJKRyAJ
+   :alt: Discord Channel
 
 |
 |
 
 .. _full documentation: https://pipsalabim.readthedocs.org
-.. _PyPIContents: https://github.com/CollageLabs/pypicontents
+.. _PyPIContents: https://github.com/LuisAlejandro/pypicontents
+
+Current version: 0.2.0
 
 **Pip Sala Bim** will tell you which packages you need to install to satisfy the dependencies of
 your project. It uses a simple *AST visitor* [#]_ for detecting imports and `PyPIContents`_ to
@@ -65,33 +67,23 @@ pip to install the stable version::
 If you want to install the development version (not recomended), you can install
 directlty from GitHub like this::
 
-    $ pip install --upgrade https://github.com/CollageLabs/pipsalabim/archive/master.tar.gz
+    $ pip install --upgrade https://github.com/LuisAlejandro/pipsalabim/archive/master.tar.gz
 
 Usage
 -----
 
-``pipsalabim`` is really easy to use. Go to your python project and execute it as follows to
-start guessing your dependencies::
+.. _USAGE.rst: USAGE.rst
 
-    $ cd your-python-project/
-    $ pipsalabim report --help
-
-    usage: pipsalabim report [-h] [-r]
-
-    optional arguments:
-      -h, --help          show this help message and exit
-      -r, --requirements  Format output for requirements.txt file.
-
-:sup:`You need to run "pipsalabim update" before being able to generate a report.`
+See USAGE.rst_ for details.
 
 Getting help
 ============
 
-.. _Gitter Chat: https://gitter.im/CollageLabs/pipsalabim
+.. _Discord server: https://discord.gg/6W6pJKRyAJ
 .. _StackOverflow: http://stackoverflow.com/questions/ask
 
-If you have any doubts or problems, suscribe to our `Gitter Chat`_ and ask for help. You can also
-ask your question on StackOverflow_ (tag it ``pipsalabim``) or drop me an email at luis@huntingbears.com.ve.
+If you have any doubts or problems, suscribe to our `Discord server`_ and ask for help. You can also
+ask your question on StackOverflow_ (tag it ``pipsalabim``) or drop me an email at luis@collagelabs.org.
 
 Contributing
 ============
@@ -111,29 +103,28 @@ See HISTORY.rst_ for details.
 License
 =======
 
-.. _COPYING.rst: COPYING.rst
 .. _AUTHORS.rst: AUTHORS.rst
-.. _GPL-3 License: LICENSE.rst
+.. _GPL-3 License: LICENSE
 
-Copyright 2016, Pip Sala Bim Developers (read AUTHORS.rst_ for a full list of copyright holders).
+Copyright 2016-2022, Pip Sala Bim Developers (read AUTHORS.rst_ for a full list of copyright holders).
 
-Released under a `GPL-3 License`_ (read COPYING.rst_ for license details).
+Released under a `GPL-3 License`_.
 
-Made with :heart: and :hamburger:
-=================================
+Made with 💖 and 🍔
+====================
 
-.. image:: https://rawcdn.githack.com/CollageLabs/pipsalabim/b00c6704253b9d05447b621f728869a2229d5322/docs/_static/promo-open-source.svg
+.. image:: https://raw.githubusercontent.com/LuisAlejandro/pipsalabim/develop/docs/_static/author-banner.svg
 
-.. _CollageLabsTwitter: https://twitter.com/CollageLabs
-.. _CollageLabsGitHub: https://github.com/CollageLabs
-.. _collagelabs.org: http://collagelabs.org
+.. _LuisAlejandroTwitter: https://twitter.com/LuisAlejandro
+.. _LuisAlejandroGitHub: https://github.com/LuisAlejandro
+.. _luisalejandro.org: https://luisalejandro.org
 
 |
 
-    Web collagelabs.org_ · GitHub `@CollageLabs`__ · Twitter `@CollageLabs`__
+    Web luisalejandro.org_ · GitHub `@LuisAlejandro`__ · Twitter `@LuisAlejandro`__
 
-__ CollageLabsGitHub_
-__ CollageLabsTwitter_
+__ LuisAlejandroGitHub_
+__ LuisAlejandroTwitter_
 
 |
 |
