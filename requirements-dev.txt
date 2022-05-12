@@ -4,7 +4,7 @@ coverage==6.3.2
 coveralls==3.3.1
 flake8==4.0.1
 gitchangelog==3.0.4
-pip==22.0.4
+pip==22.1
 pydocstyle==6.1.1
 setuptools==62.1.0
 sphinx==4.5.0
