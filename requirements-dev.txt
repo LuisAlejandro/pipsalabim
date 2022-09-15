@@ -8,7 +8,7 @@ pip==22.1.1
 pydocstyle==6.1.1
 setuptools==62.3.2
 sphinx==4.5.0
-tox==3.25.0
+tox==3.26.0
 virtualenv==20.14.1
 watchdog==2.1.8
 wheel==0.37.1
