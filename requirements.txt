@@ -1,1 +1,1 @@
-setuptools==62.3.2
+setuptools==65.5.1
